@@ -13,12 +13,12 @@
   class="hero-desktop hidden md:relative md:block w-full h-screen pt-20 pb-16 text-center overflow-hidden"
 >
   <h1
-    class="hero-title-left ubuntu text-5xl max-xl:text-4xl max-xl:left-[20%] max-lg:left-[10%] mb-4 absolute left-[15%] top-[18%] z-10 rotate-y-55 -rotate-x-[23.5deg]"
+    class="prevent-select hero-title-left ubuntu text-5xl max-xl:text-4xl max-xl:left-[20%] max-lg:left-[10%] mb-4 absolute left-[15%] top-[18%] z-10 rotate-y-55 -rotate-x-[23.5deg]"
   >
     Supera la <span class="text-orange-300">Selectividad </span> <br /> con éxito
   </h1>
   <h1
-    class="hero-title-right ubuntu text-5xl max-xl:text-4xl max-xl:right-[25%] max-lg:right-[15%] mb-4 absolute right-[22.5%] top-[20%] z-10 -rotate-y-55 -rotate-x-23"
+    class="prevent-select hero-title-right ubuntu text-5xl max-xl:text-4xl max-xl:right-[25%] max-lg:right-[15%] mb-4 absolute right-[22.5%] top-[20%] z-10 -rotate-y-55 -rotate-x-23"
   >
     Toda la PAU <br /> <span class="text-orange-300">centralizada.</span>
   </h1>
@@ -61,18 +61,25 @@
       class="inset-0 w-full h-full object-cover"
     />
   </div>
+  <div
+    class="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex justify-between max-w-3/6 gap-6"
+  >
+    <button class="btn p-3 bg-orange-300 hover:bg-blue-[#2563EB]">
+      Comenzar ahora
+    </button>
+    <button class="btn border-black border hover:bg-blue-[#2563EB]">
+      Comenzar ahora
+    </button>
+  </div>
 </section>
 
 <!-- MOBILE HERO SECTION - SIMPLE TEXT WITHOUT ROTATION -->
 
 <!-- SPAIN MAP SECTION -->
 <section
-  class="hidden max-md:flex w-full h-screen relative items-center justify-center px-6 py-20"
+  class="hidden max-md:flex w-full h-screen relative flex-col items-center justify-between px-6 py-20"
 >
-  <div class="absolute inset-0 -z-10">
-    <img src={spain} alt="spain" />
-  </div>
-  <div class="relative z-10 text-center">
+  <div class="text-center">
     <h2 class="text-[clamp(2rem,6vw,4rem)] font-bold mb-4">
       Domina toda la <span class="text-[#2563EB]">PAU de España</span>
     </h2>
@@ -80,6 +87,18 @@
       Acceso a recursos de selectividad de todas las comunidades autónomas en
       una sola plataforma.
     </p>
+  </div>
+  <div class="absolute -translate-y-1/2 bottom-50 -z-10">
+    <img src={spain} alt="spain" />
+  </div>
+
+  <div class="flex justify-between w-full gap-6">
+    <button class="btn p-3 bg-orange-300 hover:bg-blue-[#2563EB]">
+      Comenzar ahora
+    </button>
+    <button class="btn border-black border hover:bg-blue-[#2563EB]">
+      Comenzar ahora
+    </button>
   </div>
 </section>
 
@@ -299,6 +318,12 @@
     :global(.hero-desktop .hero-spain) {
       width: 44%;
     }
+  }
+
+  .prevent-select {
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
   }
 
   .ubuntu {
