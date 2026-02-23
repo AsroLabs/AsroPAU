@@ -77,7 +77,7 @@
 
 <!-- SPAIN MAP SECTION -->
 <section
-  class="hidden max-md:flex w-full h-screen relative flex-col items-center justify-between px-6 py-20"
+  class="hidden max-md:flex w-full h-screen relative flex-col items-center justify-between px-6 pt-30 pb-20"
 >
   <div class="text-center">
     <h2 class="text-[clamp(2rem,6vw,4rem)] font-bold mb-4">
