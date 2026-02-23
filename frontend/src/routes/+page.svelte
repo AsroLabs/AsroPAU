@@ -3,6 +3,7 @@
     import Hero from "../components/Hero.svelte";
     import ExamSearch from "../components/ExamSearch.svelte";
     import Features from "../components/Features.svelte";
+    import spain from "$lib/assets/spain.svg";
 </script>
 
 <main class="min-h-screen flex flex-col">
@@ -10,6 +11,61 @@
     <Hero />
     <Features />
 
+    <!-- España Section -->
+    <section class="bg-gradient-to-r from-blue-600 to-blue-500 py-24 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex gap-16 items-center">
+                <!-- Contenido de texto -->
+                <div class="flex-1 text-white">
+                    <h2 class="text-4xl font-extrabold mb-4">Toda España a un clic</h2>
+                    <p class="text-lg mb-8 leading-relaxed text-blue-100 max-w-md">
+                        Hemos recopilado las pruebas de todas las comunidades autónomas para que no te falte material de práctica, sin importar donde vivas.
+                    </p>
+                    
+                    <!-- Comunidades en dos columnas -->
+                    <div class="flex gap-12">
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">📍</span>
+                                <span class="font-semibold">Madrid</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">📍</span>
+                                <span class="font-semibold">Cataluña</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">📍</span>
+                                <span class="font-semibold">C. Valenciana</span>
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">📍</span>
+                                <span class="font-semibold">Andalucía</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">📍</span>
+                                <span class="font-semibold">País Vasco</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">📍</span>
+                                <span class="font-semibold">Galicia</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Imagen de España -->
+                <div class="flex-1 flex justify-center">
+                    <img 
+                        src={spain} 
+                        alt="Mapa de España"
+                        class="w-full max-w-md h-auto object-contain filter drop-shadow-2xl transition-transform duration-200 hover:-translate-y-2.5"
+                    />
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer class="bg-white border-t border-slate-100 pt-20 pb-10 px-6">
         <div class="max-w-6xl mx-auto">

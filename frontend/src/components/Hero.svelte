@@ -13,15 +13,14 @@
   class="hero-desktop hidden md:relative md:block w-full h-screen pt-20 pb-16 text-center overflow-hidden"
 >
   <h1
-    class="hero-title-left h1 text-5xl max-xl:text-4xl max-xl:left-[20%] max-lg:left-[10%] mb-4 absolute left-[15%] top-[18%] z-10 rotate-y-55 -rotate-x-[23.5deg]"
+    class="hero-title-left ubuntu text-5xl max-xl:text-4xl max-xl:left-[20%] max-lg:left-[10%] mb-4 absolute left-[15%] top-[18%] z-10 rotate-y-55 -rotate-x-[23.5deg]"
   >
-    Supera la Selectividad <br /> con
-    <span class="text-[#2563EB]">éxito</span>
+    Supera la <span class="text-orange-300">Selectividad </span> <br /> con éxito
   </h1>
   <h1
-    class="hero-title-right h1 text-5xl max-xl:text-4xl max-xl:right-[25%] max-lg:right-[15%] mb-4 absolute right-[22.5%] top-[20%] z-10 -rotate-y-55 -rotate-x-23"
+    class="hero-title-right ubuntu text-5xl max-xl:text-4xl max-xl:right-[25%] max-lg:right-[15%] mb-4 absolute right-[22.5%] top-[20%] z-10 -rotate-y-55 -rotate-x-23"
   >
-    Toda la PAU <br /> <span class="text-[#2563EB]">centralizada.</span>
+    Toda la PAU <br /> <span class="text-orange-300">centralizada.</span>
   </h1>
   <div
     class="relative flex justify-center items-center w-full h-screen overflow-hidden"
@@ -300,5 +299,9 @@
     :global(.hero-desktop .hero-spain) {
       width: 44%;
     }
+  }
+
+  .ubuntu {
+    font-family: "Ubuntu-bold", sans-serif;
   }
 </style>

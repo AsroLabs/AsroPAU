@@ -1,98 +1,75 @@
 <script lang="ts">
     import { Tabs } from "@skeletonlabs/skeleton-svelte";
-    import exam1 from "$lib/assets/exam1.png";
-    import exam2 from "$lib/assets/exam2.png";
-    import exam3 from "$lib/assets/exam3.png";
+    import exams from "$lib/assets/exams.svg";
     import calculator from "$lib/assets/calculator.svg";
+    import printer from "$lib/assets/printer.svg";
+
+    const features = [
+        {
+            id: "examenes",
+            label: "Examenes",
+            title: "Acceso total a exámenes oficiales",
+            description: "Acceso ilimitado a todos los PDF de exámenes pasados y soluciones oficiales",
+            image: exams
+        },
+        {
+            id: "calculadora",
+            label: "Calculadora",
+            title: "Calcula tu nota media de selectividad",
+            description: "Calcula tu nota de selectividad introduciendo tus notas de bachillerato",
+            image: calculator
+        },
+        {
+            id: "creadorIA",
+            label: "Creador IA",
+            title: "Genera exámenes gracias a la IA",
+            description: "Crea nuevos exámenes generados con IA junto a sus soluciones",
+            image: printer
+        }
+    ];
 </script>
 
-<Tabs class="flex items-center" defaultValue="examenes">
+<Tabs defaultValue="examenes">
     <Tabs.List class="max-w-3xl mx-auto mt-20">
-        <Tabs.Trigger class="flex-1" value="examenes">Examenes</Tabs.Trigger>
-        <Tabs.Trigger class="flex-1" value="calculadora"
-            >Calculadora</Tabs.Trigger
-        >
-        <Tabs.Trigger class="flex-1" value="creadorIA">Creador IA</Tabs.Trigger>
+        {#each features as feature}
+            <Tabs.Trigger class="flex-1" value={feature.id}>
+                {feature.label}
+            </Tabs.Trigger>
+        {/each}
         <Tabs.Indicator />
     </Tabs.List>
 
-    <Tabs.Content
-        class="flex max-w-10xl mx-auto justify-between items-center"
-        value="examenes"
-    >
-        <div class="text-balance">
-            <h1 class="text-2xl font-extrabold text-[#1E293B] mb-4">
-                Acceso total a exámenes oficiales
-            </h1>
-            <p class="text-lg ">
-                Acceso ilimitado a todos los PDF de exámenes pasados y
-                soluciones oficiales de todas las comunidades autónomas
-            </p>
-        </div>
-
-        <div
-            class="relative w-full h-100 *:transition-transform *:absolute *:object-cover *:h-3/5 flex items-center "
-        >
-            <img
-                src={exam1}
-                alt="Examen 1"
-                class="right-20 rotate-12 hover:-translate-y-10 hover:translate-10"
-            />
-            <img
-                src={exam2}
-                alt="Examen 2"
-                class="right-30 hover:-translate-y-10"
-            />
-            <img
-                src={exam3}
-                alt="Examen 3"
-                class="right-40 -rotate-12 hover:-translate-y-10 hover:-translate-10"
-            />
-        </div>
-    </Tabs.Content>
-    <Tabs.Content
-        class="flex max-w-6xl mx-auto justify-between items-center"
-        value="calculadora"
-    >
-        <div class="text-balance">
-            <h1 class="text-2xl font-extrabold text-[#1E293B] mb-4">
-                Calcula tu nota media de selectividad
-            </h1>
-            <p class="text-lg text-balance">
-                Calcula tu nota media de selectividad introduciendo tus notas
-                de bachillerato y eligiendo las asignaturas que has cursado
-            </p>
-        </div>
-
-        <div
-            class="w-full flex justify-end *:transition-transform  *:object-cover"
-        >
-            <img
-                src={calculator}
-                alt="Calculadora de notas"
-                class="w-100 transition-transform hover:-translate-y-5"
-            />
-        </div>
-    </Tabs.Content>
-    <Tabs.Content
-        class="flex max-w-10xl mx-auto justify-between items-center px-30"
-        value="creadorIA"
-    >
-        <div class="text-balance">
-            <h1 class="text-2xl font-extrabold text-[#1E293B] mb-4">
-                Genera exámenes gracias a la IA
-            </h1>
-            <p class="text-lg text-balance">
-                Crea nuevos exámenes generados con IA junto a sus soluciones
-            </p>
-        </div>
-
-        <div class="overflow-hidden shadow-2xl">
-            <img
-                src="../lib/assets/exam1.png"
-                alt="Estudio"
-                class="w-50 h-100 object-cover"
-            />
-        </div>
-    </Tabs.Content>
+    {#each features as feature}
+        <Tabs.Content value={feature.id} class="my-12">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="flex gap-12 items-center lg:gap-16">
+                    <!-- Texto y enlace -->
+                    <div class="flex-1 flex flex-col justify-center">
+                        <h2 class="text-2xl font-extrabold text-[#1E293B] mb-3">
+                            {feature.title}
+                        </h2>
+                        <p class="text-base text-gray-700 mb-6 leading-snug">
+                            {feature.description}
+                        </p>
+                        <a 
+                            href="#" 
+                            class="inline-flex items-center gap-2 font-semibold text-blue-600 hover:text-blue-800 transition-colors group w-fit"
+                        >
+                            Más información
+                            <span class="inline-block transition-transform group-hover:translate-x-1">→</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Imagen -->
+                    <div class="flex-1 flex justify-center">
+                        <img 
+                            src={feature.image} 
+                            alt={feature.title}
+                            class="w-full max-w-xs h-auto object-contain transition-transform hover:scale-105 duration-300"
+                        />
+                    </div>
+                </div>
+            </div>
+        </Tabs.Content>
+    {/each}
 </Tabs>

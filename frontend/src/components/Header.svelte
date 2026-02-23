@@ -3,7 +3,7 @@
     import { AppBar } from "@skeletonlabs/skeleton-svelte";
 </script>
 
-<AppBar class="bg-white shadow-md sticky z-50 opacity-95">
+<AppBar class="bg-white fixed shadow-md z-50 opacity-95 py-2">
     <AppBar.Toolbar class="grid-cols-[auto_auto_auto] px-30">
         <AppBar.Headline class="flex items-center *:mx-2">
             <div
