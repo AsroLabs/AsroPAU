@@ -1,5 +1,6 @@
 <script>
   import ToggleDark from "./ToggleDark.svelte";
+  import { ChevronsDownIcon } from "@lucide/svelte";
   import grid from "$lib/assets/grid.png";
   import spain from "$lib/assets/spain.svg";
   import hat from "$lib/assets/hat.svg";
@@ -64,12 +65,9 @@
   <div
     class="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex justify-between max-w-3/6 gap-6"
   >
-    <button class="btn p-3 bg-orange-300 hover:bg-blue-[#2563EB]">
-      Comenzar ahora
-    </button>
-    <button class="btn border-black border hover:bg-blue-[#2563EB]">
-      Comenzar ahora
-    </button>
+    <a href="#features">
+      <ChevronsDownIcon class="animate-bounce text-gray-600" size={32} />
+    </a>
   </div>
 </section>
 
@@ -80,25 +78,31 @@
   class="hidden max-md:flex w-full h-screen relative flex-col items-center justify-between px-6 pt-30 pb-20"
 >
   <div class="text-center">
-    <h2 class="text-[clamp(2rem,6vw,4rem)] font-bold mb-4">
-      Domina toda la <span class="text-[#2563EB]">PAU de España</span>
+    <h2 class="text-[clamp(2rem,6vw,4rem)] ubuntu mb-4">
+      Domina toda la <span class="text-orange-300">PAU de España</span>
     </h2>
     <p class="text-[clamp(1rem,2vw,1.5rem)] text-gray-600 max-w-2xl">
       Acceso a recursos de selectividad de todas las comunidades autónomas en
       una sola plataforma.
     </p>
   </div>
-  <div class="absolute -translate-y-1/2 bottom-50 -z-10">
+  <div class="absolute -translate-y-1/2 bottom-30 max-[345px]:bottom-40 -z-10">
     <img src={spain} alt="spain" />
   </div>
 
-  <div class="flex justify-between w-full gap-6">
-    <button class="btn p-3 bg-orange-300 hover:bg-blue-[#2563EB]">
+  <div class="flex justify-center w-full gap-6">
+    <!-- <button
+      class="btn p-2 max-[345px]:p-1 bg-orange-300 hover:bg-blue-[#2563EB]"
+    >
       Comenzar ahora
-    </button>
-    <button class="btn border-black border hover:bg-blue-[#2563EB]">
-      Comenzar ahora
-    </button>
+    </button> -->
+    <!-- <h1 class="text-3xl ubuntu text-center">
+      Toda la PAU <br /> <span class="text-orange-300">centralizada.</span>
+    </h1> -->
+
+    <a href="#features">
+      <ChevronsDownIcon class="animate-bounce text-gray-600" size={32} />
+    </a>
   </div>
 </section>
 

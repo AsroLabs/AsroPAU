@@ -30,9 +30,9 @@
 </script>
 
 <Tabs defaultValue="examenes">
-    <Tabs.List class="max-w-3xl mx-auto mt-20">
+    <Tabs.List id="features" class="max-w-3xl mx-auto mt-20">
         {#each features as feature}
-            <Tabs.Trigger class="flex-1" value={feature.id}>
+            <Tabs.Trigger class="flex-1 max-md:text-sm" value={feature.id}>
                 {feature.label}
             </Tabs.Trigger>
         {/each}
@@ -45,7 +45,7 @@
                 <div class="flex gap-12 items-center lg:gap-16">
                     <!-- Texto y enlace -->
                     <div class="flex-1 flex flex-col justify-center">
-                        <h2 class="text-2xl md:text-xl font-extrabold text-[#1E293B] mb-3">
+                        <h2 class="text-2xl max-md:text-lg font-extrabold text-[#1E293B] mb-3">
                             {feature.title}
                         </h2>
                         <p class="text-base text-gray-700 mb-6 leading-snug">

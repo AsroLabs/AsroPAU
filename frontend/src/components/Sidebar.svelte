@@ -2,6 +2,8 @@
 	import {
 		BookIcon,
 		SettingsIcon,
+		CalculatorIcon,
+		BrainIcon,
 		HouseIcon,
 	} from '@lucide/svelte';
 	import { Navigation } from '@skeletonlabs/skeleton-svelte';
@@ -11,13 +13,13 @@
 	const linksSidebar = {
 		recursos: [
 			{ label: 'Exámenes', href: '/#', icon: BookIcon },
-			{ label: 'Calculadora', href: '/#', icon: BookIcon },
-			{ label: 'Creador IA', href: '/#', icon: BookIcon },
+			{ label: 'Calculadora', href: '/#', icon: CalculatorIcon },
+			{ label: 'Creador IA', href: '/#', icon: BrainIcon },
 		],
 		comunidad: [
-			{ label: 'Blog', href: '/#', icon: BookIcon },
-			{ label: 'Foro', href: '/#', icon: BookIcon },
-			{ label: 'Colaboradores', href: '/#', icon: BookIcon },
+			{ label: 'Madrid', href: '/#', icon: BookIcon },
+			{ label: 'Andalucía', href: '/#', icon: BookIcon },
+			{ label: 'Castilla la Mancha', href: '/#', icon: BookIcon },
 		],
 	};
 
@@ -27,23 +29,13 @@
 </script>
 
 {#if isOpen}
+	<div class="fixed inset-0 bg-black/50 z-40 md:hidden" on:click={closeSidebar}
+		role="presentation"></div>
 	<div
-		class="fixed inset-0 bg-black/50 z-40 md:hidden"
-		on:click={closeSidebar}
-		role="presentation"
-	/>
-	<div
-		class="fixed left-0 top-16 bottom-0 w-72 bg-white z-50 shadow-lg overflow-y-auto md:hidden"
+		class="fixed right-0 top-18 bottom-0 z-50 shadow-lg overflow-y-auto md:hidden"
 	>
 		<Navigation layout="sidebar" class="h-full grid grid-rows-[auto_1fr_auto]">
 			<Navigation.Header>
-				<button
-					on:click={closeSidebar}
-					class="btn-icon btn-icon-lg preset-filled-primary-500"
-					aria-label="Close sidebar"
-				>
-					<span class="text-white font-bold">A</span>
-				</button>
 			</Navigation.Header>
 			<Navigation.Content>
 				<Navigation.Group>
