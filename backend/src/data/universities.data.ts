@@ -1,0 +1,163 @@
+import { University } from '../types';
+
+export const universitiesData: University[] = [
+  {
+    id: '1',
+    name: 'Universidad Complutense de Madrid',
+    community: 'Madrid',
+    city: 'Madrid',
+    degrees: [
+      {
+        id: '1-1',
+        universityId: '1',
+        name: 'Medicina',
+        cutoffGrade: 13.5,
+        field: 'Ciencias',
+      },
+      {
+        id: '1-2',
+        universityId: '1',
+        name: 'Derecho',
+        cutoffGrade: 12.0,
+        field: 'Letras',
+      },
+      {
+        id: '1-3',
+        universityId: '1',
+        name: 'Ingeniería Informática',
+        cutoffGrade: 11.5,
+        field: 'Ingeniería',
+      },
+      {
+        id: '1-4',
+        universityId: '1',
+        name: 'Psicología',
+        cutoffGrade: 12.3,
+        field: 'Ciencias',
+      },
+    ],
+  },
+  {
+    id: '2',
+    name: 'Universidad de Barcelona',
+    community: 'Cataluña',
+    city: 'Barcelona',
+    degrees: [
+      {
+        id: '2-1',
+        universityId: '2',
+        name: 'Medicina',
+        cutoffGrade: 13.8,
+        field: 'Ciencias',
+      },
+      {
+        id: '2-2',
+        universityId: '2',
+        name: 'Arquitectura',
+        cutoffGrade: 12.5,
+        field: 'Ingeniería',
+      },
+      {
+        id: '2-3',
+        universityId: '2',
+        name: 'ADE',
+        cutoffGrade: 10.5,
+        field: 'Mixto',
+      },
+      {
+        id: '2-4',
+        universityId: '2',
+        name: 'Biología',
+        cutoffGrade: 11.2,
+        field: 'Ciencias',
+      },
+    ],
+  },
+  {
+    id: '3',
+    name: 'Universidad de Valencia',
+    community: 'Comunidad Valenciana',
+    city: 'Valencia',
+    degrees: [
+      {
+        id: '3-1',
+        universityId: '3',
+        name: 'Farmacia',
+        cutoffGrade: 12.5,
+        field: 'Ciencias',
+      },
+      {
+        id: '3-2',
+        universityId: '3',
+        name: 'Biología',
+        cutoffGrade: 11.0,
+        field: 'Ciencias',
+      },
+      {
+        id: '3-3',
+        universityId: '3',
+        name: 'Física',
+        cutoffGrade: 10.8,
+        field: 'Ciencias',
+      },
+    ],
+  },
+  {
+    id: '4',
+    name: 'Universidad de Sevilla',
+    community: 'Andalucía',
+    city: 'Sevilla',
+    degrees: [
+      {
+        id: '4-1',
+        universityId: '4',
+        name: 'Medicina',
+        cutoffGrade: 13.3,
+        field: 'Ciencias',
+      },
+      {
+        id: '4-2',
+        universityId: '4',
+        name: 'Ingeniería Industrial',
+        cutoffGrade: 11.8,
+        field: 'Ingeniería',
+      },
+      {
+        id: '4-3',
+        universityId: '4',
+        name: 'Bellas Artes',
+        cutoffGrade: 9.5,
+        field: 'Letras',
+      },
+    ],
+  },
+  {
+    id: '5',
+    name: 'Universidad Autónoma de Madrid',
+    community: 'Madrid',
+    city: 'Madrid',
+    degrees: [
+      {
+        id: '5-1',
+        universityId: '5',
+        name: 'Medicina',
+        cutoffGrade: 13.6,
+        field: 'Ciencias',
+      },
+      {
+        id: '5-2',
+        universityId: '5',
+        name: 'Biología',
+        cutoffGrade: 12.1,
+        field: 'Ciencias',
+      },
+      {
+        id: '5-3',
+        universityId: '5',
+        name: 'Matemáticas',
+        cutoffGrade: 11.0,
+        field: 'Ciencias',
+      },
+    ],
+  },
+];
