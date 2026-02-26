@@ -29,7 +29,7 @@ export const validateConfig = (): void => {
 };
 
 if (config.env === 'development') {
-    console.log('📋 Configuration loaded:');
+    console.log('Configuración:');
   console.log(`   - Environment: ${config.env}`);
   console.log(`   - Port: ${config.port}`);
   console.log(`   - API Prefix: ${config.apiPrefix}`);
