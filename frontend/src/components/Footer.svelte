@@ -121,7 +121,7 @@
         <div
             class="pt-8 border-t border-slate-100 flex flex-col md:row justify-between items-center gap-4 text-[11px] text-slate-400 font-medium"
         >
-            <p>© 2024 AsroPAU. Todos los derechos reservados.</p>
+            <p>© 2026 AsroPAU. Todos los derechos reservados.</p>
             <div class="flex gap-6 uppercase tracking-widest">
                 <a href="localhost:5173" class="hover:text-[#2563EB]"
                     >Términos</a
