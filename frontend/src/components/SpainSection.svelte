@@ -2,7 +2,7 @@
     import spain from "$lib/assets/spain.svg";
 </script>
 
-<section class="bg-linear-to-r from-blue-600 to-blue-500 py-24 px-6">
+<section class="bg-linear-to-r from-orange-600 to-orange-400 py-24 px-6">
     <div class="max-w-7xl mx-auto">
         <div class="flex gap-16 items-center">
             <!-- Contenido de texto -->

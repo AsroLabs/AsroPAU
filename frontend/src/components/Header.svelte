@@ -11,7 +11,9 @@
 </script>
 
 <!-- DESKTOP HEADER -->
-<AppBar class="hidden md:block bg-white fixed shadow-md z-50 opacity-95 py-2 w-full">
+<AppBar
+    class="hidden md:block bg-white fixed shadow-md z-50 opacity-95 py-2 w-full"
+>
     <AppBar.Toolbar class="grid-cols-[auto_auto_auto] px-30">
         <AppBar.Headline class="flex items-center *:mx-2">
             <div
@@ -27,20 +29,19 @@
                 class="hidden group-hover:block hover:block group-focus:block absolute bg-white shadow-md rounded w-40 z-10"
             >
                 <a
-                    href="#"
+                    href="examen"
                     class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Link 1</a
+                    >Exámenes</a
                 >
                 <a
-                    href="#"
+                    href="/media"
                     class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Link 2</a
+                    >Calculadora</a
                 >
                 <a
-                    href="#"
+                    href="examenes-ia"
                     class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Link 3</a
-                >
+                >Examenes IA</a>
             </button>
         </div>
         <AppBar.Trail>
@@ -56,7 +57,9 @@
 </AppBar>
 
 <!-- MOBILE HEADER -->
-<header class="max-md:flex hidden bg-white fixed shadow-md z-50 opacity-95 w-full items-center justify-between px-6 py-4">
+<header
+    class="max-md:flex hidden bg-white fixed shadow-md z-50 opacity-95 w-full items-center justify-between px-6 py-4"
+>
     <!-- Logo and Title -->
     <div class="flex items-center gap-2">
         <div
