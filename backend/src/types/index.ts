@@ -43,6 +43,14 @@ export interface Degree {
 // ============================================
 // EXÁMENES
 // ============================================
+export interface OfficialExam {
+  id: string;
+  subject: string;
+  convocation: "ordinary" | "extraordinary";
+  year: number;
+  location: string;
+}
+
 export interface Exam {
   id: string;
   userId: string;

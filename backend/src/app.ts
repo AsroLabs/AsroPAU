@@ -4,6 +4,7 @@ import { config } from './config';
 import logger from './middleware/logger';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import health from './routes/health.routes';
+import exams from './routes/exams.routes';
 import { execArgv } from 'node:process';
 
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(health);
+app.use(exams);
 
 app.get('/', (req: Request, res: Response) => {
   res.json({
