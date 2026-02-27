@@ -8,11 +8,11 @@ const startServer = (): void => {
     validateConfig();
 
     // Iniciar servidor
-    app.listen(config.port, () => {
+    app.listen(config.port || 3000, () => {
       logger.info(`
 ╔═══════════════════════════════════════════════════╗
 ║                                                   ║
-║   🚀 Selectividad API is running!                ║
+║   🚀 Bienvenido a la AsroPAU API!                ║
 ║                                                   ║
 ║   📍 Local: http://localhost:${config.port}                  ║
 ║   🌐 API:   http://localhost:${config.port}${config.apiPrefix}       ║
