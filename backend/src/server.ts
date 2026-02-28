@@ -12,10 +12,10 @@ const startServer = (): void => {
       logger.info(`
 ╔═══════════════════════════════════════════════════╗
 ║                                                   ║
-║   🚀 Bienvenido a la AsroPAU API!                ║
+║   🚀 Bienvenido a la AsroPAU API!                 ║
 ║                                                   ║
-║   📍 Local: http://localhost:${config.port}                  ║
-║   🌐 API:   http://localhost:${config.port}${config.apiPrefix}       ║
+║   📍 Local: http://localhost:${config.port}                 ║
+║   🌐 API:   http://localhost:${config.port}${config.apiPrefix}          ║
 ║                                                   ║
 ║   Environment: ${config.env}                        ║
 ║                                                   ║

@@ -1,0 +1,23 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+    - "3000:3000"
+    env_file: ./backend/.env.example
+    volumes: 
+      - ./backend/src:/app/src
+      - ./backend/public:/app/public
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+    - "5173:5173"
+    volumes:
+    - ./frontend/src:/app/src
+    - ./frontend/public:/app/public
+    - /app/node_modules
+  
