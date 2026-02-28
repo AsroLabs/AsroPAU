@@ -14,4 +14,4 @@ Despues, simplemente ejecutamos el docker-compose que hay en el proyecto y ya po
 
 ```docker compose up```
 
-El proyecto estara hosteado en [http://localhost:5173/](htttp://localhost:5173/)
+El proyecto estara hosteado en ```[http://localhost:5173/](htttp://localhost:5173/)```
