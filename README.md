@@ -5,6 +5,7 @@
 ### 1. Hacemos un git clone
 
 ```git clone https://github.com/AsroLabs/AsroPAU.git```
+
 Si el proyecto ya lo tenemos en el ordenador, hacemos un git pull
 
 ```git pull```
