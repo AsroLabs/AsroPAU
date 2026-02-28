@@ -1,96 +1,110 @@
 <script lang="ts">
-    import { UserRound, Menu, X } from "@lucide/svelte";
-    import { AppBar } from "@skeletonlabs/skeleton-svelte";
-    import Sidebar from "./Sidebar.svelte";
+  import { UserRound, Menu, X, BookOpen, Calculator, Sparkles, ChevronDown } from "@lucide/svelte";
+  import Sidebar from "./Sidebar.svelte";
 
-    interface Props {
-        fixed?: boolean;
-    }
+  interface Props {
+    fixed?: boolean;
+  }
 
-    let mobileMenuOpen = $state(false);
+  let mobileMenuOpen = $state(false);
+  let menuOpen = $state(false);
+  let scrolled = $state(false);
 
-    function toggleMobileMenu() {
-        mobileMenuOpen = !mobileMenuOpen;
-    }
+  const { fixed = true }: Props = $props();
 
-    const {fixed = true}: Props = $props();
+  $effect(() => {
+    const onScroll = () => { scrolled = window.scrollY > 10; };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  });
+
+  function toggleMobileMenu() {
+    mobileMenuOpen = !mobileMenuOpen;
+  }
+
+  const navLinks = [
+    { href: "/examen",      label: "Exámenes",    Icon: BookOpen },
+    { href: "/media",       label: "Calculadora", Icon: Calculator },
+    { href: "/examenes-ia", label: "Exámenes IA", Icon: Sparkles },
+  ];
 </script>
 
 <!-- DESKTOP HEADER -->
-<AppBar
-    class="{fixed ? 'fixed' : 'relative'} hidden md:block bg-white fixed shadow-md z-50 opacity-95 py-2 w-full"
+<header
+  class="
+    hidden md:flex items-center justify-between
+    {fixed ? 'fixed' : 'relative'}
+    top-0 left-0 right-0 z-50
+    px-8 py-3
+    transition-all duration-300
+    {scrolled
+      ? 'bg-white/80 backdrop-blur-xl shadow-lg shadow-slate-200/50 border-b border-white/50'
+      : 'bg-white/60 backdrop-blur-md border-b border-transparent'}
+  "
 >
-    <AppBar.Toolbar class="grid-cols-[auto_auto_auto] px-30">
-        <a href="/">
+  <!-- Logo -->
+  <a href="/" class="flex items-center gap-2.5 group">
+    <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-500 rounded-lg flex items-center justify-center shadow-md shadow-blue-200 transition-transform group-hover:scale-105">
+      <span class="text-white font-bold text-lg leading-none">A</span>
+    </div>
+    <span class="text-xl font-bold text-slate-800 tracking-tight">AsroPAU</span>
+  </a>
 
-            <AppBar.Headline class="flex items-center *:mx-2">
-                <div
-                    class="w-8 h-8 bg-[#2563EB] rounded flex items-center justify-center"
-                >
-                    <span class="text-white font-bold text-lg">A</span>
-                </div>
-                <span class="text-xl font-bold text-[#1E293B]">AsroPAU</span>
-            </AppBar.Headline>
-        </a>
-        <div class="group relative inline-block">
-            <button class="py-2 px-4 rounded focus:outline-none"> Menú </button>
-            <button
-                class="hidden group-hover:block hover:block group-focus:block absolute bg-white shadow-md rounded w-40 z-10"
-            >
-                <a
-                    href="examen"
-                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Exámenes</a
-                >
-                <a
-                    href="/media"
-                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Calculadora</a
-                >
-                <a
-                    href="examenes-ia"
-                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                >Examenes IA</a>
-            </button>
-        </div>
-        <AppBar.Trail>
-            <button
-                type="button"
-                class="btn bg-blue-400 hover:bg-blue-[#2563EB]"
-            >
-                <span>Iniciar sesión</span>
-                <UserRound size={18} />
-            </button>
-        </AppBar.Trail>
-    </AppBar.Toolbar>
-</AppBar>
+  <!-- Nav links -->
+  <nav class="flex items-center gap-1">
+    {#each navLinks as link}
+      <a
+        href={link.href}
+        class="flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 transition-all duration-150 cursor-pointer"
+      >
+        <link.Icon size={15} class="opacity-70" />
+        {link.label}
+      </a>
+    {/each}
+  </nav>
+
+  <!-- CTA -->
+  <div class="flex items-center gap-3">
+    <a
+      href="#"
+      class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white text-sm font-semibold rounded-full shadow-md shadow-blue-200 transition-all duration-200 hover:shadow-blue-300 hover:-translate-y-0.5 cursor-pointer"
+    >
+      <UserRound size={15} />
+      Iniciar sesión
+    </a>
+  </div>
+</header>
 
 <!-- MOBILE HEADER -->
 <header
-    class="max-md:flex hidden bg-white fixed shadow-md z-50 opacity-95 w-full items-center justify-between px-6 py-4"
+  class="
+    max-md:flex hidden fixed z-50 top-0 left-0 right-0
+    items-center justify-between px-5 py-3.5
+    transition-all duration-300
+    {scrolled
+      ? 'bg-white/85 backdrop-blur-xl shadow-md'
+      : 'bg-white/70 backdrop-blur-md'}
+    border-b border-white/50
+  "
 >
-    <!-- Logo and Title -->
-    <div class="flex items-center gap-2">
-        <div
-            class="w-8 h-8 bg-[#2563EB] rounded flex items-center justify-center"
-        >
-            <span class="text-white font-bold text-lg">A</span>
-        </div>
-        <span class="text-lg font-bold text-[#1E293B]">AsroPAU</span>
+  <a href="/" class="flex items-center gap-2 group">
+    <div class="w-7 h-7 bg-gradient-to-br from-blue-600 to-blue-500 rounded-md flex items-center justify-center shadow-sm">
+      <span class="text-white font-bold text-sm">A</span>
     </div>
+    <span class="text-lg font-bold text-slate-800">AsroPAU</span>
+  </a>
 
-    <!-- Hamburger Button -->
-    <button
-        onclick={toggleMobileMenu}
-        class="p-2 hover:bg-gray-100 rounded transition-colors"
-        aria-label="Toggle menu"
-    >
-        {#if mobileMenuOpen}
-            <X size={24} class="text-[#1E293B]" />
-        {:else}
-            <Menu size={24} class="text-[#1E293B]" />
-        {/if}
-    </button>
+  <button
+    onclick={toggleMobileMenu}
+    class="p-2 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+    aria-label="Toggle menu"
+  >
+    {#if mobileMenuOpen}
+      <X size={22} class="text-slate-700" />
+    {:else}
+      <Menu size={22} class="text-slate-700" />
+    {/if}
+  </button>
 </header>
 
 <!-- MOBILE SIDEBAR -->
