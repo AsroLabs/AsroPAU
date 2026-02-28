@@ -56,5 +56,9 @@ export const UNIVERSITIES = [
 ];
 
 export function formatGrade(n: number) {
+  if(n < 0)
+    n = 0;
+  if(n > 14)
+    n = 14;
   return n.toFixed(3).replace('.', ',');
 }

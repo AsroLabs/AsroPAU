@@ -1,10 +1,8 @@
 <script lang="ts">
     import { Calculator } from "@lucide/svelte";
-    import DatosAcademicos from "./components/DatosAcademicos.svelte";
+    import DatosAcademicos from "./components/FormularioNotas.svelte";
     import ResultadosCalificacion from "./components/ResultadosCalificacion.svelte";
-    import ComparadorGrados from "./components/ComparadorGrados.svelte";
-    import DonjePuedesEstudiar from "./components/DonjePuedesEstudiar.svelte";
-    import ProximosPasos from "./components/ProximosPasos.svelte";
+    import Universidades from "./components/Universidades.svelte";
 
     // State
     let bachGrade = $state(0);
@@ -71,11 +69,11 @@
 
 </script>
 
-<div class="font-serif min-h-screen bg-[#f6f6f8] text-slate-800">
+<main class="min-h-screen bg-[#f6f6f8] text-slate-800">
     <!-- Navigation -->
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div
-            class="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between"
+            class="max-w-360 mx-auto px-6 h-16 flex items-center justify-between"
         >
             <div class="flex items-center gap-2">
                 <div class="bg-[#2b6cee] p-1.5 rounded-lg text-white">
@@ -101,7 +99,7 @@
         </div>
     </nav>
 
-    <main class="max-w-[1440px] mx-auto p-6">
+    <main class="max-w-360 mx-auto p-6">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <!-- Left Column: Inputs -->
             <aside class="lg:col-span-5 space-y-6">
@@ -127,19 +125,15 @@
                 />
 
                 <!-- Comparison List -->
-                <ComparadorGrados {totalGrade} bind:searchQuery />
+                <Universidades {totalGrade} bind:searchQuery />
 
                 <!-- Map/Location Shortcut -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <DonjePuedesEstudiar />
-                    <ProximosPasos />
-                </div>
             </div>
         </div>
     </main>
 
     <footer class="mt-12 py-8 border-t border-slate-200 bg-white">
-        <div class="max-w-[1440px] mx-auto px-6 text-center">
+        <div class="max-w-360 mx-auto px-6 text-center">
             <p class="text-sm text-slate-400">
                 © 2024 EduGrade Pro. Datos actualizados con las notas de corte
                 del curso 2023/24.
@@ -163,7 +157,7 @@
             </div>
         </div>
     </footer>
-</div>
+</main>
 
 <style>
     :global(body) {

@@ -8,6 +8,7 @@
     admisionPart: number;
   }
 
+
   let { totalGrade = 0, bachPart = 0, accesoPart = 0, admisionPart = 0 }: Props = $props();
 </script>
 
