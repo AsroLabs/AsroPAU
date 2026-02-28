@@ -5,19 +5,16 @@
 ### 1. Hacemos un git clone
 
 ```bash
-  git clone https://github.com/AsroLabs/AsroPAU.git
+$ git clone https://github.com/AsroLabs/AsroPAU.git
+$ cd AsroPAU
+$ git pull
 ```
 
-Si el proyecto ya lo tenemos en el ordenador, hacemos un git pull
-
-```bash
-git pull
-```
-
-Despues, simplemente ejecutamos el docker-compose que hay en el proyecto y ya podremos testearlo
+Ejecutar entorno de desarrollo con Docker Compose
 
 ```bash
 docker compose up
 ```
 
-El proyecto estara hosteado en ```http://localhost:5173/```
+URL del servidor Frontend: http://localhost:5173
+URL del servidor Backend: http://localhost:3000
