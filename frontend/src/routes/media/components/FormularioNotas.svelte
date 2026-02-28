@@ -166,6 +166,12 @@
           <span class="text-xs text-slate-500">Ponderación:</span>
           <div class="flex bg-slate-100 p-1 rounded-lg w-full">
             <button 
+              class="flex-1 py-1 text-xs font-medium rounded-md transition-all {subject.weight === 0.0 ? 'bg-white shadow-sm text-[#2b6cee]' : 'text-slate-500'}"
+              onclick={() => subject.weight = 0.0}
+            >
+              0.0
+            </button>
+            <button 
               class="flex-1 py-1 text-xs font-medium rounded-md transition-all {subject.weight === 0.1 ? 'bg-white shadow-sm text-[#2b6cee]' : 'text-slate-500'}"
               onclick={() => subject.weight = 0.1}
             >

@@ -3,13 +3,11 @@
 
   interface Props {
     totalGrade: number;
-    bachPart: number;
-    accesoPart: number;
+    notaAcceso: number;
     admisionPart: number;
   }
 
-
-  let { totalGrade = 0, bachPart = 0, accesoPart = 0, admisionPart = 0 }: Props = $props();
+  let { totalGrade = 0, notaAcceso = 0, admisionPart = 0 }: Props = $props();
 </script>
 
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
@@ -23,7 +21,7 @@
   <div class="p-4 bg-slate-50 flex justify-around border-t border-slate-100">
     <div class="text-center">
       <p class="text-[10px] text-slate-400 font-bold uppercase">Bach + Acceso</p>
-      <p class="text-sm font-semibold">{formatGrade(bachPart + accesoPart)}</p>
+      <p class="text-sm font-semibold">{formatGrade(notaAcceso)}</p>
     </div>
     <div class="w-px h-8 bg-slate-200"></div>
     <div class="text-center">

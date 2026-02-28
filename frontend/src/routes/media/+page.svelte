@@ -25,6 +25,44 @@
     let searchQuery = $state("");
 
     // Derived
+    // notaAcceso = (0.6 * mediaBachiller) + (0.4 * mediaFaseAcceso)
+    let notaAcceso = $derived(
+        (bachGrade * 0.6) +
+        (((accesoLengua +
+            accesoHistoriaFilosofia +
+            accesoIngles +
+            accesoTroncalGrade) /
+            4) *
+            0.4)
+    );
+    
+    // Obtiene las dos mejores aportaciones ponderadas de admisión
+    // aportacion = notaEspecifica * ponderacion
+    let admisionPart = $derived.by(() => {
+        // Calcular aportación ponderada para cada asignatura
+        const aportaciones = admisionAsignaturas
+            .filter(a => a.grade > 0)
+            .map(a => ({
+                aportacion: a.grade * a.weight,
+                nombre: a.name,
+                nota: a.grade,
+                ponderacion: a.weight
+            }))
+            .sort((a, b) => b.aportacion - a.aportacion);
+        
+        if (aportaciones.length === 0) return 0;
+        
+        // Tomar las 2 mejores aportaciones
+        const mejores = aportaciones.slice(0, 2);
+        
+        // Suma de las 2 mejores aportaciones
+        return mejores.reduce((acc, a) => acc + a.aportacion, 0);
+    });
+    
+    // notaAdmision = notaAcceso + mejorAportacion1 + mejorAportacion2
+    let totalGrade = $derived(notaAcceso + admisionPart);
+    
+    // Para mostrar en los resultados
     let bachPart = $derived(bachGrade * 0.6);
     let accesoPart = $derived(
         ((accesoLengua +
@@ -32,40 +70,8 @@
             accesoIngles +
             accesoTroncalGrade) /
             4) *
-            0.4,
+            0.4
     );
-    
-    // Calcula la media ponderada de las 4 asignaturas de admisión
-    let admisionMediaPonderada = $derived.by(() => {
-        const totalWeight = admisionAsignaturas.reduce((acc, a) => acc + (a.grade > 0 ? a.weight : 0), 0);
-        const totalPonderado = admisionAsignaturas.reduce((acc, a) => acc + (a.grade * a.weight), 0);
-        
-        if (totalWeight === 0) return 0;
-        return totalPonderado / totalWeight;
-    });
-    
-    // Obtiene las dos mejores notas de admisión SIN ponderar
-    let admisionPart = $derived.by(() => {
-        // Filtrar solo asignaturas con notas > 0
-        const conNotas = admisionAsignaturas.filter(a => a.grade > 0);
-        
-        if (conNotas.length === 0) return 0;
-        
-        // Ordenar de mayor a menor por nota (SIN ponderar)
-        const ordenadas = conNotas.sort((a, b) => b.grade - a.grade);
-        
-        // Tomar las 2 mejores (o menos si hay pocas)
-        const mejores = ordenadas.slice(0, 2);
-        
-        // Calcular media de las 2 mejores notas
-        const suma = mejores.reduce((acc, n) => acc + n.grade, 0);
-        const media = suma / mejores.length;
-        
-        // Aplicar 0.4 a la media
-        return media * 0.4;
-    });
-    
-    let totalGrade = $derived(bachPart + accesoPart + admisionPart);
 
 </script>
 
@@ -119,8 +125,7 @@
                 <!-- Result Hero -->
                 <ResultadosCalificacion
                     {totalGrade}
-                    {bachPart}
-                    {accesoPart}
+                    {notaAcceso}
                     {admisionPart}
                 />
 
