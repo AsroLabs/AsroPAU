@@ -129,8 +129,7 @@
 
   <!-- Right title - 3D rotated -->
   <h1
-    class="prevent-select hero-title-right ubuntu text-5xl max-xl:text-4xl max-xl:right-[25%] max-lg:right-[15%] mb-4 absolute right-[22.5%] top-[20%] z-10 -rotate-y-55 -rotate-x-[25deg]"
-    class:fade-in-right={mounted}
+    class="prevent-select hero-title-right ubuntu text-5xl max-xl:text-4xl max-xl:right-[25%] max-lg:right-[15%] mb-4 absolute right-[22.5%] top-[20%] z-10 -rotate-y-55 -rotate-x-25"
   >
     Toda la PAU <br /> <span class="text-gradient">centralizada.</span>
   </h1>
