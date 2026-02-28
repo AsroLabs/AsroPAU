@@ -3,9 +3,10 @@
     import DatosAcademicos from "./components/FormularioNotas.svelte";
     import ResultadosCalificacion from "./components/ResultadosCalificacion.svelte";
     import Universidades from "./components/Universidades.svelte";
+    import Header from "../../components/Header.svelte";
 
     // State
-    let bachGrade = $state(0);
+    let notaBachiller = $state(0);
 
     // Fase de Acceso - 4 asignaturas fijas
     let accesoLengua = $state(0.0);
@@ -27,7 +28,7 @@
     // Derived
     // notaAcceso = (0.6 * mediaBachiller) + (0.4 * mediaFaseAcceso)
     let notaAcceso = $derived(
-        (bachGrade * 0.6) +
+        (notaBachiller * 0.6) +
         (((accesoLengua +
             accesoHistoriaFilosofia +
             accesoIngles +
@@ -63,7 +64,7 @@
     let totalGrade = $derived(notaAcceso + admisionPart);
     
     // Para mostrar en los resultados
-    let bachPart = $derived(bachGrade * 0.6);
+    let bachPart = $derived(notaBachiller * 0.6);
     let accesoPart = $derived(
         ((accesoLengua +
             accesoHistoriaFilosofia +
@@ -73,44 +74,61 @@
             0.4
     );
 
+    // Debounce timer para el fetch de totalGrade
+    let debounceTimer: number | undefined;
+
+    // Efecto para ejecutar el debounce fetch cuando cambie totalGrade
+    $effect(() => {
+        // Trigger el efecto cuando totalGrade cambia
+        totalGrade;
+
+        // Limpiar el timer anterior
+        clearTimeout(debounceTimer);
+
+        // Establecer nuevo timer con delay de 500ms
+        debounceTimer = setTimeout(() => {
+            handleTotalGradeChange();
+        }, 500);
+    });
+
+    // Función que manejará el cambio de nota total
+    function handleTotalGradeChange() {
+        console.log('Total grade changed:', totalGrade);
+        
+        // TODO: Fetch comentado para futura implementación
+        // fetch('/api/notas', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         totalGrade,
+        //         notaAcceso,
+        //         admisionPart,
+        //         timestamp: new Date().toISOString()
+        //     })
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     console.log('Fetch successful:', data);
+        // })
+        // .catch(error => {
+        //     console.error('Fetch error:', error);
+        // });
+    }
+
 </script>
 
 <main class="min-h-screen bg-[#f6f6f8] text-slate-800">
     <!-- Navigation -->
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div
-            class="max-w-360 mx-auto px-6 h-16 flex items-center justify-between"
-        >
-            <div class="flex items-center gap-2">
-                <div class="bg-[#2b6cee] p-1.5 rounded-lg text-white">
-                    <Calculator size={20} />
-                </div>
-                <h1 class="text-xl font-bold tracking-tight text-slate-900">
-                    EduGrade<span class="text-[#2b6cee]">Pro</span>
-                </h1>
-            </div>
-            <div class="flex items-center gap-6 text-sm font-medium">
-                <a href="/" class="hover:text-[#2b6cee] transition-colors"
-                    >Notas de Corte 2024</a
-                >
-                <a href="/" class="hover:text-[#2b6cee] transition-colors"
-                    >Ponderaciones</a
-                >
-                <button
-                    class="bg-[#2b6cee]/10 text-[#2b6cee] px-4 py-2 rounded-lg hover:bg-[#2b6cee] hover:text-white transition-all"
-                >
-                    Guardar Resultados
-                </button>
-            </div>
-        </div>
-    </nav>
+    <Header fixed={false}/>
 
     <main class="max-w-360 mx-auto p-6">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <!-- Left Column: Inputs -->
             <aside class="lg:col-span-5 space-y-6">
                 <DatosAcademicos
-                    bind:bachGrade
+                    bind:notaBachiller
                     bind:accesoLengua
                     bind:accesoHistoriaFilosofia
                     bind:accesoIngles

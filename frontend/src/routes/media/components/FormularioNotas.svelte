@@ -3,7 +3,7 @@
   import { TRONCALES_OPTIONS, ADMISION_OPTIONS } from '../lib';
 
   interface Props {
-    bachGrade: number;
+    notaBachiller: number;
     accesoLengua: number;
     accesoHistoriaFilosofia: number;
     accesoIngles: number;
@@ -13,7 +13,7 @@
   }
 
   let {
-    bachGrade = $bindable(),
+    notaBachiller: bachGrade = $bindable(),
     accesoLengua = $bindable(),
     accesoHistoriaFilosofia = $bindable(),
     accesoIngles = $bindable(),

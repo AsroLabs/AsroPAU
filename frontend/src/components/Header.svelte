@@ -3,26 +3,35 @@
     import { AppBar } from "@skeletonlabs/skeleton-svelte";
     import Sidebar from "./Sidebar.svelte";
 
-    let mobileMenuOpen = false;
+    interface Props {
+        fixed?: boolean;
+    }
+
+    let mobileMenuOpen = $state(false);
 
     function toggleMobileMenu() {
         mobileMenuOpen = !mobileMenuOpen;
     }
+
+    const {fixed = true}: Props = $props();
 </script>
 
 <!-- DESKTOP HEADER -->
 <AppBar
-    class="hidden md:block bg-white fixed shadow-md z-50 opacity-95 py-2 w-full"
+    class="{fixed ? 'fixed' : 'relative'} hidden md:block bg-white fixed shadow-md z-50 opacity-95 py-2 w-full"
 >
     <AppBar.Toolbar class="grid-cols-[auto_auto_auto] px-30">
-        <AppBar.Headline class="flex items-center *:mx-2">
-            <div
-                class="w-8 h-8 bg-[#2563EB] rounded flex items-center justify-center"
-            >
-                <span class="text-white font-bold text-lg">A</span>
-            </div>
-            <span class="text-xl font-bold text-[#1E293B]">AsroPAU</span>
-        </AppBar.Headline>
+        <a href="/">
+
+            <AppBar.Headline class="flex items-center *:mx-2">
+                <div
+                    class="w-8 h-8 bg-[#2563EB] rounded flex items-center justify-center"
+                >
+                    <span class="text-white font-bold text-lg">A</span>
+                </div>
+                <span class="text-xl font-bold text-[#1E293B]">AsroPAU</span>
+            </AppBar.Headline>
+        </a>
         <div class="group relative inline-block">
             <button class="py-2 px-4 rounded focus:outline-none"> Menú </button>
             <button
@@ -72,7 +81,7 @@
 
     <!-- Hamburger Button -->
     <button
-        on:click={toggleMobileMenu}
+        onclick={toggleMobileMenu}
         class="p-2 hover:bg-gray-100 rounded transition-colors"
         aria-label="Toggle menu"
     >
