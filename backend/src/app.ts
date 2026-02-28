@@ -3,8 +3,7 @@ import cors from 'cors';
 import { config } from './config';
 import logger from './middleware/logger';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
-import health from './routes/health.routes';
-import exams from './routes/exams.routes';
+import routes from './routes/index';
 import { execArgv } from 'node:process';
 
 
@@ -15,8 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(health);
-app.use(exams);
+app.use(routes);
 
 app.get('/', (req: Request, res: Response) => {
   res.json({

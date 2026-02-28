@@ -5,7 +5,7 @@ import { startTimer } from "winston";
 
 const router = Router();
 
-router.get('/health', (req: Request, res: Response) => {
+router.get('/', (req: Request, res: Response) => {
     res.json({
         success: true, 
         message: 'Servidor de Selectividad API funcionando correctamente',

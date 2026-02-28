@@ -5,8 +5,26 @@ import { ExceptionHandler } from 'winston';
 
 const router = Router();
 
+router.get('/', (req: Request, res: Response) => {
+
+    // return res.json({
+    //     success: true,
+    //     message: "Exámenes obtenidos correctamente"
+    // }).status(200);
+
+    const { subject, difficulty, userId } = req.query;
+    let filtered = examsData;
+
+    if (subject) {
+        filtered = filtered.filter(
+            (e) => e.subject.toLowerCase().includes((subject as string).toLowerCase())
+        )
+}
+});
+
+
 router.get('/pau', (req: Request, res: Response) => {
-    const {subject, convocation, year, location} = req.query;
+    const { subject, convocation, year, location } = req.query;
 
     res.json({
         success: true,
@@ -17,25 +35,6 @@ router.get('/pau', (req: Request, res: Response) => {
             location
         }
     }).status(200);
-}),
-
-router.get('/exams', (req: Request, res: Response)=>{
-
-    // return res.json({
-    //     success: true,
-    //     message: "Exámenes obtenidos correctamente"
-    // }).status(200);
-
-    const {subject, difficulty, userId} = req.query;
-    let filtered = examsData;
-
-    if (subject){
-        filtered = filtered.filter(
-            (e)=> e.subject.toLowerCase().includes((subject as string).toLowerCase())
-        )
-    }
-
-
-;})
+});
 
 export default router;
