@@ -27,7 +27,7 @@
   class="relative py-24 px-6 overflow-hidden"
 >
   <!-- Animated gradient background -->
-  <div class="absolute inset-0 bg-gradient-to-br from-indigo-800 via-indigo-600 to-indigo-500" aria-hidden="true"></div>
+  <div class="absolute inset-0 bg-gradient-to-br from-orange-800 via-orange-600 to-orange-500" aria-hidden="true"></div>
 
   <!-- Noise texture overlay -->
   <div
@@ -38,7 +38,7 @@
 
   <!-- Decorative circles -->
   <div class="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-white/10 blur-2xl pointer-events-none" aria-hidden="true"></div>
-  <div class="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-indigo-900/30 blur-2xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-orange-900/30 blur-2xl pointer-events-none" aria-hidden="true"></div>
 
   <div class="max-w-7xl mx-auto relative z-10">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -56,7 +56,7 @@
         <h2 class="text-4xl md:text-5xl font-extrabold mb-5 leading-tight">
           Toda España<br />a un clic
         </h2>
-        <p class="text-indigo-200 text-lg mb-10 leading-relaxed max-w-md">
+        <p class="text-orange-200 text-lg mb-10 leading-relaxed max-w-md">
           Hemos recopilado las pruebas de todas las comunidades autónomas para que no te falte material de práctica, sin importar donde vivas.
         </p>
 

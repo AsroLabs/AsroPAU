@@ -83,17 +83,17 @@
   }
 
   const stats = [
-    { value: '2.400+', label: 'Exámenes',   icon: BookOpen, color: '#4F46E5' },
-    { value: '17',     label: 'Comunidades',icon: GraduationCap, color: '#7C3AED' },
+    { value: '2.400+', label: 'Exámenes',   icon: BookOpen, color: '#EA580C' },
+    { value: '17',     label: 'Comunidades',icon: GraduationCap, color: '#f97316' },
     { value: '12',     label: 'Asignaturas',icon: Calculator, color: '#0EA5E9' },
     { value: '50k+',   label: 'Descargas',  icon: Download, color: '#22C55E' },
   ]
 </script>
 
-<div class="min-h-screen bg-[#EEF2FF]">
+<div class="min-h-screen bg-[#FFF7ED]">
 
   <!-- ── Hero banner ──────────────────────────────────────────── -->
-  <div class="relative overflow-hidden bg-gradient-to-br from-indigo-700 via-indigo-600 to-indigo-500 text-white">
+  <div class="relative overflow-hidden bg-gradient-to-br from-orange-700 via-orange-600 to-orange-500 text-white">
     <!-- Dot grid decoration -->
     <div
       class="absolute inset-0 opacity-10"
@@ -101,8 +101,8 @@
       aria-hidden="true"
     ></div>
     <!-- Blurred orbs -->
-    <div class="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-indigo-400/30 blur-3xl pointer-events-none" aria-hidden="true"></div>
-    <div class="absolute -bottom-10 -left-10 w-48 h-48 rounded-full bg-violet-500/20 blur-2xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-orange-400/30 blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute -bottom-10 -left-10 w-48 h-48 rounded-full bg-orange-300/20 blur-2xl pointer-events-none" aria-hidden="true"></div>
 
     <div class="relative z-10 max-w-6xl mx-auto px-6 py-14 md:py-20">
       <div class="max-w-2xl">
@@ -114,7 +114,7 @@
         <h1 class="font-display text-4xl md:text-5xl font-extrabold leading-tight mb-4">
           Banco de Exámenes<br />de Selectividad
         </h1>
-        <p class="text-indigo-200 text-lg leading-relaxed mb-8 max-w-lg">
+        <p class="text-orange-200 text-lg leading-relaxed mb-8 max-w-lg">
           Más de 2.400 exámenes oficiales de la EBAU/PAU ordenados por asignatura, comunidad y año. Descarga, practica y supera la prueba.
         </p>
 
@@ -125,7 +125,7 @@
             <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 border border-white/15 backdrop-blur-sm">
               <Icon size={14} class="opacity-80" />
               <span class="font-bold text-sm">{s.value}</span>
-              <span class="text-indigo-300 text-xs">{s.label}</span>
+              <span class="text-orange-300 text-xs">{s.label}</span>
             </div>
           {/each}
         </div>
@@ -134,7 +134,7 @@
   </div>
 
   <!-- ── Search + Filter bar ──────────────────────────────────── -->
-  <div class="sticky top-[72px] z-30 bg-white/90 backdrop-blur-md border-b border-indigo-100 shadow-sm">
+  <div class="sticky top-[72px] z-30 bg-white/90 backdrop-blur-md border-b border-orange-100 shadow-sm">
     <div class="max-w-6xl mx-auto px-6 py-3 flex flex-col sm:flex-row gap-3">
       <!-- Search -->
       <div class="relative flex-1">
@@ -143,19 +143,19 @@
           type="search"
           bind:value={searchQuery}
           placeholder="Buscar por asignatura, región o título..."
-          class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400/30 focus:border-indigo-400 transition-all"
+          class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 transition-all"
         />
       </div>
       <!-- Filter toggle -->
       <button
         onclick={() => showFilters = !showFilters}
         class="flex items-center gap-2 px-4 py-2.5 rounded-xl border font-semibold text-sm transition-all duration-150 cursor-pointer
-          {showFilters ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-400 hover:text-indigo-600'}"
+          {showFilters ? 'bg-orange-600 border-orange-600 text-white' : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-orange-400 hover:text-orange-600'}"
       >
         <Filter size={15} />
         Filtros
         {#if activeSubject !== 'Todos' || activeRegion !== 'Todas' || activeYear !== 'Todos'}
-          <span class="w-5 h-5 rounded-full bg-white text-indigo-600 text-xs font-bold flex items-center justify-center">
+          <span class="w-5 h-5 rounded-full bg-white text-orange-600 text-xs font-bold flex items-center justify-center">
             {[activeSubject !== 'Todos', activeRegion !== 'Todas', activeYear !== 'Todos'].filter(Boolean).length}
           </span>
         {/if}
@@ -173,7 +173,7 @@
               <button
                 onclick={() => activeSubject = subj}
                 class="px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer
-                  {activeSubject === subj ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600'}"
+                  {activeSubject === subj ? 'bg-orange-600 border-orange-600 text-white' : 'border-slate-200 text-slate-500 hover:border-orange-300 hover:text-orange-600'}"
               >{subj}</button>
             {/each}
           </div>
@@ -186,7 +186,7 @@
               <button
                 onclick={() => activeRegion = reg}
                 class="px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer
-                  {activeRegion === reg ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600'}"
+                  {activeRegion === reg ? 'bg-orange-600 border-orange-600 text-white' : 'border-slate-200 text-slate-500 hover:border-orange-300 hover:text-orange-600'}"
               >{reg}</button>
             {/each}
           </div>
@@ -199,7 +199,7 @@
               <button
                 onclick={() => activeYear = yr}
                 class="px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer
-                  {activeYear === yr ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600'}"
+                  {activeYear === yr ? 'bg-orange-600 border-orange-600 text-white' : 'border-slate-200 text-slate-500 hover:border-orange-300 hover:text-orange-600'}"
               >{yr}</button>
             {/each}
           </div>
@@ -216,8 +216,8 @@
           onclick={() => activeSubject = subj}
           class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold border-2 transition-all duration-150 cursor-pointer
             {activeSubject === subj
-              ? 'bg-indigo-600 border-indigo-600 text-white shadow-md shadow-indigo-200'
-              : 'bg-white border-indigo-100 text-slate-600 hover:border-indigo-400 hover:text-indigo-600'}"
+              ? 'bg-orange-600 border-orange-600 text-white shadow-md shadow-orange-200'
+              : 'bg-white border-orange-100 text-slate-600 hover:border-orange-400 hover:text-orange-600'}"
         >{subj}</button>
       {/each}
     </div>
@@ -229,12 +229,12 @@
     <!-- Results count -->
     <div class="flex items-center justify-between mb-5">
       <p class="text-sm text-slate-500">
-        <span class="font-bold text-indigo-700">{filtered.length}</span> exámenes encontrados
+        <span class="font-bold text-orange-700">{filtered.length}</span> exámenes encontrados
       </p>
       {#if activeSubject !== 'Todos' || activeRegion !== 'Todas' || activeYear !== 'Todos' || searchQuery}
         <button
           onclick={() => { activeSubject = 'Todos'; activeRegion = 'Todas'; activeYear = 'Todos'; searchQuery = '' }}
-          class="text-xs text-indigo-500 hover:text-indigo-700 font-semibold transition-colors cursor-pointer"
+          class="text-xs text-orange-500 hover:text-orange-700 font-semibold transition-colors cursor-pointer"
         >
           Limpiar filtros
         </button>
@@ -244,8 +244,8 @@
     {#if filtered.length === 0}
       <!-- Empty state -->
       <div class="flex flex-col items-center justify-center py-20 text-center">
-        <div class="w-16 h-16 rounded-2xl bg-indigo-100 flex items-center justify-center mb-4">
-          <Search size={28} class="text-indigo-400" />
+        <div class="w-16 h-16 rounded-2xl bg-orange-100 flex items-center justify-center mb-4">
+          <Search size={28} class="text-orange-400" />
         </div>
         <h3 class="font-bold text-slate-700 text-lg mb-2">Sin resultados</h3>
         <p class="text-slate-400 text-sm max-w-xs">Prueba a cambiar los filtros o el término de búsqueda.</p>
@@ -256,12 +256,12 @@
         {#each filtered as exam, i (exam.id)}
           {@const diff = difficultyColors[exam.difficulty]}
           <div
-            class="group bg-white rounded-2xl border-2 border-indigo-50 hover:border-indigo-300 shadow-sm hover:shadow-lg hover:shadow-indigo-100 transition-all duration-200 overflow-hidden cursor-pointer"
-            style="border-bottom: 4px solid #e0e7ff; animation-delay: {Math.min(i, 8) * 40}ms;"
+            class="group bg-white rounded-2xl border-2 border-orange-50 hover:border-orange-300 shadow-sm hover:shadow-lg hover:shadow-orange-100 transition-all duration-200 overflow-hidden cursor-pointer"
+            style="border-bottom: 4px solid #FED7AA; animation-delay: {Math.min(i, 8) * 40}ms;"
             class:section-reveal={!visible}
           >
             <!-- Card top color bar by subject -->
-            <div class="h-1.5 w-full bg-gradient-to-r from-indigo-500 to-indigo-400" aria-hidden="true"></div>
+            <div class="h-1.5 w-full bg-gradient-to-r from-orange-500 to-orange-400" aria-hidden="true"></div>
 
             <div class="p-5">
               <!-- Badges row -->
@@ -286,7 +286,7 @@
               </div>
 
               <!-- Title -->
-              <h3 class="font-bold text-slate-800 text-sm leading-snug mb-1 group-hover:text-indigo-700 transition-colors">{exam.title}</h3>
+              <h3 class="font-bold text-slate-800 text-sm leading-snug mb-1 group-hover:text-orange-700 transition-colors">{exam.title}</h3>
               <p class="text-xs text-slate-400 mb-4">{exam.region} · {exam.pages} páginas</p>
 
               <!-- Meta row -->
@@ -310,8 +310,8 @@
                 </div>
 
                 <!-- CTA arrow -->
-                <div class="w-7 h-7 rounded-full bg-indigo-50 group-hover:bg-indigo-600 flex items-center justify-center transition-all duration-200">
-                  <ChevronRight size={14} class="text-indigo-400 group-hover:text-white transition-colors" />
+                <div class="w-7 h-7 rounded-full bg-orange-50 group-hover:bg-orange-600 flex items-center justify-center transition-all duration-200">
+                  <ChevronRight size={14} class="text-orange-400 group-hover:text-white transition-colors" />
                 </div>
               </div>
             </div>
@@ -323,7 +323,7 @@
 
   <!-- ── Bottom CTA ───────────────────────────────────────────── -->
   <div class="max-w-6xl mx-auto px-6 py-10">
-    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 to-indigo-500 p-8 md:p-10 text-white text-center">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-orange-600 to-orange-500 p-8 md:p-10 text-white text-center">
       <div
         class="absolute inset-0 opacity-10"
         style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 24px 24px;"
@@ -331,11 +331,11 @@
       ></div>
       <div class="relative z-10">
         <h2 class="font-display text-2xl md:text-3xl font-extrabold mb-3">¿Ya tienes el examen?</h2>
-        <p class="text-indigo-200 mb-6 max-w-md mx-auto">Usa nuestro resolutor paso a paso para comprobar tus resultados y entender cada operación.</p>
+        <p class="text-orange-200 mb-6 max-w-md mx-auto">Usa nuestro resolutor paso a paso para comprobar tus resultados y entender cada operación.</p>
         <a
           href="/resolutor"
-          class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-indigo-700 font-bold text-sm hover:-translate-y-0.5 transition-all duration-200 cursor-pointer shadow-lg shadow-indigo-900/20"
-          style="border-bottom: 3px solid #c7d2fe;"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-orange-700 font-bold text-sm hover:-translate-y-0.5 transition-all duration-200 cursor-pointer shadow-lg shadow-orange-900/20"
+          style="border-bottom: 3px solid #FDBA74;"
         >
           <Calculator size={16} />
           Ir al Resolutor

@@ -9,7 +9,7 @@
       text: "Gracias a AsroPAU pude practicar con exámenes reales de años anteriores. Aprobé la EvAU con un 9,4.",
       stars: 5,
       initial: "L",
-      bgColor: "#4F46E5",
+      bgColor: "#EA580C",
       score: "9.4",
     },
     {
@@ -47,7 +47,7 @@
 
 <section bind:this={sectionRef} class="py-28 px-6 relative overflow-hidden" style="background:#fff;">
   <!-- Top border -->
-  <div class="absolute top-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent,#C7D2FE,transparent);" aria-hidden="true"></div>
+  <div class="absolute top-0 left-0 right-0 h-px" style="background:linear-gradient(90deg,transparent,#FDBA74,transparent);" aria-hidden="true"></div>
 
   <div class="max-w-6xl mx-auto">
 
@@ -134,17 +134,17 @@
         <h2 class="font-display font-bold text-white mb-4" style="font-size:clamp(1.8rem,3.5vw,2.8rem);">
           ¿Listo para dominar la PAU?
         </h2>
-        <p class="text-indigo-200 text-lg mb-9 max-w-md mx-auto">
+        <p class="text-orange-200 text-lg mb-9 max-w-md mx-auto">
           Únete a miles de estudiantes que ya están preparando la Selectividad con AsroPAU.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="/examen"
             class="group inline-flex items-center justify-center gap-2 px-7 py-3.5
-                   bg-white text-indigo-700 font-bold rounded-2xl
+                   bg-white text-orange-700 font-bold rounded-2xl
                    shadow-xl hover:shadow-2xl hover:-translate-y-0.5
                    transition-all duration-200 cursor-pointer text-sm"
-            style="border-bottom:3px solid #c7d2fe;"
+            style="border-bottom:3px solid #fed7aa;"
           >
             Explorar exámenes
             <ArrowRight size={15} class="transition-transform duration-200 group-hover:translate-x-1" />
@@ -181,7 +181,7 @@
   .t-card:hover { transform: translateY(-4px) !important; box-shadow: 0 12px 40px rgba(0,0,0,0.1) !important; }
 
   .cta-bg {
-    background: linear-gradient(135deg, #312E81 0%, #4F46E5 40%, #6366f1 70%, #818CF8 100%);
+    background: linear-gradient(135deg, #7c2d12 0%, #EA580C 40%, #f97316 70%, #fb923c 100%);
     background-size: 300% 300%;
     animation: gradShift 10s ease infinite;
   }

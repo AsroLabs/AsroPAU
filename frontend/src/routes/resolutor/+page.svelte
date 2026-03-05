@@ -108,16 +108,16 @@
   ]
 </script>
 
-<div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-indigo-50/30 py-10 px-4">
+<div class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50/30 py-10 px-4">
   <div class="max-w-2xl mx-auto space-y-5">
 
     <!-- Page header -->
-    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-600 to-indigo-500 p-7 text-white shadow-xl shadow-indigo-200">
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-orange-600 to-orange-500 p-7 text-white shadow-xl shadow-orange-200">
       <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 50%, white 1px, transparent 1px), radial-gradient(circle at 80% 50%, white 1px, transparent 1px); background-size: 32px 32px;" aria-hidden="true"></div>
       <div class="relative z-10 flex items-start justify-between">
         <div>
           <h1 class="text-2xl font-extrabold mb-1 tracking-tight">Resolutor de Matemáticas</h1>
-          <p class="text-indigo-200 text-sm">Introduce una ecuación o expresión y obtén la solución paso a paso.</p>
+          <p class="text-orange-200 text-sm">Introduce una ecuación o expresión y obtén la solución paso a paso.</p>
         </div>
         {#if history.length > 0}
           <button
@@ -161,10 +161,10 @@
           {#each history as entry (entry.id)}
             <button
               onclick={() => loadFromHistory(entry)}
-              class="w-full text-left flex items-center justify-between px-4 py-3 rounded-xl border border-slate-100 hover:border-indigo-200 hover:bg-indigo-50 transition-all duration-150 cursor-pointer group"
+              class="w-full text-left flex items-center justify-between px-4 py-3 rounded-xl border border-slate-100 hover:border-orange-200 hover:bg-orange-50 transition-all duration-150 cursor-pointer group"
             >
               <div class="min-w-0">
-                <p class="font-mono text-sm truncate text-slate-700 group-hover:text-indigo-700">{entry.input}</p>
+                <p class="font-mono text-sm truncate text-slate-700 group-hover:text-orange-700">{entry.input}</p>
                 {#if entry.resultLatex}
                   <p class="text-xs text-slate-400 truncate mt-0.5">{entry.resultLatex}</p>
                 {/if}
@@ -184,12 +184,12 @@
         <button
           onclick={() => activeMode = 'text'}
           class="px-4 py-1.5 rounded-lg text-sm font-semibold transition-all duration-150 cursor-pointer
-            {activeMode === 'text' ? 'bg-white shadow text-indigo-600' : 'text-slate-500 hover:text-slate-700'}"
+            {activeMode === 'text' ? 'bg-white shadow text-orange-600' : 'text-slate-500 hover:text-slate-700'}"
         >Texto / LaTeX</button>
         <button
           onclick={() => activeMode = 'keyboard'}
           class="px-4 py-1.5 rounded-lg text-sm font-semibold transition-all duration-150 cursor-pointer
-            {activeMode === 'keyboard' ? 'bg-white shadow text-indigo-600' : 'text-slate-500 hover:text-slate-700'}"
+            {activeMode === 'keyboard' ? 'bg-white shadow text-orange-600' : 'text-slate-500 hover:text-slate-700'}"
         >Teclado</button>
       </div>
 
@@ -207,7 +207,7 @@
           {#each examples as ex}
             <button
               onclick={() => { inputValue = ex.val; activeMode = 'text' }}
-              class="text-xs px-3 py-1.5 rounded-full border border-slate-200 hover:border-indigo-400 hover:text-indigo-600 hover:bg-indigo-50 transition-all duration-150 font-mono cursor-pointer"
+              class="text-xs px-3 py-1.5 rounded-full border border-slate-200 hover:border-orange-400 hover:text-orange-600 hover:bg-orange-50 transition-all duration-150 font-mono cursor-pointer"
             >{ex.label}</button>
           {/each}
         </div>
@@ -218,7 +218,7 @@
         <button
           onclick={solve}
           disabled={loading || !inputValue.trim()}
-          class="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 cursor-pointer shadow-md shadow-indigo-200"
+          class="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-white bg-orange-600 hover:bg-orange-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-150 cursor-pointer shadow-md shadow-orange-200"
         >
           {#if loading}
             <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -250,7 +250,7 @@
     <!-- Loading skeleton -->
     {#if loading}
       <div class="bg-white rounded-2xl border border-slate-200 p-8 flex items-center justify-center gap-3">
-        <div class="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+        <div class="w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
         <span class="text-slate-500 text-sm">Calculando solución...</span>
       </div>
     {:else if steps.length > 0}

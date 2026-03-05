@@ -3,10 +3,10 @@
   import { FileText, MapPin, ThumbsUp, Users } from "@lucide/svelte";
 
   const stats = [
-    { value: 5000, suffix: "+", label: "Exámenes disponibles", Icon: FileText,  bgColor: "#4F46E5", lightBg: "#EEF2FF", borderColor: "#3730a3" },
+    { value: 5000, suffix: "+", label: "Exámenes disponibles", Icon: FileText,  bgColor: "#EA580C", lightBg: "#FFF7ED", borderColor: "#9a3412" },
     { value: 17,   suffix: "",  label: "Comunidades cubiertas", Icon: MapPin,   bgColor: "#F59E0B", lightBg: "#FFFBEB", borderColor: "#d97706" },
     { value: 98,   suffix: "%", label: "Satisfacción",          Icon: ThumbsUp, bgColor: "#22C55E", lightBg: "#F0FDF4", borderColor: "#16a34a" },
-    { value: 50,   suffix: "k+",label: "Estudiantes activos",   Icon: Users,    bgColor: "#8B5CF6", lightBg: "#F5F3FF", borderColor: "#6d28d9" },
+    { value: 50,   suffix: "k+",label: "Estudiantes activos",   Icon: Users,    bgColor: "#F97316", lightBg: "#FFF7ED", borderColor: "#c2410c" },
   ];
 
   let displayValues = $state(stats.map(() => 0));
@@ -53,15 +53,15 @@
 <section
   bind:this={sectionRef}
   class="py-24 px-6 relative overflow-hidden"
-  style="background: linear-gradient(180deg, #F8FAFF 0%, #EEF2FF 100%);"
+  style="background: linear-gradient(180deg, #FFF7ED 0%, #FFF7ED 100%);"
 >
   <!-- Top border gradient -->
-  <div class="absolute top-0 left-0 right-0 h-px" style="background: linear-gradient(90deg, transparent, #C7D2FE, transparent);" aria-hidden="true"></div>
+  <div class="absolute top-0 left-0 right-0 h-px" style="background: linear-gradient(90deg, transparent, #FDBA74, transparent);" aria-hidden="true"></div>
 
   <div class="max-w-6xl mx-auto">
     <!-- Section header -->
     <div class="text-center mb-14 stat-reveal" class:show={visible}>
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-widest rounded-full mb-5 shadow-sm">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-white border border-orange-100 text-orange-700 text-xs font-bold uppercase tracking-widest rounded-full mb-5 shadow-sm">
         En números
       </div>
       <h2 class="font-display font-bold text-slate-900 mb-3" style="font-size:clamp(1.8rem,3vw,2.5rem);">

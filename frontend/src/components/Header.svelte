@@ -42,13 +42,13 @@
       rounded-2xl px-5 py-2.5
       transition-all duration-300
       {scrolled
-        ? 'bg-white/95 backdrop-blur-xl shadow-lg shadow-indigo-100/60 border border-indigo-100/80'
-        : 'bg-white/80 backdrop-blur-md shadow-md shadow-indigo-100/40 border border-white/60'}
+        ? 'bg-white/95 backdrop-blur-xl shadow-lg shadow-orange-100/60 border border-orange-100/80'
+        : 'bg-white/80 backdrop-blur-md shadow-md shadow-orange-100/40 border border-white/60'}
     "
   >
     <!-- Logo -->
     <a href="/" class="flex items-center gap-2.5 group cursor-pointer">
-      <div class="w-9 h-9 bg-gradient-to-br from-indigo-600 to-indigo-500 rounded-xl flex items-center justify-center shadow-md shadow-indigo-300/50 transition-all duration-200 group-hover:shadow-indigo-400/60 group-hover:-translate-y-0.5" style="border: 2.5px solid #6366f1;">
+      <div class="w-9 h-9 bg-gradient-to-br from-orange-600 to-orange-500 rounded-xl flex items-center justify-center shadow-md shadow-orange-300/50 transition-all duration-200 group-hover:shadow-orange-400/60 group-hover:-translate-y-0.5" style="border: 2.5px solid #f97316;">
         <span class="font-display font-bold text-white text-base leading-none">A</span>
       </div>
       <span class="font-display font-bold text-slate-800 text-lg tracking-tight">AsroPAU</span>
@@ -64,8 +64,8 @@
             relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-semibold
             transition-all duration-200 cursor-pointer
             {isActive
-              ? 'bg-indigo-600 text-white shadow-md shadow-indigo-300/50'
-              : 'text-slate-600 hover:text-indigo-700 hover:bg-indigo-50'}
+              ? 'bg-orange-600 text-white shadow-md shadow-orange-300/50'
+              : 'text-slate-600 hover:text-orange-700 hover:bg-orange-50'}
           "
         >
           <link.Icon size={14} />
@@ -80,8 +80,8 @@
     <!-- CTA -->
     <a
       href="#"
-      class="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-xl shadow-md shadow-indigo-300/40 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-indigo-400/50 cursor-pointer"
-      style="border-bottom: 3px solid #3730a3;"
+      class="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold rounded-xl shadow-md shadow-orange-300/40 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-orange-400/50 cursor-pointer"
+      style="border-bottom: 3px solid #9a3412;"
     >
       <UserRound size={14} />
       Iniciar sesión
@@ -96,12 +96,12 @@
     items-center justify-between px-4 py-3
     transition-all duration-300
     {scrolled
-      ? 'bg-white/95 backdrop-blur-xl shadow-md border-b border-indigo-100/60'
+      ? 'bg-white/95 backdrop-blur-xl shadow-md border-b border-orange-100/60'
       : 'bg-white/80 backdrop-blur-md border-b border-white/60'}
   "
 >
   <a href="/" class="flex items-center gap-2 cursor-pointer">
-    <div class="w-8 h-8 bg-gradient-to-br from-indigo-600 to-indigo-500 rounded-xl flex items-center justify-center shadow-sm" style="border: 2px solid #6366f1;">
+    <div class="w-8 h-8 bg-gradient-to-br from-orange-600 to-orange-500 rounded-xl flex items-center justify-center shadow-sm" style="border: 2px solid #f97316;">
       <span class="font-display font-bold text-white text-sm">A</span>
     </div>
     <span class="font-display font-bold text-slate-800 text-base">AsroPAU</span>
@@ -109,7 +109,7 @@
 
   <button
     onclick={() => mobileMenuOpen = !mobileMenuOpen}
-    class="p-2 hover:bg-indigo-50 rounded-xl transition-colors cursor-pointer"
+    class="p-2 hover:bg-orange-50 rounded-xl transition-colors cursor-pointer"
     aria-label="Toggle menu"
   >
     {#if mobileMenuOpen}

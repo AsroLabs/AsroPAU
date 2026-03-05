@@ -18,11 +18,11 @@
   const badges = [
     { icon: Users, label: "50k+ estudiantes", color: "bg-green-500" },
     { icon: Star, label: "4.9 valoración", color: "bg-amber-500" },
-    { icon: TrendingUp, label: "#1 en España", color: "bg-indigo-500" },
+    { icon: TrendingUp, label: "#1 en España", color: "bg-orange-500" },
   ];
 
   const floatingCards = [
-    { top: "18%", left: "6%",  delay: "0s",    label: "Matemáticas", score: "+9.2",  color: "#4F46E5", bg: "#EEF2FF" },
+    { top: "18%", left: "6%",  delay: "0s",    label: "Matemáticas", score: "+9.2",  color: "#EA580C", bg: "#FFF7ED" },
     { top: "40%", left: "3%",  delay: "0.4s",  label: "Física",      score: "+8.8",  color: "#22C55E", bg: "#F0FDF4" },
     { top: "18%", right: "6%", delay: "0.2s",  label: "Historia",    score: "+9.4",  color: "#F59E0B", bg: "#FFFBEB" },
     { top: "40%", right: "3%", delay: "0.6s",  label: "Biología",    score: "+9.1",  color: "#EC4899", bg: "#FDF2F8" },
@@ -32,7 +32,7 @@
 <!-- ── DESKTOP HERO ── -->
 <section
   class="hero-section hidden md:block relative w-full overflow-hidden"
-  style="background: linear-gradient(160deg, #EEF2FF 0%, #E0E7FF 40%, #C7D2FE 100%); min-height: 100vh;"
+  style="background: linear-gradient(160deg, #FFF7ED 0%, #FED7AA 40%, #FDBA74 100%); min-height: 100vh;"
   onmousemove={handleMouseMove}
   role="presentation"
 >
@@ -43,9 +43,9 @@
 
   <!-- Blob decorations -->
   <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-    <div class="absolute top-[-120px] left-[-120px] w-[500px] h-[500px] rounded-full bg-indigo-300/25 blur-3xl hero-blob-1"></div>
-    <div class="absolute bottom-[-80px] right-[-80px] w-[400px] h-[400px] rounded-full bg-purple-300/20 blur-3xl hero-blob-2"></div>
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-indigo-200/30 blur-3xl"></div>
+    <div class="absolute top-[-120px] left-[-120px] w-[500px] h-[500px] rounded-full bg-orange-300/25 blur-3xl hero-blob-1"></div>
+    <div class="absolute bottom-[-80px] right-[-80px] w-[400px] h-[400px] rounded-full bg-amber-300/20 blur-3xl hero-blob-2"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-orange-200/30 blur-3xl"></div>
   </div>
 
   <!-- Floating achievement cards (left) -->
@@ -101,7 +101,7 @@
       class:show={mounted}
     >
       {#each badges as badge}
-        <div class="flex items-center gap-1.5 px-3.5 py-1.5 bg-white/80 backdrop-blur-sm border border-indigo-100 rounded-full shadow-sm">
+        <div class="flex items-center gap-1.5 px-3.5 py-1.5 bg-white/80 backdrop-blur-sm border border-orange-100 rounded-full shadow-sm">
           <div class="w-4 h-4 rounded-full {badge.color} flex items-center justify-center">
             <badge.icon size={9} class="text-white" />
           </div>
@@ -116,7 +116,7 @@
       style="font-size: clamp(2.6rem, 5vw, 4rem); animation-delay:0.2s;"
       class:show={mounted}
     >
-      Domina la <span class="text-gradient-indigo">Selectividad</span><br />
+      Domina la <span class="text-gradient-orange">Selectividad</span><br />
       como los mejores
     </h1>
 
@@ -138,15 +138,15 @@
     >
       <a
         href="/examen"
-        class="group flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-xl shadow-indigo-300/50 transition-all duration-200 hover:-translate-y-1 hover:shadow-indigo-400/60 cursor-pointer text-base"
-        style="border-bottom: 4px solid #3730a3;"
+        class="group flex items-center gap-2 px-8 py-4 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-2xl shadow-xl shadow-orange-300/50 transition-all duration-200 hover:-translate-y-1 hover:shadow-orange-400/60 cursor-pointer text-base"
+        style="border-bottom: 4px solid #9a3412;"
       >
         Empezar gratis
         <ArrowRight size={18} class="transition-transform duration-200 group-hover:translate-x-1" />
       </a>
       <a
         href="/resolutor"
-        class="flex items-center gap-2 px-8 py-4 bg-white hover:bg-indigo-50 text-indigo-700 font-bold rounded-2xl shadow-lg border-2 border-indigo-200 hover:border-indigo-400 transition-all duration-200 hover:-translate-y-1 cursor-pointer text-base"
+        class="flex items-center gap-2 px-8 py-4 bg-white hover:bg-orange-50 text-orange-700 font-bold rounded-2xl shadow-lg border-2 border-orange-200 hover:border-orange-400 transition-all duration-200 hover:-translate-y-1 cursor-pointer text-base"
       >
         Probar resolutor
       </a>
@@ -164,24 +164,24 @@
       >
         <!-- Glow -->
         <div class="absolute inset-0 flex items-center justify-center" aria-hidden="true">
-          <div class="w-3/4 h-3/4 rounded-full bg-indigo-400/20 blur-3xl spain-glow"></div>
+          <div class="w-3/4 h-3/4 rounded-full bg-orange-400/20 blur-3xl spain-glow"></div>
         </div>
         <img
           src={spain}
           alt="Mapa de España"
           class="relative w-full object-contain spain-float"
-          style="filter: drop-shadow(0 12px 40px rgba(79,70,229,0.35)) drop-shadow(0 0 60px rgba(99,102,241,0.2));"
+          style="filter: drop-shadow(0 12px 40px rgba(234,88,12,0.35)) drop-shadow(0 0 60px rgba(249,115,22,0.2));"
         />
       </div>
 
       <!-- Progress bar under map — gamification -->
-      <div class="mt-6 bg-white/70 backdrop-blur-sm rounded-2xl px-6 py-4 border border-indigo-100 shadow-lg">
+      <div class="mt-6 bg-white/70 backdrop-blur-sm rounded-2xl px-6 py-4 border border-orange-100 shadow-lg">
         <div class="flex items-center justify-between mb-2">
           <span class="text-xs font-bold text-slate-600">Progreso PAU 2025</span>
-          <span class="text-xs font-bold text-indigo-600">17 / 17 CCAA</span>
+          <span class="text-xs font-bold text-orange-600">17 / 17 CCAA</span>
         </div>
-        <div class="h-3 bg-indigo-100 rounded-full overflow-hidden">
-          <div class="h-full rounded-full progress-bar" style="background: linear-gradient(90deg, #4F46E5, #818CF8); width:100%;"></div>
+        <div class="h-3 bg-orange-100 rounded-full overflow-hidden">
+          <div class="h-full rounded-full progress-bar" style="background: linear-gradient(90deg, #EA580C, #fb923c); width:100%;"></div>
         </div>
         <p class="text-[11px] text-slate-500 mt-1.5 text-center font-medium">Cobertura completa de todas las comunidades autónomas</p>
       </div>
@@ -192,54 +192,54 @@
 <!-- ── MOBILE HERO ── -->
 <section
   class="hidden max-md:flex flex-col w-full relative overflow-hidden px-5 pt-24 pb-16"
-  style="background: linear-gradient(160deg, #EEF2FF 0%, #E0E7FF 60%, #C7D2FE 100%); min-height:100svh;"
+  style="background: linear-gradient(160deg, #FFF7ED 0%, #FED7AA 60%, #FDBA74 100%); min-height:100svh;"
 >
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
     <img src={grid} alt="" class="w-full h-full object-cover opacity-20" />
-    <div class="absolute top-[-60px] right-[-60px] w-64 h-64 rounded-full bg-indigo-300/30 blur-3xl"></div>
+    <div class="absolute top-[-60px] right-[-60px] w-64 h-64 rounded-full bg-orange-300/30 blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex flex-col items-center text-center flex-1 justify-center">
-    <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/80 border border-indigo-100 rounded-full shadow-sm mb-6">
+    <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/80 border border-orange-100 rounded-full shadow-sm mb-6">
       <div class="w-3.5 h-3.5 rounded-full bg-green-500"></div>
       <span class="text-xs font-bold text-slate-700">Plataforma PAU #1 de España</span>
     </div>
 
     <h1 class="font-display font-bold text-slate-900 mb-4 leading-tight" style="font-size:clamp(2rem,7vw,2.8rem);">
-      Domina la <span class="text-gradient-indigo">Selectividad</span>
+      Domina la <span class="text-gradient-orange">Selectividad</span>
     </h1>
     <p class="text-slate-600 text-sm leading-relaxed mb-8 max-w-xs">
       5.000+ exámenes, calculadora de notas y resolutor con IA para tu PAU.
     </p>
 
     <div class="flex gap-3 mb-10">
-      <a href="/examen" class="flex items-center gap-1.5 px-5 py-3 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-300/40 text-sm cursor-pointer hover:bg-indigo-700 transition-colors" style="border-bottom:3px solid #3730a3;">
+      <a href="/examen" class="flex items-center gap-1.5 px-5 py-3 bg-orange-600 text-white font-bold rounded-xl shadow-lg shadow-orange-300/40 text-sm cursor-pointer hover:bg-orange-700 transition-colors" style="border-bottom:3px solid #9a3412;">
         Empezar gratis <ArrowRight size={14} />
       </a>
-      <a href="/resolutor" class="px-5 py-3 bg-white text-indigo-700 font-bold rounded-xl border-2 border-indigo-200 text-sm cursor-pointer hover:border-indigo-400 transition-colors">
+      <a href="/resolutor" class="px-5 py-3 bg-white text-orange-700 font-bold rounded-xl border-2 border-orange-200 text-sm cursor-pointer hover:border-orange-400 transition-colors">
         Resolutor
       </a>
     </div>
 
     <!-- Mini map -->
     <div class="relative w-full max-w-xs opacity-70 -mb-4">
-      <img src={spain} alt="Mapa de España" class="w-full object-contain" style="filter: drop-shadow(0 8px 24px rgba(79,70,229,0.3));" />
+      <img src={spain} alt="Mapa de España" class="w-full object-contain" style="filter: drop-shadow(0 8px 24px rgba(234,88,12,0.3));" />
     </div>
   </div>
 </section>
 
 <style>
   /* ── Gradient text ── */
-  :global(.text-gradient-indigo) {
-    background: linear-gradient(135deg, #4F46E5 0%, #818CF8 60%, #6366f1 100%);
+  :global(.text-gradient-orange) {
+    background: linear-gradient(135deg, #EA580C 0%, #f97316 60%, #fb923c 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  /* ── Legacy gradient (used in Hero old sections) ── */
+  /* ── Legacy gradient alias ── */
   :global(.text-gradient) {
-    background: linear-gradient(135deg, #4F46E5 0%, #818CF8 100%);
+    background: linear-gradient(135deg, #EA580C 0%, #fb923c 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

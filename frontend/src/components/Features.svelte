@@ -36,13 +36,13 @@
       ],
       image: exams,
       href: "/examen",
-      bgColor: "#4F46E5",
-      borderColor: "#3730a3",
-      shadowColor: "rgba(79,70,229,0.25)",
-      badgeBg: "#EEF2FF",
-      badgeText: "#4F46E5",
-      iconBg: "#EEF2FF",
-      iconColor: "#4F46E5",
+      bgColor: "#EA580C",
+      borderColor: "#9a3412",
+      shadowColor: "rgba(234,88,12,0.25)",
+      badgeBg: "#FFF7ED",
+      badgeText: "#EA580C",
+      iconBg: "#FFF7ED",
+      iconColor: "#EA580C",
       Icon: FileSearch,
     },
     {
@@ -109,12 +109,12 @@
   id="features"
   bind:this={sectionRef}
   class="py-28 px-6 relative overflow-hidden"
-  style="background: linear-gradient(180deg, #fff 0%, #F8FAFF 100%);"
+  style="background: linear-gradient(180deg, #fff 0%, #FFF7ED 100%);"
 >
   <!-- Background decoration -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
-    <div class="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl opacity-30 -translate-x-1/2 translate-y-1/2" style="background:radial-gradient(circle, #C7D2FE, transparent 70%);"></div>
-    <div class="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl opacity-20 translate-x-1/2 -translate-y-1/2" style="background:radial-gradient(circle, #DDD6FE, transparent 70%);"></div>
+    <div class="absolute bottom-0 left-0 w-96 h-96 rounded-full blur-3xl opacity-30 -translate-x-1/2 translate-y-1/2" style="background:radial-gradient(circle, #FDBA74, transparent 70%);"></div>
+    <div class="absolute top-0 right-0 w-80 h-80 rounded-full blur-3xl opacity-20 translate-x-1/2 -translate-y-1/2" style="background:radial-gradient(circle, #FED7AA, transparent 70%);"></div>
   </div>
 
   <div class="max-w-6xl mx-auto relative z-10">
@@ -124,7 +124,7 @@
       class="text-center mb-14 section-reveal"
       class:show={visible}
     >
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-indigo-50 border border-indigo-100 text-indigo-700 text-xs font-bold uppercase tracking-widest rounded-full mb-5">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-orange-50 border border-orange-100 text-orange-700 text-xs font-bold uppercase tracking-widest rounded-full mb-5">
         Herramientas
       </div>
       <h2 class="font-display font-bold text-slate-900 mb-3" style="font-size:clamp(1.8rem,3vw,2.5rem);">

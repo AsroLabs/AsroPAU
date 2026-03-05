@@ -35,14 +35,14 @@
   <!-- Drawer -->
   <div
     class="fixed right-0 top-0 bottom-0 w-72 z-50 md:hidden flex flex-col overflow-hidden"
-    style="background: #1e1b4b; border-left: 2px solid rgba(99,102,241,0.2);"
+    style="background: #431407; border-left: 2px solid rgba(234,88,12,0.2);"
   >
     <!-- Header -->
-    <div class="flex items-center justify-between px-5 py-4 border-b" style="border-color: rgba(99,102,241,0.2);">
+    <div class="flex items-center justify-between px-5 py-4 border-b" style="border-color: rgba(234,88,12,0.2);">
       <div class="flex items-center gap-2.5">
         <div
           class="w-8 h-8 rounded-xl flex items-center justify-center"
-          style="background: linear-gradient(135deg, #4F46E5, #7C3AED); border-bottom: 2px solid #3730a3;"
+          style="background: linear-gradient(135deg, #EA580C, #f97316); border-bottom: 2px solid #9a3412;"
         >
           <span class="text-white font-extrabold text-sm">A</span>
         </div>
@@ -50,7 +50,7 @@
       </div>
       <button
         onclick={close}
-        class="w-8 h-8 flex items-center justify-center rounded-lg text-indigo-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+        class="w-8 h-8 flex items-center justify-center rounded-lg text-orange-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
         aria-label="Cerrar menú"
       >
         <X size={18} />
@@ -69,8 +69,8 @@
             onclick={close}
             class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-150 cursor-pointer mb-1"
             style={isActive(link.href)
-              ? 'background: rgba(99,102,241,0.25); color: white; border-left: 3px solid #818CF8;'
-              : 'color: rgba(165,180,252,0.8);'}
+              ? 'background: rgba(234,88,12,0.25); color: white; border-left: 3px solid #fb923c;'
+              : 'color: rgba(253,186,116,0.8);'}
           >
             <Icon size={16} />
             {link.label}
@@ -80,7 +80,7 @@
 
       <!-- Recursos section -->
       <div>
-        <p class="text-xs font-bold uppercase tracking-widest px-4 mb-3" style="color: rgba(129,140,248,0.6);">Recursos</p>
+        <p class="text-xs font-bold uppercase tracking-widest px-4 mb-3" style="color: rgba(249,115,22,0.6);">Recursos</p>
         {#each recursos as link}
           {@const Icon = link.icon}
           <a
@@ -88,8 +88,8 @@
             onclick={close}
             class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-150 cursor-pointer mb-1"
             style={isActive(link.href)
-              ? 'background: rgba(99,102,241,0.25); color: white; border-left: 3px solid #818CF8;'
-              : 'color: rgba(165,180,252,0.8);'}
+              ? 'background: rgba(234,88,12,0.25); color: white; border-left: 3px solid #fb923c;'
+              : 'color: rgba(253,186,116,0.8);'}
           >
             <Icon size={16} />
             {link.label}
@@ -102,12 +102,12 @@
     </div>
 
     <!-- Footer -->
-    <div class="px-4 py-5 border-t" style="border-color: rgba(99,102,241,0.15);">
+    <div class="px-4 py-5 border-t" style="border-color: rgba(234,88,12,0.15);">
       <a
         href="/resolutor"
         onclick={close}
         class="flex items-center justify-center gap-2 w-full py-3 rounded-xl font-bold text-white text-sm transition-all duration-150 cursor-pointer"
-        style="background: #4F46E5; border-bottom: 3px solid #3730a3;"
+        style="background: #EA580C; border-bottom: 3px solid #9a3412;"
       >
         <Sigma size={15} />
         Abrir Resolutor
