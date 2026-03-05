@@ -5,7 +5,7 @@
   import MathKeyboard from '$lib/math-solver/MathKeyboard.svelte'
   import MorphSolver from '$lib/math-solver/MorphSolver.svelte'
 
-  const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000'
+  const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8001'
 
   type Mode = 'text' | 'keyboard'
 

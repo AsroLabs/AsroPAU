@@ -67,10 +67,10 @@
   function clearAll()    { clearTimers(); clearAnims() }
 
   // ── Timing (ms) ────────────────────────────────────────────────────────────
-  const T_BEFORE  = 700   // hold before-highlighted
-  const T_AFTER   = 700   // hold after-highlighted
-  const T_CHAIN   = 380   // after→before morph duration
-  const T_SETTLE  = 60    // gap after chain before next step
+  const T_BEFORE  = 1400  // hold before-highlighted
+  const T_AFTER   = 1400  // hold after-highlighted
+  const T_CHAIN   = 500   // fade-out duration between steps
+  const T_SETTLE  = 80    // gap after fade before next step
 
   // ── katex-pop on a container's colored spans ───────────────────────────────
   function popColoredSpans(container: HTMLElement | undefined) {
@@ -88,57 +88,26 @@
     activeAnims.push(a)
   }
 
-  // ── Chain morph: after panel flies into before position ───────────────────
-  // We use a FLIP: snapshot after's rect, move it to where before is, animate
-  function chainMorph(onComplete: () => void) {
-    if (!beforePanelEl || !afterPanelEl) { onComplete(); return }
+  // ── Chain transition: both panels fade out, next step fades in ───────────
+  function chainFade(onComplete: () => void) {
+    const targets: HTMLElement[] = []
+    if (beforePanelEl) targets.push(beforePanelEl)
+    if (afterPanelEl)  targets.push(afterPanelEl)
+    const arrowEl = beforePanelEl?.parentElement?.querySelector<HTMLElement>('.step-arrow')
+    if (arrowEl) targets.push(arrowEl)
 
-    const bRect = beforePanelEl.getBoundingClientRect()
-    const aRect = afterPanelEl.getBoundingClientRect()
+    if (!targets.length) { onComplete(); return }
 
-    // dx/dy from after's current position to before's position
-    const dx = bRect.left - aRect.left
-    const dy = bRect.top  - aRect.top
-
-    // Fade out before panel
-    const a1 = animate(beforePanelEl, {
+    const a = animate(targets, {
       opacity:  [1, 0],
-      scale:    [1, 0.94],
-      duration: T_CHAIN * 0.45,
-      easing:   'easeInCubic',
-      onComplete: () => { activeAnims = activeAnims.filter(x => x !== a1) }
-    })
-    activeAnims.push(a1)
-
-    // After panel: fly from its position to where before was
-    afterPanelEl.style.position = 'relative'
-    const a2 = animate(afterPanelEl, {
-      translateX: [0, dx],
-      translateY: [0, dy],
-      scale:      [1, 0.96],
-      duration:   T_CHAIN,
-      easing:     'cubicBezier(0.4, 0, 0.2, 1)',
+      duration: T_CHAIN,
+      easing:   'easeInOutCubic',
       onComplete: () => {
-        // Reset transforms
-        afterPanelEl!.style.transform = ''
-        afterPanelEl!.style.position = ''
-        activeAnims = activeAnims.filter(x => x !== a2)
+        activeAnims = activeAnims.filter(x => x !== a)
         onComplete()
       }
     })
-    activeAnims.push(a2)
-
-    // Also fade out the arrow
-    const arrowEl = beforePanelEl.parentElement?.querySelector<HTMLElement>('.step-arrow')
-    if (arrowEl) {
-      const a3 = animate(arrowEl, {
-        opacity: [1, 0],
-        duration: T_CHAIN * 0.4,
-        easing: 'easeInCubic',
-        onComplete: () => { activeAnims = activeAnims.filter(x => x !== a3) }
-      })
-      activeAnims.push(a3)
-    }
+    activeAnims.push(a)
   }
 
   // ── Core step runner ───────────────────────────────────────────────────────
@@ -212,7 +181,7 @@
 
           phase = 'chain-out'
           afterLit = false
-          chainMorph(() => {
+          chainFade(() => {
             t(() => runStep(index + 1), T_SETTLE)
           })
         }, T_AFTER)
@@ -251,7 +220,7 @@
     if (!next) { phase = 'done'; return }
     phase    = 'chain-out'
     afterLit = false
-    chainMorph(() => {
+    chainFade(() => {
       t(() => runStep(currentIndex + 1), T_SETTLE)
     })
   }
@@ -518,6 +487,51 @@
             </div>
           {/if}
         </div>
+
+        <!-- ── Step breakdown ─────────────────────────────────────────────── -->
+        {#if steps.length > 0}
+          <div
+            in:fade={{ duration: 340, delay: 300, easing: cubicOut }}
+            class="steps-breakdown"
+            aria-label="Desglose de pasos"
+          >
+            <h3 class="breakdown-title">Desglose de pasos</h3>
+            <ol class="breakdown-list">
+              {#each steps as s, i}
+                <li
+                  in:fade={{ duration: 220, delay: 320 + i * 60, easing: cubicOut }}
+                  class="breakdown-item"
+                >
+                  <!-- Step number + connector line -->
+                  <div class="breakdown-spine">
+                    <span class="breakdown-num" style="background: {s.highlight_color ?? '#EA580C'}">
+                      {s.step_number}
+                    </span>
+                    {#if i < steps.length - 1}
+                      <span class="breakdown-line"></span>
+                    {/if}
+                  </div>
+
+                  <!-- Content -->
+                  <div class="breakdown-content">
+                    <div class="breakdown-header">
+                      <p class="breakdown-desc">{s.description}</p>
+                      {#if s.rule_name}
+                        <span class="breakdown-pill {rulePill(s.highlight_color)}">{s.rule_name}</span>
+                      {/if}
+                    </div>
+                    <div class="breakdown-math">
+                      <MathRenderer latex={s.expr_latex} inline={false} />
+                    </div>
+                    {#if s.explanation}
+                      <p class="breakdown-explanation">{s.explanation}</p>
+                    {/if}
+                  </div>
+                </li>
+              {/each}
+            </ol>
+          </div>
+        {/if}
       {/if}
 
     </div>
@@ -596,5 +610,118 @@
   /* ── katex-pop on lit colored spans ─────────────────────────────────────── */
   :global(.math-panel.is-lit .katex [style*="color:"]) {
     display: inline-block;
+  }
+
+  /* ── Steps breakdown ─────────────────────────────────────────────────────── */
+  .steps-breakdown {
+    margin-top: 0.5rem;
+    border-top: 1.5px solid #f3f4f6;
+    padding-top: 1.25rem;
+  }
+
+  .breakdown-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 1rem;
+    padding-left: 0.25rem;
+  }
+
+  .breakdown-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .breakdown-item {
+    display: flex;
+    gap: 0.875rem;
+    align-items: flex-start;
+  }
+
+  /* Left spine: number bubble + connecting line */
+  .breakdown-spine {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 1.5rem;
+  }
+
+  .breakdown-num {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .breakdown-line {
+    width: 2px;
+    flex: 1;
+    min-height: 1rem;
+    background: #e5e7eb;
+    margin: 0.2rem 0;
+  }
+
+  /* Right content */
+  .breakdown-content {
+    flex: 1;
+    min-width: 0;
+    padding-bottom: 1.25rem;
+  }
+
+  .breakdown-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .breakdown-desc {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #374151;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .breakdown-pill {
+    flex-shrink: 0;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    white-space: nowrap;
+    margin-top: 0.1rem;
+  }
+
+  .breakdown-math {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.625rem;
+    padding: 0.625rem 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .breakdown-explanation {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin: 0.375rem 0 0;
+    line-height: 1.5;
   }
 </style>

@@ -141,10 +141,10 @@ test('Result card appears after all steps', async ({ page }) => {
 
   await solveProblem(page, '2x + 4 = 10')
 
-  // 2x+4=10 gives 5 steps → total animation ~5 * 1.12s + 0.38s ≈ 6s
-  // Wait up to 12s for "Resultado final" to appear
+  // 2x+4=10 gives ~5 steps → total animation ~5 * 3.4s ≈ 17s
+  // Wait up to 30s for "Resultado final" to appear
   const resultCard = page.locator('text=Resultado final')
-  await expect(resultCard).toBeVisible({ timeout: 12000 })
+  await expect(resultCard).toBeVisible({ timeout: 30000 })
 
   // The result math should be rendered as KaTeX
   const katexInResult = page.locator('.rounded-2xl .katex').first()
