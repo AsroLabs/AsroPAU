@@ -1,14 +1,30 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: asropau_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: asropau 
+      POSTGRES_PASSWORD: asropau_pass
+      POSTGRES_DB: test
+
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
     - "3000:3000"
-    env_file: ./backend/.env.example
+    env_file: ./backend/.env
     volumes: 
       - ./backend/src:/app/src
       - ./backend/public:/app/public
+    depends_on:
+      - postgres
 
   frontend:
     build:
@@ -20,4 +36,6 @@ services:
     - ./frontend/src:/app/src
     - ./frontend/public:/app/public
     - /app/node_modules
-  
+
+volumes:
+  postgres_data:
