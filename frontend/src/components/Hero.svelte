@@ -7,10 +7,15 @@
   let mounted = $state(false);
   let mouseX = $state(0);
   let mouseY = $state(0);
+  let reducedMotion = $state(false);
 
-  onMount(() => { mounted = true; });
+  onMount(() => {
+    mounted = true;
+    reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  });
 
   function handleMouseMove(e: MouseEvent) {
+    if (reducedMotion) return;
     mouseX = (e.clientX / window.innerWidth - 0.5) * 12;
     mouseY = (e.clientY / window.innerHeight - 0.5) * 12;
   }

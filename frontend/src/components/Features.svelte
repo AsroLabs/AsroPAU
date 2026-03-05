@@ -235,7 +235,7 @@
             <img
               src={activeFeature.image}
               alt={activeFeature.title}
-              class="relative w-full max-w-[280px] h-auto object-contain transition-transform duration-500 hover:scale-105 hover:-translate-y-2"
+              class="relative w-full max-w-[280px] h-auto object-contain transition-transform duration-500 hover:-translate-y-2"
               style="filter: drop-shadow(0 16px 40px {activeFeature.shadowColor});"
             />
           </div>

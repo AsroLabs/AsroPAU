@@ -141,8 +141,10 @@
         <Search size={16} class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
         <input
           type="search"
+          name="exam-search"
+          autocomplete="off"
           bind:value={searchQuery}
-          placeholder="Buscar por asignatura, región o título..."
+          placeholder="Buscar por asignatura, región o título…"
           class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400 transition-all"
         />
       </div>
@@ -255,8 +257,9 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {#each filtered as exam, i (exam.id)}
           {@const diff = difficultyColors[exam.difficulty]}
-          <div
-            class="group bg-white rounded-2xl border-2 border-orange-50 hover:border-orange-300 shadow-sm hover:shadow-lg hover:shadow-orange-100 transition-all duration-200 overflow-hidden cursor-pointer"
+          <button
+            type="button"
+            class="group bg-white rounded-2xl border-2 border-orange-50 hover:border-orange-300 shadow-sm hover:shadow-lg hover:shadow-orange-100 transition-all duration-200 overflow-hidden cursor-pointer text-left w-full"
             style="border-bottom: 4px solid #FED7AA; animation-delay: {Math.min(i, 8) * 40}ms;"
             class:section-reveal={!visible}
           >
@@ -315,7 +318,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </button>
         {/each}
       </div>
     {/if}

@@ -50,10 +50,10 @@
       </div>
       <button
         onclick={close}
-        class="w-8 h-8 flex items-center justify-center rounded-lg text-orange-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+        class="w-8 h-8 flex items-center justify-center rounded-lg text-orange-300 hover:text-white hover:bg-white/10 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
         aria-label="Cerrar menú"
       >
-        <X size={18} />
+        <X size={18} aria-hidden="true" />
       </button>
     </div>
 

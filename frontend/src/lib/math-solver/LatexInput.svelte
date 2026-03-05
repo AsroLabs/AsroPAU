@@ -38,7 +38,7 @@
       <button
         type="button"
         on:click={() => insertSymbol(sym.insert)}
-        class="px-2.5 py-1 text-sm font-mono border border-gray-200 dark:border-slate-600 rounded-lg hover:bg-blue-50 dark:hover:bg-slate-700 hover:border-blue-300 dark:hover:border-blue-500 transition-colors"
+        class="px-2.5 py-1 text-sm font-mono border border-gray-200 dark:border-slate-600 rounded-lg hover:bg-orange-50 dark:hover:bg-slate-700 hover:border-orange-300 dark:hover:border-orange-500 transition-colors cursor-pointer"
       >{sym.label}</button>
     {/each}
   </div>
@@ -48,8 +48,10 @@
     bind:value
     on:keydown={handleKeydown}
     type="text"
-    placeholder="Ej: x**2 - 5*x + 6 = 0"
-    class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-700 font-mono text-base focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 transition"
+    name="math-expression"
+    autocomplete="off"
+    placeholder="Ej: x**2 - 5*x + 6 = 0…"
+    class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600 bg-gray-50 dark:bg-slate-700 font-mono text-base focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-400 transition"
   />
 
   <!-- KaTeX preview -->

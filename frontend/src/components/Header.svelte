@@ -68,7 +68,7 @@
               : 'text-slate-600 hover:text-orange-700 hover:bg-orange-50'}
           "
         >
-          <link.Icon size={14} />
+          <link.Icon size={14} aria-hidden="true" />
           {link.label}
           {#if link.href === '/examenes-ia'}
             <span class="absolute -top-1.5 -right-1.5 px-1 py-0.5 bg-green-500 text-white text-[9px] font-bold rounded-full leading-none">NEW</span>
@@ -79,11 +79,11 @@
 
     <!-- CTA -->
     <a
-      href="#"
+      href="/login"
       class="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold rounded-xl shadow-md shadow-orange-300/40 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-orange-400/50 cursor-pointer"
       style="border-bottom: 3px solid #9a3412;"
     >
-      <UserRound size={14} />
+      <UserRound size={14} aria-hidden="true" />
       Iniciar sesión
     </a>
   </div>
@@ -109,13 +109,13 @@
 
   <button
     onclick={() => mobileMenuOpen = !mobileMenuOpen}
-    class="p-2 hover:bg-orange-50 rounded-xl transition-colors cursor-pointer"
+    class="p-2 hover:bg-orange-50 rounded-xl transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
     aria-label="Toggle menu"
   >
     {#if mobileMenuOpen}
-      <X size={22} class="text-slate-700" />
+      <X size={22} class="text-slate-700" aria-hidden="true" />
     {:else}
-      <Menu size={22} class="text-slate-700" />
+      <Menu size={22} class="text-slate-700" aria-hidden="true" />
     {/if}
   </button>
 </header>

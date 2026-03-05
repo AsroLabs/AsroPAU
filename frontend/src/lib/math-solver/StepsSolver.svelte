@@ -28,7 +28,7 @@
       >
         <div class="flex items-start gap-3">
           <!-- Step number badge -->
-          <span class="shrink-0 w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center mt-0.5 {i === steps.length - 1 ? 'bg-emerald-500 text-white' : 'bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400'}">
+          <span class="shrink-0 w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center mt-0.5 {i === steps.length - 1 ? 'bg-emerald-500 text-white' : 'bg-orange-100 dark:bg-orange-900/50 text-orange-600 dark:text-orange-400'}">
             {step.step_number}
           </span>
 
@@ -55,7 +55,7 @@
   {#if result}
     <div
       in:fly={{ y: 20, duration: 400, delay: steps.length * 80 }}
-      class="mt-5 rounded-xl bg-blue-600 dark:bg-blue-700 text-white p-5"
+      class="mt-5 rounded-xl bg-orange-600 dark:bg-orange-700 text-white p-5"
     >
       <div class="flex items-center justify-between mb-3">
         <span class="font-semibold">Resultado final</span>
