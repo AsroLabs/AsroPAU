@@ -51,7 +51,7 @@
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
       fetchGrados();
-    }, 400);
+    }, 1000);
   }
 
   $effect(() => {

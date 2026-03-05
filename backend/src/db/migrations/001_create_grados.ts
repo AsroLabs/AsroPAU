@@ -1,55 +1,138 @@
+import fs from 'fs';
+import path from 'path';
 import { Pool } from 'pg';
 import pool from '../index';
 
+// ---------------------------------------------------------------------------
+// Schema
+// ---------------------------------------------------------------------------
 const createGradosTable = `
   CREATE TABLE IF NOT EXISTS "Grados" (
     id         SERIAL PRIMARY KEY,
     title      VARCHAR(255) NOT NULL,
     location   VARCHAR(255) NOT NULL,
     university VARCHAR(255) NOT NULL,
-    "cutOff"   NUMERIC(5, 3) NOT NULL,
+    "cutOff"   NUMERIC(6, 3) NOT NULL,
     CONSTRAINT grados_title_location_university_unique UNIQUE (title, location, university)
   );
 `;
 
-const seedGrados = `
-  INSERT INTO "Grados" (title, location, university, "cutOff")
-  VALUES
-    ('Grado en Medicina', 'Madrid', 'Universidad Complutense de Madrid', 13.310),
-    ('Grado en Medicina', 'Barcelona', 'Universidad de Barcelona', 13.500),
-    ('Grado en Ingeniería Biomédica', 'Barcelona', 'Universidad de Barcelona', 12.100),
-    ('Grado en Biotecnología', 'Valencia', 'Universidad Politécnica de Valencia', 11.890),
-    ('Grado en Derecho', 'Madrid', 'Universidad Complutense de Madrid', 10.500),
-    ('Grado en Derecho', 'Barcelona', 'Universidad de Barcelona', 11.000),
-    ('Grado en Psicología', 'Madrid', 'Universidad Complutense de Madrid', 12.000),
-    ('Grado en Informática', 'Madrid', 'Universidad Complutense de Madrid', 10.500),
-    ('Grado en Administración y Dirección de Empresas', 'Madrid', 'Universidad Autónoma de Madrid', 10.200),
-    ('Grado en Administración y Dirección de Empresas', 'Sevilla', 'Universidad de Sevilla', 9.800),
-    ('Grado en Arquitectura', 'Madrid', 'Universidad Politécnica de Madrid', 11.500),
-    ('Grado en Arquitectura', 'Barcelona', 'Universidad Politécnica de Cataluña', 12.300),
-    ('Grado en Enfermería', 'Valencia', 'Universidad de Valencia', 9.500),
-    ('Grado en Enfermería', 'Madrid', 'Universidad Complutense de Madrid', 10.100),
-    ('Grado en Farmacia', 'Granada', 'Universidad de Granada', 11.200),
-    ('Grado en Física', 'Barcelona', 'Universidad de Barcelona', 9.000),
-    ('Grado en Matemáticas', 'Madrid', 'Universidad Autónoma de Madrid', 8.500),
-    ('Grado en Química', 'Sevilla', 'Universidad de Sevilla', 8.900),
-    ('Grado en Periodismo', 'Madrid', 'Universidad Complutense de Madrid', 9.700),
-    ('Grado en Veterinaria', 'Zaragoza', 'Universidad de Zaragoza', 10.800)
-  ON CONFLICT DO NOTHING;
-`;
+// ---------------------------------------------------------------------------
+// CSV parser
+// Handles RFC-4180 quoted fields (e.g. "13,450") without external deps.
+// ---------------------------------------------------------------------------
+interface GradoRow {
+  title: string;
+  location: string;
+  university: string;
+  cutOff: number;
+}
 
-/**
- * Runs migrations using the shared pool.
- * Safe to call at server startup — does NOT close the pool.
- */
+function parseCsv(filePath: string): GradoRow[] {
+  const content = fs.readFileSync(filePath, 'utf-8');
+  const lines = content.split('\n').filter((l) => l.trim() !== '');
+
+  // Parse a single CSV line respecting quoted fields
+  function parseLine(line: string): string[] {
+    const fields: string[] = [];
+    let current = '';
+    let insideQuotes = false;
+
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') {
+        insideQuotes = !insideQuotes;
+      } else if (ch === ',' && !insideQuotes) {
+        fields.push(current.trim());
+        current = '';
+      } else {
+        current += ch;
+      }
+    }
+    fields.push(current.trim());
+    return fields;
+  }
+
+  // First line is the header — map column names to indices
+  const headers = parseLine(lines[0]).map((h) => h.trim());
+  const idx = {
+    titulacion: headers.indexOf('titulacion'),
+    universidad: headers.indexOf('universidad'),
+    provincia: headers.indexOf('provincia'),
+    nota_corte_num: headers.indexOf('nota_corte_num'),
+  };
+
+  const rows: GradoRow[] = [];
+
+  for (let i = 1; i < lines.length; i++) {
+    const fields = parseLine(lines[i]);
+
+    const title = fields[idx.titulacion]?.trim();
+    const university = fields[idx.universidad]?.trim();
+    const location = fields[idx.provincia]?.trim();
+    const cutOffRaw = fields[idx.nota_corte_num]?.trim();
+    const cutOff = parseFloat(cutOffRaw);
+
+    // Skip rows with missing or non-numeric cutOff
+    if (!title || !university || !location || isNaN(cutOff)) continue;
+
+    rows.push({ title, location, university, cutOff });
+  }
+
+  return rows;
+}
+
+// ---------------------------------------------------------------------------
+// Batch insert helper
+// ---------------------------------------------------------------------------
+async function insertBatch(client: any, rows: GradoRow[]): Promise<number> {
+  if (rows.length === 0) return 0;
+
+  const valuePlaceholders: string[] = [];
+  const values: (string | number)[] = [];
+  let paramIndex = 1;
+
+  for (const row of rows) {
+    valuePlaceholders.push(
+      `($${paramIndex}, $${paramIndex + 1}, $${paramIndex + 2}, $${paramIndex + 3})`
+    );
+    values.push(row.title, row.location, row.university, row.cutOff);
+    paramIndex += 4;
+  }
+
+  const query = `
+    INSERT INTO "Grados" (title, location, university, "cutOff")
+    VALUES ${valuePlaceholders.join(', ')}
+    ON CONFLICT ON CONSTRAINT grados_title_location_university_unique DO NOTHING
+  `;
+
+  const result = await client.query(query, values);
+  return result.rowCount ?? 0;
+}
+
+// ---------------------------------------------------------------------------
+// Main migration function
+// ---------------------------------------------------------------------------
 export async function runMigrations(dbPool: Pool = pool): Promise<void> {
   const client = await dbPool.connect();
   try {
     console.log('[DB] Running migrations...');
     await client.query(createGradosTable);
     console.log('[DB] Table "Grados" ready.');
-    await client.query(seedGrados);
-    console.log('[DB] Seed data inserted (duplicates ignored).');
+
+    const csvPath = path.join(__dirname, '..', 'data', 'notas_corte.csv');
+    const rows = parseCsv(csvPath);
+    console.log(`[DB] Parsed ${rows.length} rows from CSV.`);
+
+    const BATCH_SIZE = 100;
+    let inserted = 0;
+
+    for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+      const batch = rows.slice(i, i + BATCH_SIZE);
+      inserted += await insertBatch(client, batch);
+    }
+
+    console.log(`[DB] Seed complete — ${inserted} rows inserted (duplicates ignored).`);
     console.log('[DB] Migrations completed.');
   } catch (err) {
     console.error('[DB] Migration error:', err);
@@ -59,7 +142,9 @@ export async function runMigrations(dbPool: Pool = pool): Promise<void> {
   }
 }
 
-// Allow running as a standalone script: `npm run migrate`
+// ---------------------------------------------------------------------------
+// Standalone script: npm run migrate
+// ---------------------------------------------------------------------------
 if (require.main === module) {
   runMigrations()
     .then(() => pool.end())

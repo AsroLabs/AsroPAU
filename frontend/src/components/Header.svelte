@@ -13,16 +13,17 @@
         mobileMenuOpen = !mobileMenuOpen;
     }
 
-    const {fixed = true}: Props = $props();
+    const { fixed = true }: Props = $props();
 </script>
 
 <!-- DESKTOP HEADER -->
 <AppBar
-    class="{fixed ? 'fixed' : 'relative'} hidden md:block bg-white fixed shadow-md z-50 opacity-95 py-2 w-full"
+    class="{fixed
+        ? 'fixed'
+        : 'relative'} hidden md:block bg-white fixed shadow-md z-50 opacity-95 py-2 w-full"
 >
     <AppBar.Toolbar class="grid-cols-[auto_auto_auto] px-30">
         <a href="/">
-
             <AppBar.Headline class="flex items-center *:mx-2">
                 <div
                     class="w-8 h-8 bg-[#2563EB] rounded flex items-center justify-center"
@@ -50,7 +51,8 @@
                 <a
                     href="examenes-ia"
                     class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                >Examenes IA</a>
+                    >Examenes IA</a
+                >
             </button>
         </div>
         <AppBar.Trail>
@@ -67,7 +69,9 @@
 
 <!-- MOBILE HEADER -->
 <header
-    class="max-md:flex hidden bg-white fixed shadow-md z-50 opacity-95 w-full items-center justify-between px-6 py-4"
+    class=" {fixed
+        ? 'fixed'
+        : 'relative'} max-md:flex hidden bg-white fixed shadow-md z-50 opacity-95 w-full items-center justify-between px-6 py-4"
 >
     <!-- Logo and Title -->
     <div class="flex items-center gap-2">
