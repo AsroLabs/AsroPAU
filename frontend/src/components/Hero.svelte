@@ -1,5 +1,4 @@
 <script>
-  import ToggleDark from "./ToggleDark.svelte";
   import { ChevronsDownIcon } from "@lucide/svelte";
   import grid from "$lib/assets/grid.png";
   import spain from "$lib/assets/spain.svg";
@@ -26,29 +25,37 @@
   <div
     class="relative flex justify-center items-center w-full h-screen overflow-hidden"
   >
-    <img
-      src={hat}
-      alt="Graduation hat"
-      class="hero-icon-hat absolute top-[20%] max-xl:top-[25%] max-lg:top-[30%] right-[30%] w-[12vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
-    />
+    <a href="/resolutor">
+      <img
+        src={hat}
+        alt="Graduation hat"
+        class="hero-icon-hat absolute top-[20%] max-xl:top-[25%] max-lg:top-[30%] right-[30%] w-[12vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
+      />
+    </a>
 
-    <img
-      src={printer}
-      alt="printer AI"
-      class="hero-icon-printer absolute top-[25%] max-xl:top-[30%] max-lg:top-[35%] left-[27.5%] w-[10vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
-    />
+    <a href="/iae">
+      <img
+        src={printer}
+        alt="printer AI"
+        class="hero-icon-printer absolute top-[25%] max-xl:top-[30%] max-lg:top-[35%] left-[27.5%] w-[10vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
+      />
+    </a>
 
-    <img
-      src={exams}
-      alt="official exams"
-      class="hero-icon-exams absolute bottom-[20%] max-xl:bottom-[25%] max-lg:bottom-[30%] right-[35%] w-[11vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
-    />
+    <a href="/examen">
+      <img
+        src={exams}
+        alt="official exams"
+        class="hero-icon-exams absolute bottom-[20%] max-xl:bottom-[25%] max-lg:bottom-[30%] right-[35%] w-[11vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
+      />
+    </a>
 
-    <img
-      src={calculator}
-      alt="calculator"
-      class="hero-icon-calc absolute bottom-[25%] max-xl:bottom-[30%] max-lg:bottom-[35%] left-[27.5%] w-[9vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
-    />
+    <a href="/media">
+      <img
+        src={calculator}
+        alt="calculator"
+        class="hero-icon-calc absolute bottom-[25%] max-xl:bottom-[30%] max-lg:bottom-[35%] left-[27.5%] w-[9vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
+      />
+    </a>
 
     <img src={spain} alt="Spain map" class="hero-spain w-2/4 object-contain" />
   </div>
