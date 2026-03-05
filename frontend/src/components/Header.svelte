@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { UserRound, Menu, X, BookOpen, Calculator, Sparkles, FlaskConical } from "@lucide/svelte";
+  import { UserRound, Menu, X, BookOpen, Calculator, FlaskConical } from "@lucide/svelte";
   import Sidebar from "./Sidebar.svelte";
   import { page } from "$app/stores";
 
@@ -19,10 +19,9 @@
   });
 
   const navLinks = [
-    { href: "/examen",      label: "Exámenes",    Icon: BookOpen },
-    { href: "/media",       label: "Calculadora", Icon: Calculator },
-    { href: "/examenes-ia", label: "Exámenes IA", Icon: Sparkles },
-    { href: "/resolutor",   label: "Resolutor",   Icon: FlaskConical },
+    { href: "/examen",    label: "Exámenes",    Icon: BookOpen },
+    { href: "/media",     label: "Calculadora", Icon: Calculator },
+    { href: "/resolutor", label: "Resolutor",   Icon: FlaskConical },
   ];
 </script>
 
@@ -60,6 +59,7 @@
         {@const isActive = $page.url.pathname.startsWith(link.href)}
         <a
           href={link.href}
+          aria-current={isActive ? 'page' : undefined}
           class="
             relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-semibold
             transition-all duration-200 cursor-pointer
@@ -70,21 +70,18 @@
         >
           <link.Icon size={14} aria-hidden="true" />
           {link.label}
-          {#if link.href === '/examenes-ia'}
-            <span class="absolute -top-1.5 -right-1.5 px-1 py-0.5 bg-green-500 text-white text-[9px] font-bold rounded-full leading-none">NEW</span>
-          {/if}
         </a>
       {/each}
     </nav>
 
     <!-- CTA -->
     <a
-      href="/login"
+      href="/examen"
       class="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold rounded-xl shadow-md shadow-orange-300/40 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-orange-400/50 cursor-pointer"
       style="border-bottom: 3px solid #9a3412;"
     >
       <UserRound size={14} aria-hidden="true" />
-      Iniciar sesión
+      Empezar gratis
     </a>
   </div>
 </header>

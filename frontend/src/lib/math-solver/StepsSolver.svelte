@@ -121,12 +121,7 @@
     try {
       await navigator.clipboard.writeText(text)
     } catch {
-      const el = document.createElement('textarea')
-      el.value = text
-      document.body.appendChild(el)
-      el.select()
-      document.execCommand('copy')
-      document.body.removeChild(el)
+      // Clipboard API unavailable — silently ignore (same pattern as MorphSolver)
     }
     copyDone = true
     setTimeout(() => (copyDone = false), 2000)
@@ -319,7 +314,7 @@
 
                 <!-- Math expression — plain when idle, highlighted (colored) when active -->
                 <div class="text-lg rounded-xl bg-white dark:bg-slate-900/40
-                            border border-gray-100 dark:border-slate-700 overflow-hidden
+                            border border-gray-100 dark:border-slate-700 overflow-x-auto overflow-y-hidden
                             math-expr-box">
                   {#key isActive}
                     <div
@@ -503,9 +498,9 @@
   }
 
   /* The wrapper div that holds the MathRenderer output */
-  :global(.katex-highlight-wrap) {
-    /* nothing special when idle */
-  }
+  /*
+    .katex-highlight-wrap — no base styles needed; styles only apply when .is-active is added
+  */
 
   /*
    * When active: every <span> that has an explicit inline color (from \textcolor)

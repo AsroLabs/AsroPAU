@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import List, Optional
+from typing import List, Optional, Tuple
 import sympy
 from sympy import (
     symbols, Eq, solve, factor, expand, simplify, diff, integrate, limit,
@@ -17,7 +17,7 @@ app = FastAPI(title="Math Equation Solver API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -192,7 +192,15 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                         highlighted=disc_highlighted,
                     ))
 
-                    if discriminant > 0:
+                    # BUG-037 fix: discriminant comparison raises TypeError for symbolic coefficients
+                    try:
+                        disc_positive = bool(discriminant > 0)
+                        disc_zero     = bool(discriminant == 0)
+                    except TypeError:
+                        disc_positive = False
+                        disc_zero     = False
+
+                    if disc_positive:
                         steps.append(_s(len(steps)+1,
                             "Aplicar la fórmula cuadrática",
                             r"x = \frac{-b \pm \sqrt{\Delta}}{2a}",
@@ -209,7 +217,7 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                                 + r"}"
                             ),
                         ))
-                    elif discriminant == 0:
+                    elif disc_zero:
                         steps.append(_s(len(steps)+1,
                             "Aplicar la fórmula cuadrática",
                             r"x = \frac{-b}{2a}",
@@ -344,13 +352,15 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
 
 # ─── Derivatives ──────────────────────────────────────────────────────────────
 
-def _classify_diff_rule(expr, x) -> tuple[str, str]:
+def _classify_diff_rule(expr, x) -> Tuple[str, str]:
     """Return (rule_label, rule_name_pill)."""
     if expr.is_Add:
         return "Regla de la suma/diferencia", "Suma"
-    if expr.is_Mul and len(expr.args) == 2:
-        u, v = expr.args
-        if not u.has(x):
+    if expr.is_Mul and len(expr.args) >= 2:
+        # Check if one factor is a constant (scalar multiple rule)
+        x_factors = [a for a in expr.args if a.has(x)]
+        const_factors = [a for a in expr.args if not a.has(x)]
+        if const_factors and len(x_factors) == 1:
             return "Regla del múltiplo constante", "Constante"
         return "Regla del producto: (uv)' = u'v + uv'", "Producto"
     if expr.is_Pow:
@@ -403,10 +413,11 @@ def solve_derivative(expr_str: str) -> SolveResponse:
             highlighted=f"\\frac{{d}}{{dx}}\\left[{tc(C_ACTIVE, sym_latex(expr))}\\right]",
         ))
 
-        # Product rule breakdown
-        if expr.is_Mul and len(expr.args) == 2:
-            u, v = expr.args
-            if u.has(x) and v.has(x):
+        # Product rule breakdown — works for 2+ x-containing factors
+        if expr.is_Mul and len(expr.args) >= 2:
+            x_factors = [a for a in expr.args if a.has(x)]
+            if len(x_factors) >= 2:
+                u, v = x_factors[0], x_factors[1]
                 du = diff(u, x)
                 dv = diff(v, x)
                 steps.append(_s(3,
@@ -531,7 +542,7 @@ def solve_derivative(expr_str: str) -> SolveResponse:
 
 # ─── Integrals ────────────────────────────────────────────────────────────────
 
-def _classify_integral_rule(expr, x) -> tuple[str, str]:
+def _classify_integral_rule(expr, x) -> Tuple[str, str]:
     """Return (explanation, rule_pill)."""
     if expr.is_Number or (expr.is_Mul and not expr.has(x)):
         return "Integral de constante: ∫k dx = kx + C", "Constante"
@@ -724,7 +735,7 @@ def solve_limit(expr_str: str) -> SolveResponse:
             point_latex = '0'
 
         func_str = re.sub(r'^lim\s*', '', raw, flags=re.I)
-        func_str = re.sub(r'x\s*->\s*[+-]?(?:inf(?:inity)?|oo|\d+(?:\.\d+)?)\s*', '', func_str, flags=re.I).strip()
+        func_str = re.sub(r'x\s*->\s*[+-]?\s*(?:inf(?:inity)?|oo|\d+(?:\.\d+)?)\s*', '', func_str, flags=re.I).strip()
         func_str = func_str.strip('()')
 
         expr = _safe_parse(func_str)
@@ -863,4 +874,4 @@ def solve_equation(request: SolveRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8001)

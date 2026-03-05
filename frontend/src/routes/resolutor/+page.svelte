@@ -4,7 +4,6 @@
   import LatexInput from '$lib/math-solver/LatexInput.svelte'
   import MathKeyboard from '$lib/math-solver/MathKeyboard.svelte'
   import MorphSolver from '$lib/math-solver/MorphSolver.svelte'
-
   const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8001'
 
   type Mode = 'text' | 'keyboard'
@@ -63,7 +62,7 @@
       input,
       resultLatex: res?.latex ?? res?.result ?? '',
       type: res?.type ?? 'expression',
-      ts: new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
+      ts: new Intl.DateTimeFormat(navigator.languages as string[], { hour: '2-digit', minute: '2-digit' }).format(new Date())
     }
     history = [entry, ...history.filter(h => h.input !== input)].slice(0, MAX_HISTORY)
     try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history)) } catch { /* quota exceeded */ }
@@ -85,8 +84,8 @@
   })
 
   // ── Solver ─────────────────────────────────────────────────────────
-  function onKeyboardInput(e: CustomEvent<string>) {
-    inputValue = e.detail
+  function onKeyboardChange(v: string) {
+    inputValue = v
   }
 
   // Friendly error messages for common backend errors
@@ -115,7 +114,7 @@
       const res = await fetch(`${API_URL}/api/solve`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ input: trimmed, mode: 'text' })
+        body: JSON.stringify({ input: trimmed, mode: activeMode })
       })
 
       if (!res.ok) {
@@ -160,6 +159,10 @@
     items: examples.filter(e => e.category === cat)
   }))
 </script>
+
+<svelte:head>
+  <title>Resolutor de Matemáticas – AsroPAU</title>
+</svelte:head>
 
 <div class="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50/30 py-10 px-4">
   <div class="max-w-2xl mx-auto space-y-5">
@@ -279,9 +282,9 @@
 
       <!-- Input area -->
       {#if activeMode === 'text'}
-        <LatexInput bind:value={inputValue} on:submit={solve} />
+        <LatexInput bind:value={inputValue} onsubmit={solve} />
       {:else}
-        <MathKeyboard bind:value={inputValue} on:change={onKeyboardInput} />
+        <MathKeyboard bind:value={inputValue} onchange={onKeyboardChange} />
       {/if}
 
       <!-- Quick examples grouped by category -->
@@ -358,22 +361,25 @@
       </div>
     {/if}
 
-    <!-- ── Loading skeleton ──────────────────────────────────────────── -->
-    {#if loading}
-      <div
-        role="status"
-        aria-label="Calculando solución"
-        class="bg-white rounded-2xl border border-slate-200 p-8 flex items-center justify-center gap-3"
-      >
+    <!-- ── Result region (always in DOM for aria-live to work) ──────────── -->
+    <div aria-live="polite" aria-atomic="true" aria-label="Resultado del cálculo">
+      <!-- Loading skeleton -->
+      {#if loading}
         <div
-          class="w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"
-          aria-hidden="true"
-        ></div>
-        <span class="text-slate-500 text-sm">Calculando solución…</span>
-      </div>
-    {:else if steps.length > 0}
-      <MorphSolver {steps} {result} />
-    {/if}
+          role="status"
+          aria-label="Calculando solución"
+          class="bg-white rounded-2xl border border-slate-200 p-8 flex items-center justify-center gap-3"
+        >
+          <div
+            class="w-5 h-5 border-2 border-orange-500 border-t-transparent rounded-full animate-spin"
+            aria-hidden="true"
+          ></div>
+          <span class="text-slate-500 text-sm">Calculando solución…</span>
+        </div>
+      {:else if steps.length > 0}
+        <MorphSolver {steps} {result} />
+      {/if}
+    </div>
 
   </div>
 </div>

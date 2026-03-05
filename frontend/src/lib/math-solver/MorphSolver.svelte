@@ -23,6 +23,11 @@
 
   let { steps = [], result = null }: { steps: Step[]; result: Result | null } = $props()
 
+  // ── Reduced motion preference ──────────────────────────────────────────────
+  const prefersReduced =
+    typeof window !== 'undefined' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
   // ── Phase machine ──────────────────────────────────────────────────────────
   // show-before : before is highlighted, after is dim
   // show-after  : before dims out, after lights up
@@ -67,14 +72,14 @@
   function clearAll()    { clearTimers(); clearAnims() }
 
   // ── Timing (ms) ────────────────────────────────────────────────────────────
-  const T_BEFORE  = 1400  // hold before-highlighted
-  const T_AFTER   = 1400  // hold after-highlighted
-  const T_CHAIN   = 500   // fade-out duration between steps
-  const T_SETTLE  = 80    // gap after fade before next step
+  const T_BEFORE  = prefersReduced ? 0 : 1400  // hold before-highlighted
+  const T_AFTER   = prefersReduced ? 0 : 1400  // hold after-highlighted
+  const T_CHAIN   = prefersReduced ? 0 : 500   // fade-out duration between steps
+  const T_SETTLE  = prefersReduced ? 0 : 80    // gap after fade before next step
 
   // ── katex-pop on a container's colored spans ───────────────────────────────
   function popColoredSpans(container: HTMLElement | undefined) {
-    if (!container) return
+    if (!container || prefersReduced) return
     const targets = Array.from(container.querySelectorAll<HTMLElement>('.katex [style*="color:"]'))
     if (!targets.length) return
     targets.forEach(el => { el.style.display = 'inline-block' })
@@ -90,6 +95,7 @@
 
   // ── Chain transition: both panels fade out, next step fades in ───────────
   function chainFade(onComplete: () => void) {
+    if (prefersReduced) { onComplete(); return }
     const targets: HTMLElement[] = []
     if (beforePanelEl) targets.push(beforePanelEl)
     if (afterPanelEl)  targets.push(afterPanelEl)
@@ -162,20 +168,22 @@
 
         if (!autoMode) return
 
-        // 3. After T_AFTER: chain morph
+          // 3. After T_AFTER: chain morph
         t(() => {
           if (!next) {
             // Last step — fade both out then show result
             phase = 'chain-out'
-            if (beforePanelEl) {
-              const a = animate(beforePanelEl, { opacity: [1, 0], duration: 300, easing: 'easeInCubic', onComplete: () => { activeAnims = activeAnims.filter(x => x !== a) } })
-              activeAnims.push(a)
+            if (!prefersReduced) {
+              if (beforePanelEl) {
+                const a = animate(beforePanelEl, { opacity: [1, 0], duration: 300, easing: 'easeInCubic', onComplete: () => { activeAnims = activeAnims.filter(x => x !== a) } })
+                activeAnims.push(a)
+              }
+              if (afterPanelEl) {
+                const a = animate(afterPanelEl, { opacity: [1, 0], duration: 300, easing: 'easeInCubic', onComplete: () => { activeAnims = activeAnims.filter(x => x !== a) } })
+                activeAnims.push(a)
+              }
             }
-            if (afterPanelEl) {
-              const a = animate(afterPanelEl, { opacity: [1, 0], duration: 300, easing: 'easeInCubic', onComplete: () => { activeAnims = activeAnims.filter(x => x !== a) } })
-              activeAnims.push(a)
-            }
-            t(() => { phase = 'done' }, 320)
+            t(() => { phase = 'done' }, prefersReduced ? 0 : 320)
             return
           }
 
@@ -193,16 +201,15 @@
   // ── Manual advance ─────────────────────────────────────────────────────────
   function advanceManual() {
     clearAll()
-    if (phase === 'show-before') {
+    const p = phase as string
+    if (p === 'show-before' && !beforeLit) {
+      // First click: show before highlight
       const s = steps[currentIndex]
       beforeDisplay = s.highlighted_latex ?? s.expr_latex ?? ''
       beforeLit     = true
       t(() => popColoredSpans(beforeEl), 30)
-      phase = 'show-after'   // allow next click to proceed
-      // Actually keep in show-before until next click — we show the highlight now
-      phase = 'show-before'
-    } else if (phase === 'show-after' || phase === 'show-before') {
-      // Move to after highlight
+    } else if (p === 'show-after' || (p === 'show-before' && beforeLit)) {
+      // Second click: advance to after highlight
       const s    = steps[currentIndex]
       const next = steps[currentIndex + 1]
       phase         = 'show-after'
@@ -267,9 +274,7 @@
     const text = result?.latex ?? result?.result ?? ''
     if (!text) return
     try { await navigator.clipboard.writeText(text) } catch {
-      const el = document.createElement('textarea')
-      el.value = text; document.body.appendChild(el); el.select()
-      document.execCommand('copy'); document.body.removeChild(el)
+      // Clipboard API unavailable — silently ignore
     }
     copyDone = true
     t(() => (copyDone = false), 2000)
@@ -298,13 +303,13 @@
 
     <!-- Header -->
     <div
-      in:fade={{ duration: 260, easing: cubicOut }}
+      in:fade={{ duration: prefersReduced ? 0 : 260, easing: cubicOut }}
       class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50/50"
     >
       <div class="flex items-center gap-3">
         <h2 class="font-semibold text-lg text-gray-800">Resolución paso a paso</h2>
         {#if result && isDone}
-          <span in:scale={{ duration: 240, easing: backOut }}
+          <span in:scale={{ duration: prefersReduced ? 0 : 240, easing: backOut }}
             class="text-xs font-semibold px-2.5 py-1 rounded-full text-white {typeColor(result.type)}"
           >{typeLabel(result.type)}</span>
         {/if}
@@ -313,10 +318,12 @@
         <span class="text-xs text-gray-400 hidden sm:inline">Ritmo:</span>
         <div class="flex gap-0.5 bg-gray-100 p-0.5 rounded-lg">
           <button onclick={() => { autoMode = true }}
+            aria-label="Ritmo automático"
             class="px-2.5 py-1 text-xs font-semibold rounded-md transition-all duration-150 cursor-pointer
               {autoMode ? 'bg-white text-orange-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}"
           >Auto</button>
           <button onclick={() => { autoMode = false }}
+            aria-label="Ritmo manual"
             class="px-2.5 py-1 text-xs font-semibold rounded-md transition-all duration-150 cursor-pointer
               {!autoMode ? 'bg-white text-orange-600 shadow-sm' : 'text-gray-400 hover:text-gray-600'}"
           >Manual</button>
@@ -324,20 +331,20 @@
       </div>
     </div>
 
-    <div class="p-5 space-y-5" aria-live="polite" aria-atomic="true">
+    <div class="p-5 space-y-5">
 
       <!-- Progress dots -->
       {#if !isDone && steps.length > 1}
-        <div class="flex items-center justify-center gap-1.5 flex-wrap">
+        <div class="flex items-center justify-center gap-1.5 flex-wrap" aria-label="Progreso: paso {currentIndex + 1} de {steps.length}" role="status">
           {#each steps as s, i}
-            <button
+            <span
               title="Paso {s.step_number}"
-              aria-current={i === currentIndex ? 'step' : undefined}
-              class="rounded-full transition-all duration-300 cursor-default
+              aria-hidden="true"
+              class="rounded-full transition-all duration-300
                 {i === currentIndex ? 'w-5 h-2.5 bg-orange-500'
                   : i < currentIndex ? 'w-2 h-2 bg-orange-300'
                   : 'w-2 h-2 bg-gray-200'}"
-            ></button>
+            ></span>
           {/each}
         </div>
       {/if}
@@ -385,7 +392,7 @@
       {#if !isDone && step}
         {#key currentIndex}
           <div
-            in:fade={{ duration: 200, delay: 40, easing: cubicOut }}
+            in:fade={{ duration: prefersReduced ? 0 : 200, delay: prefersReduced ? 0 : 40, easing: cubicOut }}
             class="flex items-start justify-between gap-3 px-1"
           >
             <div class="flex items-center gap-2 min-w-0">
@@ -409,7 +416,7 @@
         <div class="flex gap-2">
           {#if manualPhase !== 'next'}
             <button
-              in:fade={{ duration: 160 }}
+          in:fade={{ duration: prefersReduced ? 0 : 160 }}
               onclick={advanceManual}
               class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl
                      border-2 border-dashed border-orange-300 text-orange-600 font-semibold text-sm
@@ -420,7 +427,7 @@
           {/if}
           {#if phase === 'show-after' && afterLit}
             <button
-              in:fade={{ duration: 160 }}
+          in:fade={{ duration: prefersReduced ? 0 : 160 }}
               onclick={advanceManualNext}
               class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl
                      bg-orange-500 text-white font-semibold text-sm
@@ -434,7 +441,7 @@
 
       <!-- Final result -->
       {#if isDone && result}
-        <div in:scale={{ duration: 480, easing: backOut, start: 0.92 }}
+        <div in:scale={{ duration: prefersReduced ? 0 : 480, easing: backOut, start: 0.92 }}
           class="rounded-2xl overflow-hidden shadow-xl shadow-orange-100/60 border border-orange-200"
         >
           <div class="flex items-center justify-between px-5 py-3
@@ -476,7 +483,7 @@
           {#if result.solutions && result.solutions.length > 0}
             <div class="flex flex-wrap gap-2 px-5 pb-4 pt-1 bg-orange-50/50 border-t border-orange-200/40">
               {#each result.solutions as sol, i}
-                <span in:scale={{ duration: 220, delay: i * 80, easing: backOut }}
+                <span in:scale={{ duration: prefersReduced ? 0 : 220, delay: prefersReduced ? 0 : i * 80, easing: backOut }}
                   class="inline-flex items-center gap-1 bg-orange-600 text-white text-sm font-mono px-3 py-1.5 rounded-lg shadow-sm"
                 >
                   <span class="opacity-70 text-xs">
@@ -491,7 +498,7 @@
         <!-- ── Step breakdown ─────────────────────────────────────────────── -->
         {#if steps.length > 0}
           <div
-            in:fade={{ duration: 340, delay: 300, easing: cubicOut }}
+            in:fade={{ duration: prefersReduced ? 0 : 340, delay: prefersReduced ? 0 : 300, easing: cubicOut }}
             class="steps-breakdown"
             aria-label="Desglose de pasos"
           >
@@ -499,7 +506,7 @@
             <ol class="breakdown-list">
               {#each steps as s, i}
                 <li
-                  in:fade={{ duration: 220, delay: 320 + i * 60, easing: cubicOut }}
+                  in:fade={{ duration: prefersReduced ? 0 : 220, delay: prefersReduced ? 0 : 320 + i * 60, easing: cubicOut }}
                   class="breakdown-item"
                 >
                   <!-- Step number + connector line -->
@@ -605,6 +612,8 @@
     align-items: center;
     justify-content: center;
     min-height: 2.5rem;
+    min-width: 0;
+    overflow: hidden;
   }
 
   /* ── katex-pop on lit colored spans ─────────────────────────────────────── */
@@ -712,7 +721,7 @@
     background: #f9fafb;
     border: 1px solid #e5e7eb;
     border-radius: 0.625rem;
-    padding: 0.625rem 0.875rem;
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -723,5 +732,13 @@
     color: #6b7280;
     margin: 0.375rem 0 0;
     line-height: 1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .math-panel,
+    .step-arrow,
+    .panel-label {
+      transition: none !important;
+    }
   }
 </style>

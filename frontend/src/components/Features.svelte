@@ -77,7 +77,7 @@
         "Soluciones detalladas con IA",
       ],
       image: printer,
-      href: "/examenes-ia",
+      href: "/resolutor",
       bgColor: "#8B5CF6",
       borderColor: "#6d28d9",
       shadowColor: "rgba(139,92,246,0.25)",

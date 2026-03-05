@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte'
   import MathRenderer from './MathRenderer.svelte'
 
-  export let value: string = ''
+  interface Props {
+    value?: string
+    onchange?: (v: string) => void
+  }
 
-  const dispatch = createEventDispatcher<{ change: string }>()
+  let { value = $bindable(''), onchange }: Props = $props()
 
   interface Key {
     label: string
@@ -60,7 +62,7 @@
   // ── Actions ───────────────────────────────────────────────────────
   function press(val: string) {
     value = value + val
-    dispatch('change', value)
+    onchange?.(value)
   }
 
   function backspace() {
@@ -68,12 +70,12 @@
     // just remove the last character (simple slice). Full token-aware delete
     // would require a parser; single-char removal is safe.
     value = value.slice(0, -1)
-    dispatch('change', value)
+    onchange?.(value)
   }
 
   function clear() {
     value = ''
-    dispatch('change', value)
+    onchange?.(value)
   }
 </script>
 
@@ -97,8 +99,9 @@
       <div class="grid grid-cols-3 gap-1.5">
         {#each digits as k}
           <button
-            on:click={() => press(k.val)}
+            onclick={() => press(k.val)}
             title={k.tip ?? k.label}
+            aria-label={k.tip ?? k.label}
             class="py-2.5 rounded-lg font-mono text-sm border border-gray-200 dark:border-slate-600
               bg-white dark:bg-slate-700 hover:bg-blue-50 dark:hover:bg-slate-600 hover:border-blue-300
               transition-colors active:scale-95 cursor-pointer"
@@ -110,8 +113,9 @@
       <div class="grid grid-cols-6 gap-1.5">
         {#each consts as k}
           <button
-            on:click={() => press(k.val)}
+            onclick={() => press(k.val)}
             title={k.tip ?? k.label}
+            aria-label={k.tip ?? k.label}
             class="py-2 rounded-lg font-mono text-xs border border-gray-200 dark:border-slate-600
               bg-white dark:bg-slate-700 hover:bg-blue-50 dark:hover:bg-slate-600 hover:border-blue-300
               transition-colors active:scale-95 cursor-pointer"
@@ -126,8 +130,9 @@
       <div class="grid grid-cols-4 gap-1.5">
         {#each ops as k}
           <button
-            on:click={() => press(k.val)}
+            onclick={() => press(k.val)}
             title={k.tip ?? k.label}
+            aria-label={k.tip ?? k.label}
             class="py-2 rounded-lg text-xs border border-gray-200 dark:border-slate-600
               bg-white dark:bg-slate-700 hover:bg-blue-50 dark:hover:bg-slate-600 hover:border-blue-300
               transition-colors active:scale-95 cursor-pointer"
@@ -139,8 +144,9 @@
       <div class="grid grid-cols-3 gap-1.5">
         {#each funcs as k}
           <button
-            on:click={() => press(k.val)}
+            onclick={() => press(k.val)}
             title={k.tip ?? k.label}
+            aria-label={k.tip ?? k.label}
             class="py-2 rounded-lg text-xs border border-gray-200 dark:border-slate-600
               bg-white dark:bg-slate-700 hover:bg-blue-50 dark:hover:bg-slate-600 hover:border-blue-300
               transition-colors active:scale-95 cursor-pointer whitespace-nowrap"
@@ -153,14 +159,16 @@
   <!-- Control row -->
   <div class="flex gap-2">
     <button
-      on:click={backspace}
+      onclick={backspace}
+      aria-label="Borrar último carácter"
       class="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-slate-600
         hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-300 dark:hover:border-red-700
         text-sm font-medium transition-colors active:scale-95 cursor-pointer"
       title="Borrar último carácter"
     >← Borrar</button>
     <button
-      on:click={clear}
+      onclick={clear}
+      aria-label="Borrar toda la expresión"
       class="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-slate-600
         hover:bg-red-50 dark:hover:bg-red-900/20 hover:border-red-300 dark:hover:border-red-700
         text-sm font-medium transition-colors active:scale-95 cursor-pointer text-red-500 dark:text-red-400"

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { MailIcon, InstagramIcon, BookOpen, Calculator, Wand2, ExternalLink, Sigma } from "@lucide/svelte";
+  import { MailIcon, InstagramIcon, BookOpen, Calculator, ExternalLink, Sigma } from "@lucide/svelte";
 </script>
 
 <footer class="bg-[#431407] text-white pt-16 pb-10 px-6 max-md:px-4 relative overflow-hidden">
@@ -76,19 +76,6 @@
               Calculadora de Notas
             </a>
           </li>
-          <li>
-            <a href="/examenes-ia" class="flex items-center gap-2 text-orange-200/80 hover:text-white transition-colors cursor-pointer group">
-              <Wand2 size={13} class="opacity-60 group-hover:opacity-100 text-orange-400" />
-              Corrector IA
-              <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">NEW</span>
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center gap-2 text-orange-200/80 hover:text-white transition-colors cursor-pointer group">
-              <ExternalLink size={13} class="opacity-60 group-hover:opacity-100 text-orange-400" />
-              Notas de Corte
-            </a>
-          </li>
         </ul>
       </div>
 
@@ -98,10 +85,10 @@
           Comunidad
         </h5>
         <ul class="space-y-3.5 text-sm">
-          <li><a href="#" class="text-orange-200/80 hover:text-white transition-colors cursor-pointer">Blog de Selectividad</a></li>
-          <li><a href="#" class="text-orange-200/80 hover:text-white transition-colors cursor-pointer">Guía de Universidades</a></li>
-          <li><a href="#" class="text-orange-200/80 hover:text-white transition-colors cursor-pointer">Foro de Dudas</a></li>
-          <li><a href="#" class="text-orange-200/80 hover:text-white transition-colors cursor-pointer">Colaboradores</a></li>
+          <li><span class="text-orange-200/50 cursor-default">Blog de Selectividad</span></li>
+          <li><span class="text-orange-200/50 cursor-default">Guía de Universidades</span></li>
+          <li><span class="text-orange-200/50 cursor-default">Foro de Dudas</span></li>
+          <li><span class="text-orange-200/50 cursor-default">Colaboradores</span></li>
         </ul>
       </div>
 
@@ -137,10 +124,10 @@
     <div class="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-orange-300/50 font-medium">
       <p>© 2026 AsroPAU. Todos los derechos reservados.</p>
       <div class="flex gap-5 uppercase tracking-widest">
-        <a href="#" class="hover:text-orange-200 transition-colors cursor-pointer">Términos</a>
-        <a href="#" class="hover:text-orange-200 transition-colors cursor-pointer">Privacidad</a>
-        <a href="#" class="hover:text-orange-200 transition-colors cursor-pointer">Cookies</a>
-        <a href="#" class="hover:text-orange-200 transition-colors cursor-pointer">Contacto</a>
+        <span class="text-orange-300/30 cursor-default">Términos</span>
+        <span class="text-orange-300/30 cursor-default">Privacidad</span>
+        <span class="text-orange-300/30 cursor-default">Cookies</span>
+        <span class="text-orange-300/30 cursor-default">Contacto</span>
       </div>
     </div>
   </div>

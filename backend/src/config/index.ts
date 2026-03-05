@@ -4,11 +4,11 @@ import path from 'path';
 dotenv.config();
 
 interface Config {
-    env: String;
-    port: Number;
-    apiPrefix: String;
-    corsOrigin: String;
-    logLevel: String;
+    env: string;
+    port: number;
+    apiPrefix: string;
+    corsOrigin: string;
+    logLevel: string;
 }
 
 export const config: Config = {
@@ -20,7 +20,8 @@ export const config: Config = {
 };
 
 export const validateConfig = (): void => {
-    const requireVars = ['PORT'];
+    // PORT has a default value (3000) so it is not required
+    const requireVars: string[] = [];
     const missing = requireVars.filter((key) => !process.env[key]);
 
     if (missing.length > 0) {

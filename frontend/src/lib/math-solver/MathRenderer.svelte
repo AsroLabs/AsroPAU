@@ -41,10 +41,10 @@
     aria-label={latex}
   ></span>
 {:else}
-  <div class="relative">
+  <div class="relative min-w-0 overflow-hidden">
     <div
       bind:this={container}
-      class="overflow-x-auto px-4 py-3 text-center [&_.katex-display]:my-0"
+      class="overflow-x-auto px-4 py-3 text-center [&_.katex-display]:my-0 [&_.katex-display]:overflow-x-auto [&_.katex-display]:overflow-y-hidden [&_.katex]:max-w-full"
       aria-label={latex}
     ></div>
     <!-- fade-out right edge when content overflows -->

@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte'
   import MathRenderer from './MathRenderer.svelte'
 
-  export let value: string = ''
+  interface Props {
+    value?: string
+    onsubmit?: () => void
+  }
 
-  const dispatch = createEventDispatcher<{ submit: void }>()
+  let { value = $bindable(''), onsubmit }: Props = $props()
 
   const quickSymbols: { label: string; insert: string; tip?: string }[] = [
     { label: 'x²',  insert: '**2',   tip: 'Elevar al cuadrado' },
@@ -47,7 +49,7 @@
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Enter') {
       e.preventDefault()
-      dispatch('submit')
+      onsubmit?.()
     }
   }
 </script>
@@ -59,7 +61,7 @@
       <button
         type="button"
         title={sym.tip ?? sym.label}
-        on:click={() => insertSymbol(sym.insert)}
+        onclick={() => insertSymbol(sym.insert)}
         class="px-2.5 py-1 text-sm font-mono border border-gray-200 dark:border-slate-600 rounded-lg
           hover:bg-orange-50 dark:hover:bg-slate-700 hover:border-orange-300 dark:hover:border-orange-500
           active:scale-95 transition-all duration-100 cursor-pointer select-none"
@@ -71,9 +73,11 @@
   <input
     bind:this={inputEl}
     bind:value
-    on:keydown={handleKeydown}
+    onkeydown={handleKeydown}
     type="text"
+    id="math-expression"
     name="math-expression"
+    aria-label="Expresión matemática"
     autocomplete="off"
     spellcheck="false"
     placeholder="Ej: x**2 - 5*x + 6 = 0  |  d/dx(x**3)  |  lim x->0 sin(x)/x"
@@ -81,7 +85,7 @@
       bg-gray-50 dark:bg-slate-700 font-mono text-base
       focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-400
       placeholder:text-gray-300 dark:placeholder:text-slate-500
-      transition"
+      transition-[border-color,box-shadow] duration-150"
   />
 
   <!-- KaTeX live preview -->

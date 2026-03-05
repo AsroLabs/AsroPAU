@@ -90,6 +90,10 @@
   ]
 </script>
 
+<svelte:head>
+  <title>Exámenes PAU – AsroPAU</title>
+</svelte:head>
+
 <div class="min-h-screen bg-[#FFF7ED]">
 
   <!-- ── Hero banner ──────────────────────────────────────────── -->

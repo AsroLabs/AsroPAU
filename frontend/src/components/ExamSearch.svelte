@@ -10,6 +10,7 @@
                     >Comunidad</label
                 >
                 <select
+                    id="comunidadAutonoma"
                     class="bg-slate-50 border-none rounded-lg text-sm text-slate-700 py-3 px-4 focus:ring-2 focus:ring-blue-500"
                 >
                     <option>Madrid</option>
@@ -25,6 +26,7 @@
                     >Asignatura</label
                 >
                 <select
+                    id="asignatura"
                     class="bg-slate-50 border-none rounded-lg text-sm text-slate-700 py-3 px-4 focus:ring-2 focus:ring-blue-500"
                 >
                     <option>Matemáticas II</option>
@@ -40,6 +42,7 @@
                     >Año</label
                 >
                 <select
+                    id="anyo"
                     class="bg-slate-50 border-none rounded-lg text-sm text-slate-700 py-3 px-4 focus:ring-2 focus:ring-blue-500"
                 >
                     <option>2024</option>

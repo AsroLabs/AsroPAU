@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { BookIcon, CalculatorIcon, BrainIcon, HouseIcon, Sigma, X } from '@lucide/svelte'
+  import { BookIcon, CalculatorIcon, HouseIcon, Sigma, X } from '@lucide/svelte'
   import { page } from '$app/stores'
 
   let { isOpen = $bindable(false) }: { isOpen?: boolean } = $props()
@@ -13,10 +13,9 @@
   ]
 
   const recursos = [
-    { label: 'Exámenes',    href: '/examen',     icon: BookIcon },
-    { label: 'Resolutor',   href: '/resolutor',  icon: Sigma },
-    { label: 'Calculadora', href: '/media',      icon: CalculatorIcon },
-    { label: 'Exámenes IA', href: '/examenes-ia',icon: BrainIcon, isNew: true },
+    { label: 'Exámenes',    href: '/examen',    icon: BookIcon },
+    { label: 'Resolutor',   href: '/resolutor', icon: Sigma },
+    { label: 'Calculadora', href: '/media',     icon: CalculatorIcon },
   ]
 
   function isActive(href: string) {
@@ -36,6 +35,9 @@
   <div
     class="fixed right-0 top-0 bottom-0 w-72 z-50 md:hidden flex flex-col overflow-hidden"
     style="background: #431407; border-left: 2px solid rgba(234,88,12,0.2);"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menú de navegación"
   >
     <!-- Header -->
     <div class="flex items-center justify-between px-5 py-4 border-b" style="border-color: rgba(234,88,12,0.2);">
@@ -71,6 +73,7 @@
             style={isActive(link.href)
               ? 'background: rgba(234,88,12,0.25); color: white; border-left: 3px solid #fb923c;'
               : 'color: rgba(253,186,116,0.8);'}
+            aria-current={isActive(link.href) ? 'page' : undefined}
           >
             <Icon size={16} />
             {link.label}
@@ -90,12 +93,10 @@
             style={isActive(link.href)
               ? 'background: rgba(234,88,12,0.25); color: white; border-left: 3px solid #fb923c;'
               : 'color: rgba(253,186,116,0.8);'}
+            aria-current={isActive(link.href) ? 'page' : undefined}
           >
             <Icon size={16} />
             {link.label}
-            {#if link.isNew}
-              <span class="ml-auto text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">NEW</span>
-            {/if}
           </a>
         {/each}
       </div>
