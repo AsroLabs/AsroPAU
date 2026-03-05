@@ -1,98 +1,142 @@
 <script lang="ts">
-    import { UserRound, Menu, X } from "@lucide/svelte";
-    import { AppBar } from "@skeletonlabs/skeleton-svelte";
+    import {
+        UserRound,
+        Menu,
+        X,
+        BookOpen,
+        Calculator,
+        Sparkles,
+        FlaskConical,
+        ChevronRight,
+    } from "@lucide/svelte";
     import Sidebar from "./Sidebar.svelte";
+    import { page } from "$app/state";
+    import ToggleDark from "./ToggleDark.svelte";
 
     interface Props {
         fixed?: boolean;
     }
 
     let mobileMenuOpen = $state(false);
-
-    function toggleMobileMenu() {
-        mobileMenuOpen = !mobileMenuOpen;
-    }
+    let scrolled = $state(false);
 
     const { fixed = true }: Props = $props();
+
+    const navLinks = [
+        { href: "/examen", label: "Exámenes", Icon: BookOpen },
+        { href: "/media", label: "Calculadora", Icon: Calculator },
+        { href: "/iae", label: "Exámenes IA", Icon: Sparkles },
+        { href: "/resolutor", label: "Resolutor", Icon: FlaskConical },
+    ];
 </script>
 
-<!-- DESKTOP HEADER -->
-<AppBar
-    class="{fixed
-        ? 'fixed'
-        : 'relative'} hidden md:block bg-white fixed shadow-md z-50 opacity-95 py-2 w-full"
+<!-- DESKTOP HEADER — floating pill -->
+<header
+    class="
+    hidden md:flex items-center justify-between
+    {fixed ? 'fixed' : 'relative'}
+    top-0 left-0 right-0 z-50
+    transition-all duration-300
+    pt-2 px-6
+  "
 >
-    <AppBar.Toolbar class="grid-cols-[auto_auto_auto] px-30">
-        <a href="/">
-            <AppBar.Headline class="flex items-center *:mx-2">
-                <div
-                    class="w-8 h-8 bg-[#2563EB] rounded flex items-center justify-center"
+    <div
+        class="
+      flex items-center justify-between w-full
+      rounded-2xl px-5 py-2.5
+      transition-all duration-300
+      {scrolled
+            ? 'bg-white/95 backdrop-blur-xl shadow-lg shadow-orange-100/60 border border-orange-100/80'
+            : 'bg-white/80 backdrop-blur-md shadow-md shadow-orange-100/40 border border-white/60'}
+    "
+    >
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2.5 group cursor-pointer">
+            <div
+                class="w-9 h-9 bg-gradient-to-br from-orange-600 to-orange-500 rounded-xl flex items-center justify-center shadow-md shadow-orange-300/50 transition-all duration-200 group-hover:shadow-orange-400/60 group-hover:-translate-y-0.5"
+                style="border: 2.5px solid #f97316;"
+            >
+                <span
+                    class="font-display font-bold text-white text-base leading-none"
+                    >A</span
                 >
-                    <span class="text-white font-bold text-lg">A</span>
-                </div>
-                <span class="text-xl font-bold text-[#1E293B]">AsroPAU</span>
-            </AppBar.Headline>
+            </div>
+            <span
+                class="font-display font-bold text-slate-800 text-lg tracking-tight"
+                >AsroPAU</span
+            >
         </a>
-        <div class="group relative inline-block">
-            <button class="py-2 px-4 rounded focus:outline-none"> Menú </button>
-            <button
-                class="hidden group-hover:block hover:block group-focus:block absolute bg-white shadow-md rounded w-40 z-10"
-            >
+
+        <!-- Nav links -->
+        <nav class="flex items-center gap-1">
+            {#each navLinks as link}
+                {@const isActive = page.url.pathname.startsWith(link.href)}
                 <a
-                    href="examen"
-                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Exámenes</a
+                    href={link.href}
+                    class="
+            relative flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-sm font-semibold
+            transition-all duration-200 cursor-pointer
+            {isActive
+                        ? 'bg-orange-600 text-white shadow-md shadow-orange-300/50'
+                        : 'text-slate-600 hover:text-orange-700 hover:bg-orange-50'}
+          "
                 >
-                <a
-                    href="/media"
-                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Calculadora</a
-                >
-                <a
-                    href="examenes-ia"
-                    class="block px-4 py-2 text-gray-800 hover:bg-gray-200"
-                    >Examenes IA</a
-                >
-            </button>
-        </div>
-        <AppBar.Trail>
-            <button
-                type="button"
-                class="btn bg-blue-400 hover:bg-blue-[#2563EB]"
-            >
-                <span>Iniciar sesión</span>
-                <UserRound size={18} />
-            </button>
-        </AppBar.Trail>
-    </AppBar.Toolbar>
-</AppBar>
+                    <link.Icon size={14} aria-hidden="true" />
+                    {link.label}
+                    {#if link.href === "/examenes-ia"}
+                        <span
+                            class="absolute -top-1.5 -right-1.5 px-1 py-0.5 bg-green-500 text-white text-[9px] font-bold rounded-full leading-none"
+                            >NEW</span
+                        >
+                    {/if}
+                </a>
+            {/each}
+        </nav>
+
+        <!-- CTA -->
+        <a
+            href="/login"
+            class="flex items-center gap-2 px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-semibold rounded-xl shadow-md shadow-orange-300/40 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-orange-400/50 cursor-pointer"
+            style="border-bottom: 3px solid #9a3412;"
+        >
+            <UserRound size={14} aria-hidden="true" />
+            Iniciar sesión
+        </a>
+    </div>
+</header>
 
 <!-- MOBILE HEADER -->
 <header
-    class=" {fixed
-        ? 'fixed'
-        : 'relative'} max-md:flex hidden bg-white fixed shadow-md z-50 opacity-95 w-full items-center justify-between px-6 py-4"
+    class="
+    max-md:flex hidden fixed z-50 top-0 left-0 right-0
+    items-center justify-between px-4 py-3
+    transition-all duration-300
+    {scrolled
+        ? 'bg-white/95 backdrop-blur-xl shadow-md border-b border-orange-100/60'
+        : 'bg-white/80 backdrop-blur-md border-b border-white/60'}
+  "
 >
-    <!-- Logo and Title -->
-    <div class="flex items-center gap-2">
+    <a href="/" class="flex items-center gap-2 cursor-pointer">
         <div
-            class="w-8 h-8 bg-[#2563EB] rounded flex items-center justify-center"
+            class="w-8 h-8 bg-gradient-to-br from-orange-600 to-orange-500 rounded-xl flex items-center justify-center shadow-sm"
+            style="border: 2px solid #f97316;"
         >
-            <span class="text-white font-bold text-lg">A</span>
+            <span class="font-display font-bold text-white text-sm">A</span>
         </div>
-        <span class="text-lg font-bold text-[#1E293B]">AsroPAU</span>
-    </div>
+        <span class="font-display font-bold text-slate-800 text-base"
+            >AsroPAU</span
+        >
+    </a>
 
-    <!-- Hamburger Button -->
     <button
-        onclick={toggleMobileMenu}
-        class="p-2 hover:bg-gray-100 rounded transition-colors"
+        onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
+        class="p-2 hover:bg-orange-50 rounded-xl transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400"
         aria-label="Toggle menu"
     >
         {#if mobileMenuOpen}
-            <X size={24} class="text-[#1E293B]" />
+            <X size={22} class="text-slate-700" aria-hidden="true" />
         {:else}
-            <Menu size={24} class="text-[#1E293B]" />
+            <Menu size={22} class="text-slate-700" aria-hidden="true" />
         {/if}
     </button>
 </header>
