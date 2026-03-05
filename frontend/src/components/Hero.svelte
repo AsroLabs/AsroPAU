@@ -1,336 +1,328 @@
-<script>
-  import ToggleDark from "./ToggleDark.svelte";
-  import { ChevronsDownIcon } from "@lucide/svelte";
-  import grid from "$lib/assets/grid.png";
+<script lang="ts">
+  import { ArrowRight, Star, TrendingUp, Users, Zap } from "@lucide/svelte";
+  import { onMount } from "svelte";
   import spain from "$lib/assets/spain.svg";
-  import hat from "$lib/assets/hat.svg";
-  import printer from "$lib/assets/printer.svg";
-  import calculator from "$lib/assets/calculator.svg";
-  import exams from "$lib/assets/exams.svg";
+  import grid from "$lib/assets/grid.png";
+
+  let mounted = $state(false);
+  let mouseX = $state(0);
+  let mouseY = $state(0);
+
+  onMount(() => { mounted = true; });
+
+  function handleMouseMove(e: MouseEvent) {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 12;
+    mouseY = (e.clientY / window.innerHeight - 0.5) * 12;
+  }
+
+  const badges = [
+    { icon: Users, label: "50k+ estudiantes", color: "bg-green-500" },
+    { icon: Star, label: "4.9 valoración", color: "bg-amber-500" },
+    { icon: TrendingUp, label: "#1 en España", color: "bg-indigo-500" },
+  ];
+
+  const floatingCards = [
+    { top: "18%", left: "6%",  delay: "0s",    label: "Matemáticas", score: "+9.2",  color: "#4F46E5", bg: "#EEF2FF" },
+    { top: "40%", left: "3%",  delay: "0.4s",  label: "Física",      score: "+8.8",  color: "#22C55E", bg: "#F0FDF4" },
+    { top: "18%", right: "6%", delay: "0.2s",  label: "Historia",    score: "+9.4",  color: "#F59E0B", bg: "#FFFBEB" },
+    { top: "40%", right: "3%", delay: "0.6s",  label: "Biología",    score: "+9.1",  color: "#EC4899", bg: "#FDF2F8" },
+  ];
 </script>
 
-<!-- DESKTOP HERO SECTION WITH ROTATED TEXT -->
+<!-- ── DESKTOP HERO ── -->
 <section
-  class="hero-desktop hidden md:relative md:block w-full h-screen pt-20 pb-16 text-center overflow-hidden"
+  class="hero-section hidden md:block relative w-full overflow-hidden"
+  style="background: linear-gradient(160deg, #EEF2FF 0%, #E0E7FF 40%, #C7D2FE 100%); min-height: 100vh;"
+  onmousemove={handleMouseMove}
+  role="presentation"
 >
-  <h1
-    class="prevent-select hero-title-left ubuntu text-5xl max-xl:text-4xl max-xl:left-[20%] max-lg:left-[10%] mb-4 absolute left-[15%] top-[18%] z-10 rotate-y-55 -rotate-x-[23.5deg]"
-  >
-    Supera la <span class="text-orange-300">Selectividad </span> <br /> con éxito
-  </h1>
-  <h1
-    class="prevent-select hero-title-right ubuntu text-5xl max-xl:text-4xl max-xl:right-[25%] max-lg:right-[15%] mb-4 absolute right-[22.5%] top-[20%] z-10 -rotate-y-55 -rotate-x-23"
-  >
-    Toda la PAU <br /> <span class="text-orange-300">centralizada.</span>
-  </h1>
-  <div
-    class="relative flex justify-center items-center w-full h-screen overflow-hidden"
-  >
-    <img
-      src={hat}
-      alt="Graduation hat"
-      class="hero-icon-hat absolute top-[20%] max-xl:top-[25%] max-lg:top-[30%] right-[30%] w-[12vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
-    />
-
-    <img
-      src={printer}
-      alt="printer AI"
-      class="hero-icon-printer absolute top-[25%] max-xl:top-[30%] max-lg:top-[35%] left-[27.5%] w-[10vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
-    />
-
-    <img
-      src={exams}
-      alt="official exams"
-      class="hero-icon-exams absolute bottom-[20%] max-xl:bottom-[25%] max-lg:bottom-[30%] right-[35%] w-[11vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
-    />
-
-    <img
-      src={calculator}
-      alt="calculator"
-      class="hero-icon-calc absolute bottom-[25%] max-xl:bottom-[30%] max-lg:bottom-[35%] left-[27.5%] w-[9vw] aspect-square drop-shadow-2xl hover:-translate-y-2 transition-transform"
-    />
-
-    <img src={spain} alt="Spain map" class="hero-spain w-2/4 object-contain" />
+  <!-- Grid texture -->
+  <div class="absolute inset-0 pointer-events-none opacity-30" aria-hidden="true">
+    <img src={grid} alt="" class="w-full h-full object-cover" />
   </div>
 
-  <div
-    class="absolute top-0 flex justify-center items-center w-full h-full -z-10"
-  >
-    <img
-      src={grid}
-      alt="Grid background"
-      class="inset-0 w-full h-full object-cover"
-    />
-  </div>
-  <div
-    class="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex justify-between max-w-3/6 gap-6"
-  >
-    <a href="#features">
-      <ChevronsDownIcon class="animate-bounce text-gray-600" size={32} />
-    </a>
-  </div>
-</section>
-
-<!-- MOBILE HERO SECTION - SIMPLE TEXT WITHOUT ROTATION -->
-
-<!-- SPAIN MAP SECTION -->
-<section
-  class="hidden max-md:flex w-full h-screen relative flex-col items-center justify-between px-6 pt-30 pb-20"
->
-  <div class="text-center">
-    <h2 class="text-[clamp(2rem,6vw,4rem)] ubuntu mb-4">
-      Domina toda la <span class="text-orange-300">PAU de España</span>
-    </h2>
-    <p class="text-[clamp(1rem,2vw,1.5rem)] text-gray-600 max-w-2xl">
-      Acceso a recursos de selectividad de todas las comunidades autónomas en
-      una sola plataforma.
-    </p>
-  </div>
-  <div class="absolute -translate-y-1/2 bottom-30 max-[345px]:bottom-40 -z-10">
-    <img src={spain} alt="spain" />
+  <!-- Blob decorations -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
+    <div class="absolute top-[-120px] left-[-120px] w-[500px] h-[500px] rounded-full bg-indigo-300/25 blur-3xl hero-blob-1"></div>
+    <div class="absolute bottom-[-80px] right-[-80px] w-[400px] h-[400px] rounded-full bg-purple-300/20 blur-3xl hero-blob-2"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] rounded-full bg-indigo-200/30 blur-3xl"></div>
   </div>
 
-  <div class="flex justify-center w-full gap-6">
-    <!-- <button
-      class="btn p-2 max-[345px]:p-1 bg-orange-300 hover:bg-blue-[#2563EB]"
+  <!-- Floating achievement cards (left) -->
+  {#each floatingCards.slice(0,2) as card, i}
+    <div
+      class="absolute z-20 float-card"
+      style="top:{card.top}; left:{card.left}; animation-delay:{card.delay};"
+      class:mounted-in={mounted}
     >
-      Comenzar ahora
-    </button> -->
-    <!-- <h1 class="text-3xl ubuntu text-center">
-      Toda la PAU <br /> <span class="text-orange-300">centralizada.</span>
-    </h1> -->
+      <div
+        class="flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-lg border border-white/80"
+        style="background:{card.bg}; border-bottom:3px solid {card.color}20;"
+      >
+        <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background:{card.color}15;">
+          <Zap size={14} style="color:{card.color};" />
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-500">{card.label}</p>
+          <p class="text-sm font-bold" style="color:{card.color};">{card.score}</p>
+        </div>
+      </div>
+    </div>
+  {/each}
 
-    <a href="#features">
-      <ChevronsDownIcon class="animate-bounce text-gray-600" size={32} />
-    </a>
+  <!-- Floating achievement cards (right) -->
+  {#each floatingCards.slice(2) as card}
+    <div
+      class="absolute z-20 float-card"
+      style="top:{card.top}; right:{card.right}; animation-delay:{card.delay};"
+      class:mounted-in={mounted}
+    >
+      <div
+        class="flex items-center gap-2.5 px-4 py-3 rounded-2xl shadow-lg border border-white/80"
+        style="background:{card.bg}; border-bottom:3px solid {card.color}20;"
+      >
+        <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background:{card.color}15;">
+          <Zap size={14} style="color:{card.color};" />
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-500">{card.label}</p>
+          <p class="text-sm font-bold" style="color:{card.color};">{card.score}</p>
+        </div>
+      </div>
+    </div>
+  {/each}
+
+  <!-- Main content -->
+  <div class="relative z-10 flex flex-col items-center justify-center text-center px-6 pt-24 pb-20" style="min-height:100vh;">
+    <!-- Social proof badges -->
+    <div
+      class="flex flex-wrap justify-center gap-2 mb-8 hero-fade-up"
+      style="animation-delay:0.1s"
+      class:show={mounted}
+    >
+      {#each badges as badge}
+        <div class="flex items-center gap-1.5 px-3.5 py-1.5 bg-white/80 backdrop-blur-sm border border-indigo-100 rounded-full shadow-sm">
+          <div class="w-4 h-4 rounded-full {badge.color} flex items-center justify-center">
+            <badge.icon size={9} class="text-white" />
+          </div>
+          <span class="text-xs font-bold text-slate-700">{badge.label}</span>
+        </div>
+      {/each}
+    </div>
+
+    <!-- Headline -->
+    <h1
+      class="font-display font-bold text-slate-900 mb-5 max-w-3xl leading-tight hero-fade-up"
+      style="font-size: clamp(2.6rem, 5vw, 4rem); animation-delay:0.2s;"
+      class:show={mounted}
+    >
+      Domina la <span class="text-gradient-indigo">Selectividad</span><br />
+      como los mejores
+    </h1>
+
+    <!-- Subheading -->
+    <p
+      class="text-slate-600 max-w-lg mb-10 leading-relaxed hero-fade-up"
+      style="font-size:1.1rem; animation-delay:0.3s;"
+      class:show={mounted}
+    >
+      Más de 5.000 exámenes oficiales, calculadora de notas y resolutor con IA.
+      Todo lo que necesitas para tu PAU, en un solo lugar.
+    </p>
+
+    <!-- CTA buttons -->
+    <div
+      class="flex flex-wrap justify-center gap-4 mb-16 hero-fade-up"
+      style="animation-delay:0.4s;"
+      class:show={mounted}
+    >
+      <a
+        href="/examen"
+        class="group flex items-center gap-2 px-8 py-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-2xl shadow-xl shadow-indigo-300/50 transition-all duration-200 hover:-translate-y-1 hover:shadow-indigo-400/60 cursor-pointer text-base"
+        style="border-bottom: 4px solid #3730a3;"
+      >
+        Empezar gratis
+        <ArrowRight size={18} class="transition-transform duration-200 group-hover:translate-x-1" />
+      </a>
+      <a
+        href="/resolutor"
+        class="flex items-center gap-2 px-8 py-4 bg-white hover:bg-indigo-50 text-indigo-700 font-bold rounded-2xl shadow-lg border-2 border-indigo-200 hover:border-indigo-400 transition-all duration-200 hover:-translate-y-1 cursor-pointer text-base"
+      >
+        Probar resolutor
+      </a>
+    </div>
+
+    <!-- Spain map 3D parallax -->
+    <div
+      class="relative hero-fade-up"
+      style="animation-delay:0.5s; width:min(480px,65vw);"
+      class:show={mounted}
+    >
+      <div
+        class="relative transition-transform duration-100 ease-out"
+        style="transform: perspective(800px) rotateX({mouseY * 0.04}deg) rotateY({mouseX * 0.04}deg);"
+      >
+        <!-- Glow -->
+        <div class="absolute inset-0 flex items-center justify-center" aria-hidden="true">
+          <div class="w-3/4 h-3/4 rounded-full bg-indigo-400/20 blur-3xl spain-glow"></div>
+        </div>
+        <img
+          src={spain}
+          alt="Mapa de España"
+          class="relative w-full object-contain spain-float"
+          style="filter: drop-shadow(0 12px 40px rgba(79,70,229,0.35)) drop-shadow(0 0 60px rgba(99,102,241,0.2));"
+        />
+      </div>
+
+      <!-- Progress bar under map — gamification -->
+      <div class="mt-6 bg-white/70 backdrop-blur-sm rounded-2xl px-6 py-4 border border-indigo-100 shadow-lg">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-slate-600">Progreso PAU 2025</span>
+          <span class="text-xs font-bold text-indigo-600">17 / 17 CCAA</span>
+        </div>
+        <div class="h-3 bg-indigo-100 rounded-full overflow-hidden">
+          <div class="h-full rounded-full progress-bar" style="background: linear-gradient(90deg, #4F46E5, #818CF8); width:100%;"></div>
+        </div>
+        <p class="text-[11px] text-slate-500 mt-1.5 text-center font-medium">Cobertura completa de todas las comunidades autónomas</p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- Keep absolute positioning on container, use vw for all sizes -->
+<!-- ── MOBILE HERO ── -->
+<section
+  class="hidden max-md:flex flex-col w-full relative overflow-hidden px-5 pt-24 pb-16"
+  style="background: linear-gradient(160deg, #EEF2FF 0%, #E0E7FF 60%, #C7D2FE 100%); min-height:100svh;"
+>
+  <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <img src={grid} alt="" class="w-full h-full object-cover opacity-20" />
+    <div class="absolute top-[-60px] right-[-60px] w-64 h-64 rounded-full bg-indigo-300/30 blur-3xl"></div>
+  </div>
+
+  <div class="relative z-10 flex flex-col items-center text-center flex-1 justify-center">
+    <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-white/80 border border-indigo-100 rounded-full shadow-sm mb-6">
+      <div class="w-3.5 h-3.5 rounded-full bg-green-500"></div>
+      <span class="text-xs font-bold text-slate-700">Plataforma PAU #1 de España</span>
+    </div>
+
+    <h1 class="font-display font-bold text-slate-900 mb-4 leading-tight" style="font-size:clamp(2rem,7vw,2.8rem);">
+      Domina la <span class="text-gradient-indigo">Selectividad</span>
+    </h1>
+    <p class="text-slate-600 text-sm leading-relaxed mb-8 max-w-xs">
+      5.000+ exámenes, calculadora de notas y resolutor con IA para tu PAU.
+    </p>
+
+    <div class="flex gap-3 mb-10">
+      <a href="/examen" class="flex items-center gap-1.5 px-5 py-3 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-300/40 text-sm cursor-pointer hover:bg-indigo-700 transition-colors" style="border-bottom:3px solid #3730a3;">
+        Empezar gratis <ArrowRight size={14} />
+      </a>
+      <a href="/resolutor" class="px-5 py-3 bg-white text-indigo-700 font-bold rounded-xl border-2 border-indigo-200 text-sm cursor-pointer hover:border-indigo-400 transition-colors">
+        Resolutor
+      </a>
+    </div>
+
+    <!-- Mini map -->
+    <div class="relative w-full max-w-xs opacity-70 -mb-4">
+      <img src={spain} alt="Mapa de España" class="w-full object-contain" style="filter: drop-shadow(0 8px 24px rgba(79,70,229,0.3));" />
+    </div>
+  </div>
+</section>
 
 <style>
-  /* 1440px and above - Desktop Large */
-  @media (min-width: 1440px) {
-    :global(.hero-desktop .hero-title-left) {
-      font-size: 3rem;
-      left: 15%;
-      top: 18%;
-    }
-
-    :global(.hero-desktop .hero-title-right) {
-      font-size: 3rem;
-      right: 22.5%;
-      top: 20%;
-    }
-
-    :global(.hero-desktop .hero-icon-hat) {
-      width: 12vw;
-      top: 20%;
-      right: 30%;
-    }
-
-    :global(.hero-desktop .hero-icon-printer) {
-      width: 10vw;
-      top: 25%;
-      left: 27.5%;
-    }
-
-    :global(.hero-desktop .hero-icon-exams) {
-      width: 11vw;
-      bottom: 20%;
-      right: 35%;
-    }
-
-    :global(.hero-desktop .hero-icon-calc) {
-      width: 9vw;
-      bottom: 25%;
-      left: 27.5%;
-    }
-
-    :global(.hero-desktop .hero-spain) {
-      width: 50%;
-    }
+  /* ── Gradient text ── */
+  :global(.text-gradient-indigo) {
+    background: linear-gradient(135deg, #4F46E5 0%, #818CF8 60%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  /* 1440px to 1200px */
-  @media (min-width: 1200px) and (max-width: 1439px) {
-    :global(.hero-desktop .hero-title-left) {
-      font-size: 2.75rem;
-      left: 16%;
-      top: 20%;
-    }
-
-    :global(.hero-desktop .hero-title-right) {
-      font-size: 2.75rem;
-      right: 24%;
-      top: 22%;
-    }
-
-    :global(.hero-desktop .hero-icon-hat) {
-      width: 11.5vw;
-      top: 22%;
-      right: 31%;
-    }
-
-    :global(.hero-desktop .hero-icon-printer) {
-      width: 9.5vw;
-      top: 27%;
-      left: 28%;
-    }
-
-    :global(.hero-desktop .hero-icon-exams) {
-      width: 10.5vw;
-      bottom: 22%;
-      right: 36%;
-    }
-
-    :global(.hero-desktop .hero-icon-calc) {
-      width: 8.5vw;
-      bottom: 27%;
-      left: 28%;
-    }
-
-    :global(.hero-desktop .hero-spain) {
-      width: 50%;
-    }
+  /* ── Legacy gradient (used in Hero old sections) ── */
+  :global(.text-gradient) {
+    background: linear-gradient(135deg, #4F46E5 0%, #818CF8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
-  /* 1200px to 1080px */
-  @media (min-width: 1080px) and (max-width: 1199px) {
-    :global(.hero-desktop .hero-title-left) {
-      font-size: 2.5rem;
-      left: 14%;
-      top: 22%;
-    }
-
-    :global(.hero-desktop .hero-title-right) {
-      font-size: 2.5rem;
-      right: 20%;
-      top: 24%;
-    }
-
-    :global(.hero-desktop .hero-icon-hat) {
-      width: 11vw;
-      top: 24%;
-      right: 32%;
-    }
-
-    :global(.hero-desktop .hero-icon-printer) {
-      width: 9vw;
-      top: 29%;
-      left: 29%;
-    }
-
-    :global(.hero-desktop .hero-icon-exams) {
-      width: 10vw;
-      bottom: 24%;
-      right: 37%;
-    }
-
-    :global(.hero-desktop .hero-icon-calc) {
-      width: 8vw;
-      bottom: 29%;
-      left: 29%;
-    }
-
-    :global(.hero-desktop .hero-spain) {
-      width: 48%;
-    }
+  /* ── Fade-up entrance ── */
+  .hero-fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+  }
+  .hero-fade-up.show {
+    opacity: 1;
+    transform: translateY(0);
   }
 
-  /* 1024px (iPad landscape / tablets) */
-  @media (min-width: 1024px) and (max-width: 1079px) {
-    :global(.hero-desktop .hero-title-left) {
-      font-size: 2.25rem;
-      left: 12%;
-      top: 24%;
-    }
+  /* ── Float cards entrance ── */
+  .float-card {
+    opacity: 0;
+    transform: translateX(-16px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .float-card:nth-child(3),
+  .float-card:nth-child(4) {
+    transform: translateX(16px);
+  }
+  .float-card.mounted-in {
+    opacity: 1;
+    transform: translateX(0);
+    animation: floatUpDown 5s ease-in-out infinite;
+  }
+  .float-card:nth-child(2).mounted-in { animation-delay: 1.2s; }
+  .float-card:nth-child(3).mounted-in { animation-delay: 0.6s; }
+  .float-card:nth-child(4).mounted-in { animation-delay: 1.8s; }
 
-    :global(.hero-desktop .hero-title-right) {
-      font-size: 2.25rem;
-      right: 18%;
-      top: 26%;
-    }
-
-    :global(.hero-desktop .hero-icon-hat) {
-      width: 10.5vw;
-      top: 26%;
-      right: 33%;
-    }
-
-    :global(.hero-desktop .hero-icon-printer) {
-      width: 8.5vw;
-      top: 31%;
-      left: 30%;
-    }
-
-    :global(.hero-desktop .hero-icon-exams) {
-      width: 9.5vw;
-      bottom: 26%;
-      right: 38%;
-    }
-
-    :global(.hero-desktop .hero-icon-calc) {
-      width: 7.5vw;
-      bottom: 31%;
-      left: 30%;
-    }
-
-    :global(.hero-desktop .hero-spain) {
-      width: 46%;
-    }
+  @keyframes floatUpDown {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
   }
 
-  /* 800-1024px (Large tablets / small desktops) */
-  @media (min-width: 800px) and (max-width: 1023px) {
-    :global(.hero-desktop .hero-title-left) {
-      font-size: 2rem;
-      left: 8%;
-      top: 26%;
-    }
-
-    :global(.hero-desktop .hero-title-right) {
-      font-size: 2rem;
-      right: 12%;
-      top: 28%;
-    }
-
-    :global(.hero-desktop .hero-icon-hat) {
-      width: 10vw;
-      top: 28%;
-      right: 34%;
-    }
-
-    :global(.hero-desktop .hero-icon-printer) {
-      width: 8vw;
-      top: 33%;
-      left: 31%;
-    }
-
-    :global(.hero-desktop .hero-icon-exams) {
-      width: 9vw;
-      bottom: 28%;
-      right: 39%;
-    }
-
-    :global(.hero-desktop .hero-icon-calc) {
-      width: 7vw;
-      bottom: 33%;
-      left: 31%;
-    }
-
-    :global(.hero-desktop .hero-spain) {
-      width: 44%;
-    }
+  /* ── Spain map ── */
+  .spain-float {
+    animation: spainBob 5s ease-in-out infinite;
+  }
+  @keyframes spainBob {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-10px); }
   }
 
-  .prevent-select {
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
+  .spain-glow {
+    animation: glowPulse 4s ease-in-out infinite;
+  }
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50%       { opacity: 1; transform: scale(1.1); }
   }
 
-  .ubuntu {
-    font-family: "Ubuntu-bold", sans-serif;
+  /* ── Progress bar animation ── */
+  .progress-bar {
+    animation: fillBar 1.5s ease-out 0.8s both;
+  }
+  @keyframes fillBar {
+    from { width: 0%; }
+    to   { width: 100%; }
+  }
+
+  /* ── Blob animations ── */
+  .hero-blob-1 { animation: blobDrift1 14s ease-in-out infinite; }
+  .hero-blob-2 { animation: blobDrift2 18s ease-in-out infinite; }
+  @keyframes blobDrift1 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50%       { transform: translate(50px, 40px) scale(1.1); }
+  }
+  @keyframes blobDrift2 {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50%       { transform: translate(-40px,-30px) scale(1.08); }
+  }
+
+  /* ── Reduced motion ── */
+  @media (prefers-reduced-motion: reduce) {
+    .float-card, .spain-float, .spain-glow, .hero-blob-1, .hero-blob-2, .progress-bar { animation: none; }
+    .float-card.mounted-in { opacity: 1; transform: none; }
+    .hero-fade-up { transition: none; }
+    .progress-bar { width: 100%; }
   }
 </style>

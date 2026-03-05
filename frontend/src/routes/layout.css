@@ -4,7 +4,38 @@
 @import '@skeletonlabs/skeleton-svelte'; 
 @import '@skeletonlabs/skeleton/themes/crimson';
 
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
 @custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ── Base font ── */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* ── Display/heading font ── */
+.font-display {
+    font-family: 'Baloo 2', sans-serif;
+}
+
+/* ── Anti-aliasing ── */
+*, *::before, *::after {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Custom scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #94A3B8; }
+
+/* ── Selection color ── */
+::selection { background: rgba(79, 70, 229, 0.15); color: #312E81; }
 
 @font-face {
     font-family: "Ubuntu-normal";

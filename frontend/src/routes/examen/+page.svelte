@@ -1,0 +1,363 @@
+<script lang="ts">
+  import { onMount } from 'svelte'
+  import { Search, Filter, BookOpen, Download, Star, Clock, ChevronRight, Flame, Trophy, GraduationCap, Calculator } from '@lucide/svelte'
+
+  // ── Data ─────────────────────────────────────────────────────────
+  const subjects = ['Todos', 'Matemáticas', 'Física', 'Química', 'Historia', 'Lengua', 'Inglés', 'Biología']
+  const regions  = ['Todas', 'Madrid', 'Cataluña', 'Andalucía', 'C. Valenciana', 'País Vasco', 'Galicia', 'Aragón', 'Canarias']
+  const years    = ['Todos', '2024', '2023', '2022', '2021', '2020', '2019']
+
+  interface Exam {
+    id: number
+    title: string
+    subject: string
+    region: string
+    year: number
+    difficulty: 'Fácil' | 'Medio' | 'Difícil'
+    pages: number
+    downloads: number
+    rating: number
+    hot?: boolean
+    isNew?: boolean
+  }
+
+  const allExams: Exam[] = [
+    { id:1,  title: 'Matemáticas CCSS — Fase General',    subject: 'Matemáticas', region: 'Madrid',       year: 2024, difficulty: 'Medio',  pages: 4, downloads: 1840, rating: 4.8, isNew: true },
+    { id:2,  title: 'Matemáticas II — Opción A',           subject: 'Matemáticas', region: 'Cataluña',     year: 2024, difficulty: 'Difícil', pages: 6, downloads: 2210, rating: 4.9, hot: true },
+    { id:3,  title: 'Física — Electricidad y Magnetismo',  subject: 'Física',      region: 'Andalucía',    year: 2024, difficulty: 'Difícil', pages: 5, downloads: 980,  rating: 4.6 },
+    { id:4,  title: 'Química Orgánica — Reacciones',       subject: 'Química',     region: 'Madrid',       year: 2023, difficulty: 'Difícil', pages: 5, downloads: 1120, rating: 4.7, hot: true },
+    { id:5,  title: 'Historia de España — Siglo XX',       subject: 'Historia',    region: 'C. Valenciana',year: 2024, difficulty: 'Medio',  pages: 4, downloads: 760,  rating: 4.5 },
+    { id:6,  title: 'Lengua Castellana — Comentario',      subject: 'Lengua',      region: 'País Vasco',   year: 2023, difficulty: 'Fácil',  pages: 3, downloads: 430,  rating: 4.3 },
+    { id:7,  title: 'Matemáticas CCSS — Fase Específica',  subject: 'Matemáticas', region: 'Galicia',      year: 2023, difficulty: 'Medio',  pages: 4, downloads: 620,  rating: 4.4 },
+    { id:8,  title: 'Inglés — Reading & Writing',          subject: 'Inglés',      region: 'Aragón',       year: 2024, difficulty: 'Fácil',  pages: 4, downloads: 890,  rating: 4.6 },
+    { id:9,  title: 'Biología Celular y Genética',         subject: 'Biología',    region: 'Canarias',     year: 2024, difficulty: 'Difícil', pages: 6, downloads: 1350, rating: 4.8, isNew: true },
+    { id:10, title: 'Física — Ondas y Óptica',             subject: 'Física',      region: 'Madrid',       year: 2023, difficulty: 'Medio',  pages: 5, downloads: 740,  rating: 4.5 },
+    { id:11, title: 'Química — Equilibrio Químico',        subject: 'Química',     region: 'Cataluña',     year: 2023, difficulty: 'Medio',  pages: 4, downloads: 680,  rating: 4.4 },
+    { id:12, title: 'Historia del Arte — Contemporáneo',   subject: 'Historia',    region: 'Andalucía',    year: 2022, difficulty: 'Fácil',  pages: 3, downloads: 390,  rating: 4.2 },
+    { id:13, title: 'Matemáticas II — Cálculo Integral',   subject: 'Matemáticas', region: 'Madrid',       year: 2022, difficulty: 'Difícil', pages: 5, downloads: 1560, rating: 4.7, hot: true },
+    { id:14, title: 'Biología — Ecología y Medio Ambiente',subject: 'Biología',    region: 'C. Valenciana',year: 2023, difficulty: 'Fácil',  pages: 4, downloads: 480,  rating: 4.3 },
+    { id:15, title: 'Inglés — Use of English',             subject: 'Inglés',      region: 'País Vasco',   year: 2022, difficulty: 'Medio',  pages: 3, downloads: 560,  rating: 4.4 },
+    { id:16, title: 'Física — Mecánica y Energía',         subject: 'Física',      region: 'Galicia',      year: 2022, difficulty: 'Medio',  pages: 5, downloads: 820,  rating: 4.6 },
+  ]
+
+  // ── Filters ───────────────────────────────────────────────────────
+  let searchQuery   = $state('')
+  let activeSubject = $state('Todos')
+  let activeRegion  = $state('Todas')
+  let activeYear    = $state('Todos')
+  let showFilters   = $state(false)
+
+  let filtered = $derived(
+    allExams.filter(e => {
+      const q = searchQuery.toLowerCase()
+      const matchSearch  = !q || e.title.toLowerCase().includes(q) || e.subject.toLowerCase().includes(q) || e.region.toLowerCase().includes(q)
+      const matchSubject = activeSubject === 'Todos'  || e.subject === activeSubject
+      const matchRegion  = activeRegion  === 'Todas'  || e.region  === activeRegion
+      const matchYear    = activeYear    === 'Todos'  || e.year    === Number(activeYear)
+      return matchSearch && matchSubject && matchRegion && matchYear
+    })
+  )
+
+  // ── Animations ───────────────────────────────────────────────────
+  let sectionRef: HTMLElement
+  let visible = $state(false)
+
+  onMount(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) visible = true },
+      { threshold: 0.05 }
+    )
+    if (sectionRef) observer.observe(sectionRef)
+    return () => observer.disconnect()
+  })
+
+  // ── Helpers ───────────────────────────────────────────────────────
+  const difficultyColors: Record<string, { bg: string; text: string; border: string }> = {
+    'Fácil':   { bg: '#f0fdf4', text: '#16a34a', border: '#bbf7d0' },
+    'Medio':   { bg: '#fffbeb', text: '#d97706', border: '#fde68a' },
+    'Difícil': { bg: '#fef2f2', text: '#dc2626', border: '#fecaca' },
+  }
+
+  function formatDownloads(n: number) {
+    return n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n)
+  }
+
+  const stats = [
+    { value: '2.400+', label: 'Exámenes',   icon: BookOpen, color: '#4F46E5' },
+    { value: '17',     label: 'Comunidades',icon: GraduationCap, color: '#7C3AED' },
+    { value: '12',     label: 'Asignaturas',icon: Calculator, color: '#0EA5E9' },
+    { value: '50k+',   label: 'Descargas',  icon: Download, color: '#22C55E' },
+  ]
+</script>
+
+<div class="min-h-screen bg-[#EEF2FF]">
+
+  <!-- ── Hero banner ──────────────────────────────────────────── -->
+  <div class="relative overflow-hidden bg-gradient-to-br from-indigo-700 via-indigo-600 to-indigo-500 text-white">
+    <!-- Dot grid decoration -->
+    <div
+      class="absolute inset-0 opacity-10"
+      style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 28px 28px;"
+      aria-hidden="true"
+    ></div>
+    <!-- Blurred orbs -->
+    <div class="absolute -top-16 -right-16 w-64 h-64 rounded-full bg-indigo-400/30 blur-3xl pointer-events-none" aria-hidden="true"></div>
+    <div class="absolute -bottom-10 -left-10 w-48 h-48 rounded-full bg-violet-500/20 blur-2xl pointer-events-none" aria-hidden="true"></div>
+
+    <div class="relative z-10 max-w-6xl mx-auto px-6 py-14 md:py-20">
+      <div class="max-w-2xl">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 border border-white/20 text-xs font-bold uppercase tracking-widest mb-6">
+          <Trophy size={13} />
+          Archivo oficial de selectividad
+        </div>
+        <h1 class="font-display text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+          Banco de Exámenes<br />de Selectividad
+        </h1>
+        <p class="text-indigo-200 text-lg leading-relaxed mb-8 max-w-lg">
+          Más de 2.400 exámenes oficiales de la EBAU/PAU ordenados por asignatura, comunidad y año. Descarga, practica y supera la prueba.
+        </p>
+
+        <!-- Stats pills row -->
+        <div class="flex flex-wrap gap-3">
+          {#each stats as s}
+            {@const Icon = s.icon}
+            <div class="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 border border-white/15 backdrop-blur-sm">
+              <Icon size={14} class="opacity-80" />
+              <span class="font-bold text-sm">{s.value}</span>
+              <span class="text-indigo-300 text-xs">{s.label}</span>
+            </div>
+          {/each}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Search + Filter bar ──────────────────────────────────── -->
+  <div class="sticky top-[72px] z-30 bg-white/90 backdrop-blur-md border-b border-indigo-100 shadow-sm">
+    <div class="max-w-6xl mx-auto px-6 py-3 flex flex-col sm:flex-row gap-3">
+      <!-- Search -->
+      <div class="relative flex-1">
+        <Search size={16} class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+        <input
+          type="search"
+          bind:value={searchQuery}
+          placeholder="Buscar por asignatura, región o título..."
+          class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400/30 focus:border-indigo-400 transition-all"
+        />
+      </div>
+      <!-- Filter toggle -->
+      <button
+        onclick={() => showFilters = !showFilters}
+        class="flex items-center gap-2 px-4 py-2.5 rounded-xl border font-semibold text-sm transition-all duration-150 cursor-pointer
+          {showFilters ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-indigo-400 hover:text-indigo-600'}"
+      >
+        <Filter size={15} />
+        Filtros
+        {#if activeSubject !== 'Todos' || activeRegion !== 'Todas' || activeYear !== 'Todos'}
+          <span class="w-5 h-5 rounded-full bg-white text-indigo-600 text-xs font-bold flex items-center justify-center">
+            {[activeSubject !== 'Todos', activeRegion !== 'Todas', activeYear !== 'Todos'].filter(Boolean).length}
+          </span>
+        {/if}
+      </button>
+    </div>
+
+    <!-- Expandable filter panels -->
+    {#if showFilters}
+      <div class="max-w-6xl mx-auto px-6 pb-4 border-t border-slate-100 pt-3 grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Subject filter -->
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Asignatura</p>
+          <div class="flex flex-wrap gap-1.5">
+            {#each subjects as subj}
+              <button
+                onclick={() => activeSubject = subj}
+                class="px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer
+                  {activeSubject === subj ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600'}"
+              >{subj}</button>
+            {/each}
+          </div>
+        </div>
+        <!-- Region filter -->
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Comunidad</p>
+          <div class="flex flex-wrap gap-1.5">
+            {#each regions as reg}
+              <button
+                onclick={() => activeRegion = reg}
+                class="px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer
+                  {activeRegion === reg ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600'}"
+              >{reg}</button>
+            {/each}
+          </div>
+        </div>
+        <!-- Year filter -->
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Año</p>
+          <div class="flex flex-wrap gap-1.5">
+            {#each years as yr}
+              <button
+                onclick={() => activeYear = yr}
+                class="px-3 py-1 rounded-full text-xs font-semibold border transition-all duration-150 cursor-pointer
+                  {activeYear === yr ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-slate-200 text-slate-500 hover:border-indigo-300 hover:text-indigo-600'}"
+              >{yr}</button>
+            {/each}
+          </div>
+        </div>
+      </div>
+    {/if}
+  </div>
+
+  <!-- ── Subject quick-pills (horizontal scroll) ──────────────── -->
+  <div class="max-w-6xl mx-auto px-6 pt-6 pb-2 overflow-x-auto">
+    <div class="flex gap-2 w-max">
+      {#each subjects as subj}
+        <button
+          onclick={() => activeSubject = subj}
+          class="flex-shrink-0 px-4 py-2 rounded-full text-sm font-semibold border-2 transition-all duration-150 cursor-pointer
+            {activeSubject === subj
+              ? 'bg-indigo-600 border-indigo-600 text-white shadow-md shadow-indigo-200'
+              : 'bg-white border-indigo-100 text-slate-600 hover:border-indigo-400 hover:text-indigo-600'}"
+        >{subj}</button>
+      {/each}
+    </div>
+  </div>
+
+  <!-- ── Results grid ─────────────────────────────────────────── -->
+  <div bind:this={sectionRef} class="max-w-6xl mx-auto px-6 py-6">
+
+    <!-- Results count -->
+    <div class="flex items-center justify-between mb-5">
+      <p class="text-sm text-slate-500">
+        <span class="font-bold text-indigo-700">{filtered.length}</span> exámenes encontrados
+      </p>
+      {#if activeSubject !== 'Todos' || activeRegion !== 'Todas' || activeYear !== 'Todos' || searchQuery}
+        <button
+          onclick={() => { activeSubject = 'Todos'; activeRegion = 'Todas'; activeYear = 'Todos'; searchQuery = '' }}
+          class="text-xs text-indigo-500 hover:text-indigo-700 font-semibold transition-colors cursor-pointer"
+        >
+          Limpiar filtros
+        </button>
+      {/if}
+    </div>
+
+    {#if filtered.length === 0}
+      <!-- Empty state -->
+      <div class="flex flex-col items-center justify-center py-20 text-center">
+        <div class="w-16 h-16 rounded-2xl bg-indigo-100 flex items-center justify-center mb-4">
+          <Search size={28} class="text-indigo-400" />
+        </div>
+        <h3 class="font-bold text-slate-700 text-lg mb-2">Sin resultados</h3>
+        <p class="text-slate-400 text-sm max-w-xs">Prueba a cambiar los filtros o el término de búsqueda.</p>
+      </div>
+    {:else}
+      <!-- Card grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {#each filtered as exam, i (exam.id)}
+          {@const diff = difficultyColors[exam.difficulty]}
+          <div
+            class="group bg-white rounded-2xl border-2 border-indigo-50 hover:border-indigo-300 shadow-sm hover:shadow-lg hover:shadow-indigo-100 transition-all duration-200 overflow-hidden cursor-pointer"
+            style="border-bottom: 4px solid #e0e7ff; animation-delay: {Math.min(i, 8) * 40}ms;"
+            class:section-reveal={!visible}
+          >
+            <!-- Card top color bar by subject -->
+            <div class="h-1.5 w-full bg-gradient-to-r from-indigo-500 to-indigo-400" aria-hidden="true"></div>
+
+            <div class="p-5">
+              <!-- Badges row -->
+              <div class="flex items-center gap-2 mb-3 flex-wrap">
+                <!-- Difficulty badge -->
+                <span
+                  class="text-xs font-bold px-2.5 py-0.5 rounded-full border"
+                  style="background-color:{diff.bg}; color:{diff.text}; border-color:{diff.border};"
+                >{exam.difficulty}</span>
+
+                {#if exam.hot}
+                  <span class="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-0.5 rounded-full bg-orange-50 text-orange-600 border border-orange-200">
+                    <Flame size={10} />
+                    Popular
+                  </span>
+                {/if}
+                {#if exam.isNew}
+                  <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-600 border border-emerald-200">Nuevo</span>
+                {/if}
+
+                <span class="ml-auto text-xs font-bold text-slate-400">{exam.year}</span>
+              </div>
+
+              <!-- Title -->
+              <h3 class="font-bold text-slate-800 text-sm leading-snug mb-1 group-hover:text-indigo-700 transition-colors">{exam.title}</h3>
+              <p class="text-xs text-slate-400 mb-4">{exam.region} · {exam.pages} páginas</p>
+
+              <!-- Meta row -->
+              <div class="flex items-center justify-between text-xs text-slate-400">
+                <div class="flex items-center gap-3">
+                  <!-- Star rating -->
+                  <span class="flex items-center gap-1">
+                    <Star size={11} class="text-amber-400 fill-amber-400" />
+                    <span class="font-semibold text-slate-600">{exam.rating}</span>
+                  </span>
+                  <!-- Downloads -->
+                  <span class="flex items-center gap-1">
+                    <Download size={11} />
+                    {formatDownloads(exam.downloads)}
+                  </span>
+                  <!-- Time estimate -->
+                  <span class="flex items-center gap-1">
+                    <Clock size={11} />
+                    ~{exam.pages * 15}min
+                  </span>
+                </div>
+
+                <!-- CTA arrow -->
+                <div class="w-7 h-7 rounded-full bg-indigo-50 group-hover:bg-indigo-600 flex items-center justify-center transition-all duration-200">
+                  <ChevronRight size={14} class="text-indigo-400 group-hover:text-white transition-colors" />
+                </div>
+              </div>
+            </div>
+          </div>
+        {/each}
+      </div>
+    {/if}
+  </div>
+
+  <!-- ── Bottom CTA ───────────────────────────────────────────── -->
+  <div class="max-w-6xl mx-auto px-6 py-10">
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-indigo-600 to-indigo-500 p-8 md:p-10 text-white text-center">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 24px 24px;"
+        aria-hidden="true"
+      ></div>
+      <div class="relative z-10">
+        <h2 class="font-display text-2xl md:text-3xl font-extrabold mb-3">¿Ya tienes el examen?</h2>
+        <p class="text-indigo-200 mb-6 max-w-md mx-auto">Usa nuestro resolutor paso a paso para comprobar tus resultados y entender cada operación.</p>
+        <a
+          href="/resolutor"
+          class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-indigo-700 font-bold text-sm hover:-translate-y-0.5 transition-all duration-200 cursor-pointer shadow-lg shadow-indigo-900/20"
+          style="border-bottom: 3px solid #c7d2fe;"
+        >
+          <Calculator size={16} />
+          Ir al Resolutor
+          <ChevronRight size={15} />
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .section-reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .section-reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>
