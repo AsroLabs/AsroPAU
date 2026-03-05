@@ -2,15 +2,15 @@ FROM node:22
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-RUN npm install -g pnpm
+RUN npm install -g pnpm && pnpm install
 
 COPY . .
 
-RUN pnpm install
-
 EXPOSE 5173
 
-CMD ["pnpm", "dev", "--host"] 
+ENV ORIGIN=http://localhost:5173
+
+CMD ["pnpm", "dev", "--host", "0.0.0.0"] 
 
