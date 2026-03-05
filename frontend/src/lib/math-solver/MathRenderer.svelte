@@ -1,27 +1,57 @@
-<script>
-  import { onMount, afterUpdate } from 'svelte'
+<script lang="ts">
   import katex from 'katex'
 
-  export let latex = ''
-  export let inline = false
+  let { latex = '', inline = false }: { latex?: string; inline?: boolean } = $props()
 
-  let container
+  let container = $state<HTMLElement | null>(null)
 
-  function render() {
-    if (!container || !latex) return
-    try {
-      katex.render(latex, container, {
-        throwOnError: false,
-        displayMode: !inline,
-        output: 'html'
-      })
-    } catch (e) {
-      container.textContent = latex
+  $effect(() => {
+    if (!container) return
+    const l = latex
+    const i = inline
+
+    if (!l.trim()) {
+      container.innerHTML = ''
+      return
     }
-  }
 
-  onMount(render)
-  afterUpdate(render)
+    try {
+      katex.render(l, container, {
+        throwOnError: false,
+        displayMode: !i,
+        output: 'html',
+        trust: true,           // needed for \textcolor
+        strict: false,
+        macros: {
+          '\\diff': '\\,\\mathrm{d}',
+          '\\abs':  '\\left|#1\\right|',
+        },
+        minRuleThickness: 0.06,
+      })
+    } catch {
+      container.textContent = l
+    }
+  })
 </script>
 
-<span bind:this={container} class={inline ? 'inline' : 'block overflow-x-auto'}></span>
+{#if inline}
+  <span
+    bind:this={container}
+    class="inline align-middle"
+    aria-label={latex}
+  ></span>
+{:else}
+  <div class="relative">
+    <div
+      bind:this={container}
+      class="overflow-x-auto px-4 py-3 text-center [&_.katex-display]:my-0"
+      aria-label={latex}
+    ></div>
+    <!-- fade-out right edge when content overflows -->
+    <div
+      class="pointer-events-none absolute inset-y-0 right-0 w-8
+             bg-gradient-to-l from-white/80 to-transparent dark:from-slate-900/80"
+      aria-hidden="true"
+    ></div>
+  </div>
+{/if}

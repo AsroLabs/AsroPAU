@@ -9,6 +9,7 @@
 <svelte:head>
   <link rel="icon" href={favicon} />
   <meta name="theme-color" content="#FFF7ED" />
+
 </svelte:head>
 
 <!-- Skip to main content (accessibility) -->

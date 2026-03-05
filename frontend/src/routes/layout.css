@@ -1,10 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
 @import 'tailwindcss';
+@import 'katex/dist/katex.min.css';
 
 @import '@skeletonlabs/skeleton'; 
 @import '@skeletonlabs/skeleton-svelte'; 
 @import '@skeletonlabs/skeleton/themes/crimson';
-
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 @custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
 
