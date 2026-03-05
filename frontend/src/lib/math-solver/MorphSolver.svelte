@@ -1,6 +1,7 @@
 <script lang="ts">
   import { fade, scale } from 'svelte/transition'
   import { backOut, cubicOut } from 'svelte/easing'
+  import { animate, stagger } from 'animejs'
   import MathRenderer from './MathRenderer.svelte'
 
   interface Step {
@@ -23,122 +24,275 @@
   let { steps = [], result = null }: { steps: Step[]; result: Result | null } = $props()
 
   // ── Phase machine ──────────────────────────────────────────────────────────
-  type Phase = 'idle' | 'show-plain' | 'highlight' | 'morph-out' | 'morph-in' | 'done'
+  // show-before : before is highlighted, after is dim
+  // show-after  : before dims out, after lights up
+  // chain-out   : after morphs into the next before
+  // done        : final result shown
+  type Phase = 'idle' | 'show-before' | 'show-after' | 'chain-out' | 'done'
 
   let currentIndex = $state(0)
   let phase        = $state<Phase>('idle')
   let autoMode     = $state(true)
   let copyDone     = $state(false)
 
-  // What the single MathRenderer is showing RIGHT NOW
-  let displayLatex  = $state('')
-  // CSS classes:
-  //   boxClass     → on .math-box     (border glow: '' | 'is-highlighted')
-  //   contentClass → on .math-content (morph anim: '' | 'is-morphing-in' | 'is-morphing-out')
-  let boxClass     = $state('')   // '' | 'is-highlighted'
-  let contentClass = $state('')   // '' | 'is-morphing-in' | 'is-morphing-out'
+  // What each panel shows
+  let beforeLatex  = $state('')   // always expr_latex of current step
+  let afterLatex   = $state('')   // always expr_latex of next step
+  // Highlighted versions (used during respective highlight phases)
+  let beforeHighlighted = $state('')
+  let afterHighlighted  = $state('')
+  // Which version is actually rendered in each panel
+  let beforeDisplay = $state('')
+  let afterDisplay  = $state('')
 
+  // Panel highlight states (drive CSS classes)
+  let beforeLit = $state(false)
+  let afterLit  = $state(false)
+  let beforeColor = $state('#EA580C')
+  let afterColor  = $state('#EA580C')
+
+  // DOM refs
+  let beforeEl: HTMLDivElement | undefined = $state()
+  let afterEl:  HTMLDivElement | undefined = $state()
+  let beforePanelEl: HTMLDivElement | undefined = $state()
+  let afterPanelEl:  HTMLDivElement | undefined = $state()
+
+  // ── Timers & anims ─────────────────────────────────────────────────────────
   let timers: ReturnType<typeof setTimeout>[] = []
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let activeAnims: any[] = []
   function t(fn: () => void, ms: number) { const id = setTimeout(fn, ms); timers.push(id); return id }
   function clearTimers() { timers.forEach(clearTimeout); timers = [] }
+  function clearAnims()  { activeAnims.forEach(a => { try { a.pause?.() } catch {} }); activeAnims = [] }
+  function clearAll()    { clearTimers(); clearAnims() }
 
   // ── Timing (ms) ────────────────────────────────────────────────────────────
-  const T_PLAIN     = 700   // show plain formula
-  const T_POP       = 500   // highlighted + katex-pop plays
-  const T_OUT       = 280   // morph-out animation duration (must match CSS)
-  const T_IN        = 340   // morph-in animation duration (must match CSS)
-  const T_GAP       = 40    // brief pause between out & in
+  const T_BEFORE  = 700   // hold before-highlighted
+  const T_AFTER   = 700   // hold after-highlighted
+  const T_CHAIN   = 380   // after→before morph duration
+  const T_SETTLE  = 60    // gap after chain before next step
+
+  // ── katex-pop on a container's colored spans ───────────────────────────────
+  function popColoredSpans(container: HTMLElement | undefined) {
+    if (!container) return
+    const targets = Array.from(container.querySelectorAll<HTMLElement>('.katex [style*="color:"]'))
+    if (!targets.length) return
+    targets.forEach(el => { el.style.display = 'inline-block' })
+    const a = animate(targets, {
+      scale:    [1, 1.30, 1.08, 1],
+      duration: 480,
+      delay:    stagger(55),
+      easing:   'cubicBezier(0.34, 1.56, 0.64, 1)',
+      onComplete: () => { activeAnims = activeAnims.filter(x => x !== a) }
+    })
+    activeAnims.push(a)
+  }
+
+  // ── Chain morph: after panel flies into before position ───────────────────
+  // We use a FLIP: snapshot after's rect, move it to where before is, animate
+  function chainMorph(onComplete: () => void) {
+    if (!beforePanelEl || !afterPanelEl) { onComplete(); return }
+
+    const bRect = beforePanelEl.getBoundingClientRect()
+    const aRect = afterPanelEl.getBoundingClientRect()
+
+    // dx/dy from after's current position to before's position
+    const dx = bRect.left - aRect.left
+    const dy = bRect.top  - aRect.top
+
+    // Fade out before panel
+    const a1 = animate(beforePanelEl, {
+      opacity:  [1, 0],
+      scale:    [1, 0.94],
+      duration: T_CHAIN * 0.45,
+      easing:   'easeInCubic',
+      onComplete: () => { activeAnims = activeAnims.filter(x => x !== a1) }
+    })
+    activeAnims.push(a1)
+
+    // After panel: fly from its position to where before was
+    afterPanelEl.style.position = 'relative'
+    const a2 = animate(afterPanelEl, {
+      translateX: [0, dx],
+      translateY: [0, dy],
+      scale:      [1, 0.96],
+      duration:   T_CHAIN,
+      easing:     'cubicBezier(0.4, 0, 0.2, 1)',
+      onComplete: () => {
+        // Reset transforms
+        afterPanelEl!.style.transform = ''
+        afterPanelEl!.style.position = ''
+        activeAnims = activeAnims.filter(x => x !== a2)
+        onComplete()
+      }
+    })
+    activeAnims.push(a2)
+
+    // Also fade out the arrow
+    const arrowEl = beforePanelEl.parentElement?.querySelector<HTMLElement>('.step-arrow')
+    if (arrowEl) {
+      const a3 = animate(arrowEl, {
+        opacity: [1, 0],
+        duration: T_CHAIN * 0.4,
+        easing: 'easeInCubic',
+        onComplete: () => { activeAnims = activeAnims.filter(x => x !== a3) }
+      })
+      activeAnims.push(a3)
+    }
+  }
 
   // ── Core step runner ───────────────────────────────────────────────────────
   function runStep(index: number) {
-    if (index >= steps.length) { phase = 'done'; boxClass = ''; contentClass = ''; return }
+    if (index >= steps.length) { phase = 'done'; return }
 
-    const s = steps[index]
+    const s    = steps[index]
+    const next = steps[index + 1]
+
     currentIndex = index
-    phase        = 'show-plain'
+    phase        = 'show-before'
 
-    // Snap-show plain formula, start morph-in on content only
-    displayLatex = s.expr_latex ?? ''
-    boxClass     = ''
-    contentClass = 'is-morphing-in'
+    // Set panel content
+    beforeLatex      = s.expr_latex ?? ''
+    beforeHighlighted = s.highlighted_latex ?? s.expr_latex ?? ''
+    beforeColor      = s.highlight_color ?? '#EA580C'
 
-    // After morph-in animation finishes, settle to plain
-    t(() => { contentClass = '' }, T_IN)
+    afterLatex       = next?.expr_latex ?? ''
+    afterHighlighted  = next?.highlighted_latex ?? next?.expr_latex ?? ''
+    afterColor       = next?.highlight_color ?? '#EA580C'
 
-    if (!autoMode) return   // manual: stop here
+    // Start with plain versions, before lit
+    beforeDisplay = beforeLatex
+    afterDisplay  = afterLatex
+    beforeLit     = false
+    afterLit      = false
 
-    // 1. After T_PLAIN: show highlighted
+    // Reset panel opacities (in case coming from chain-out)
+    if (beforePanelEl) { beforePanelEl.style.opacity = '1'; beforePanelEl.style.transform = '' }
+    if (afterPanelEl)  { afterPanelEl.style.opacity  = '1'; afterPanelEl.style.transform  = '' }
+    const arrowEl = beforePanelEl?.parentElement?.querySelector<HTMLElement>('.step-arrow')
+    if (arrowEl) arrowEl.style.opacity = '1'
+
+    if (!autoMode) return
+
+    // 1. Light up before
     t(() => {
-      phase        = 'highlight'
-      displayLatex = s.highlighted_latex ?? s.expr_latex ?? ''
-      boxClass     = 'is-highlighted'
-      contentClass = ''
+      beforeDisplay = beforeHighlighted
+      beforeLit     = true
+      t(() => popColoredSpans(beforeEl), 30)
 
       if (!autoMode) return
 
-      // 2. After T_POP: morph out
+      // 2. After T_BEFORE: dim before, light up after
       t(() => {
-        doMorphOut(index)
-      }, T_POP)
+        phase         = 'show-after'
+        beforeDisplay = beforeLatex   // back to plain
+        beforeLit     = false
+        afterDisplay  = afterHighlighted
+        afterLit      = true
+        t(() => popColoredSpans(afterEl), 30)
 
-    }, T_PLAIN + T_IN)   // wait for morph-in to finish first
-  }
+        if (!autoMode) return
 
-  function doMorphOut(index: number) {
-    const s = steps[index]
-    phase        = 'morph-out'
-    boxClass     = ''          // remove highlight glow immediately
-    contentClass = 'is-morphing-out'
+        // 3. After T_AFTER: chain morph
+        t(() => {
+          if (!next) {
+            // Last step — fade both out then show result
+            phase = 'chain-out'
+            if (beforePanelEl) {
+              const a = animate(beforePanelEl, { opacity: [1, 0], duration: 300, easing: 'easeInCubic', onComplete: () => { activeAnims = activeAnims.filter(x => x !== a) } })
+              activeAnims.push(a)
+            }
+            if (afterPanelEl) {
+              const a = animate(afterPanelEl, { opacity: [1, 0], duration: 300, easing: 'easeInCubic', onComplete: () => { activeAnims = activeAnims.filter(x => x !== a) } })
+              activeAnims.push(a)
+            }
+            t(() => { phase = 'done' }, 320)
+            return
+          }
 
-    // Midway through out-anim: swap the latex so it's invisible when content changes
-    t(() => {
-      const next = steps[index + 1]
-      displayLatex = next?.expr_latex ?? ''
-    }, T_OUT / 2)
+          phase = 'chain-out'
+          afterLit = false
+          chainMorph(() => {
+            t(() => runStep(index + 1), T_SETTLE)
+          })
+        }, T_AFTER)
 
-    // After out-anim: start morph-in with next step's content
-    t(() => {
-      t(() => runStep(index + 1), T_GAP)
-    }, T_OUT)
+      }, T_BEFORE)
+    }, 40)
   }
 
   // ── Manual advance ─────────────────────────────────────────────────────────
   function advanceManual() {
-    clearTimers()
-    if (phase === 'show-plain') {
-      // → highlight
+    clearAll()
+    if (phase === 'show-before') {
       const s = steps[currentIndex]
-      phase        = 'highlight'
-      displayLatex = s.highlighted_latex ?? s.expr_latex ?? ''
-      boxClass     = 'is-highlighted'
-      contentClass = ''
-    } else if (phase === 'highlight') {
-      // → morph out → next step
-      doMorphOut(currentIndex)
+      beforeDisplay = s.highlighted_latex ?? s.expr_latex ?? ''
+      beforeLit     = true
+      t(() => popColoredSpans(beforeEl), 30)
+      phase = 'show-after'   // allow next click to proceed
+      // Actually keep in show-before until next click — we show the highlight now
+      phase = 'show-before'
+    } else if (phase === 'show-after' || phase === 'show-before') {
+      // Move to after highlight
+      const s    = steps[currentIndex]
+      const next = steps[currentIndex + 1]
+      phase         = 'show-after'
+      beforeDisplay = s.expr_latex ?? ''
+      beforeLit     = false
+      afterDisplay  = next?.highlighted_latex ?? next?.expr_latex ?? ''
+      afterLit      = true
+      t(() => popColoredSpans(afterEl), 30)
     }
+  }
+
+  function advanceManualNext() {
+    clearAll()
+    const next = steps[currentIndex + 1]
+    if (!next) { phase = 'done'; return }
+    phase    = 'chain-out'
+    afterLit = false
+    chainMorph(() => {
+      t(() => runStep(currentIndex + 1), T_SETTLE)
+    })
   }
 
   // ── Reset when steps change ────────────────────────────────────────────────
   $effect(() => {
     const _len = steps.length
-    clearTimers()
-    currentIndex = 0
-    phase        = 'idle'
-    displayLatex = ''
-    boxClass     = ''
-    contentClass = ''
-    copyDone     = false
+    clearAll()
+    currentIndex  = 0
+    phase         = _len > 0 ? 'show-before' : 'idle'
+    beforeLatex   = ''
+    afterLatex    = ''
+    beforeDisplay = ''
+    afterDisplay  = ''
+    beforeLit     = false
+    afterLit      = false
+    copyDone      = false
     if (!_len) return
-    t(() => runStep(0), 200)
-    return () => clearTimers()
+    t(() => runStep(0), 80)
+    return () => clearAll()
+  })
+
+  // ── Stop auto when switching to Manual ────────────────────────────────────
+  $effect(() => {
+    if (!autoMode && (phase === 'show-before' || phase === 'show-after')) {
+      clearTimers()
+      clearAnims()
+    }
   })
 
   // ── Derived ────────────────────────────────────────────────────────────────
-  const step         = $derived(steps[currentIndex] ?? null)
-  const hColor       = $derived(step?.highlight_color ?? '#EA580C')
-  const isHighlight  = $derived(phase === 'highlight')
-  const isDone       = $derived(phase === 'done')
-  const showManual   = $derived(!autoMode && (phase === 'show-plain' || phase === 'highlight'))
+  const step        = $derived(steps[currentIndex] ?? null)
+  const nextStep    = $derived(steps[currentIndex + 1] ?? null)
+  const isDone      = $derived(phase === 'done')
+  const showManual  = $derived(!autoMode && (phase === 'show-before' || phase === 'show-after'))
+  const manualPhase = $derived(
+    phase === 'show-before' && !beforeLit ? 'see-before' :
+    phase === 'show-before' && beforeLit  ? 'see-after'  :
+    phase === 'show-after'  && !afterLit  ? 'see-after'  :
+    'next'
+  )
 
   async function copyLatex() {
     const text = result?.latex ?? result?.result ?? ''
@@ -171,7 +325,7 @@
   class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden"
   aria-label="Resolución paso a paso"
 >
-  {#if phase !== 'idle'}
+  {#if steps.length > 0}
 
     <!-- Header -->
     <div
@@ -201,14 +355,13 @@
       </div>
     </div>
 
-    <div class="p-5 space-y-4" aria-live="polite" aria-atomic="true">
+    <div class="p-5 space-y-5" aria-live="polite" aria-atomic="true">
 
       <!-- Progress dots -->
       {#if !isDone && steps.length > 1}
         <div class="flex items-center justify-center gap-1.5 flex-wrap">
           {#each steps as s, i}
             <button
-              onclick={() => { if (!autoMode) { clearTimers(); runStep(i) } }}
               title="Paso {s.step_number}"
               aria-current={i === currentIndex ? 'step' : undefined}
               class="rounded-full transition-all duration-300 cursor-default
@@ -220,39 +373,58 @@
         </div>
       {/if}
 
-      <!-- ── THE single morphing box ───────────────────────────────────────── -->
-      {#if !isDone && step}
-        <div class="math-box-outer">
-          <!--
-            One element. CSS keyframes drive:
-              .is-morphing-in  → scale(0.88)+blur(5px) → normal
-              .is-highlighted  → border glow, colored spans do katex-pop
-              .is-morphing-out → normal → scale(1.1)+blur(6px)+opacity(0)
-            Content (displayLatex) only swaps mid-morph-out when invisible.
-          -->
+      <!-- ── Before / After panels ──────────────────────────────────────────── -->
+      {#if !isDone}
+        <div class="before-after-row">
+
+          <!-- BEFORE panel -->
           <div
-            class="math-box {boxClass}"
-            style="--hc: {hColor}"
+            class="math-panel {beforeLit ? 'is-lit' : 'is-dim'}"
+            style="--pc: {beforeColor}"
+            bind:this={beforePanelEl}
           >
-            <div class="math-content {contentClass}">
-              <MathRenderer latex={displayLatex} inline={false} />
+            <div class="panel-label">Antes</div>
+            <div class="panel-math" bind:this={beforeEl}>
+              <MathRenderer latex={beforeDisplay} inline={false} />
             </div>
           </div>
-        </div>
 
-        <!-- Step label -->
+          <!-- Arrow -->
+          <div class="step-arrow" aria-hidden="true">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <path d="M6 14h16M16 8l6 6-6 6" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- AFTER panel -->
+          <div
+            class="math-panel {afterLit ? 'is-lit' : 'is-dim'}"
+            style="--pc: {afterColor}"
+            bind:this={afterPanelEl}
+          >
+            <div class="panel-label">Después</div>
+            <div class="panel-math" bind:this={afterEl}>
+              <MathRenderer latex={afterDisplay} inline={false} />
+            </div>
+          </div>
+
+        </div>
+      {/if}
+
+      <!-- Step label -->
+      {#if !isDone && step}
         {#key currentIndex}
           <div
-            in:fade={{ duration: 200, delay: 60, easing: cubicOut }}
+            in:fade={{ duration: 200, delay: 40, easing: cubicOut }}
             class="flex items-start justify-between gap-3 px-1"
           >
             <div class="flex items-center gap-2 min-w-0">
               <span class="shrink-0 w-6 h-6 rounded-full text-[11px] font-bold
-                           flex items-center justify-center bg-orange-500 text-white"
-              >{step.step_number}</span>
-              <p class="text-sm font-semibold text-gray-700 leading-snug truncate">
-                {step.description}
-              </p>
+                           flex items-center justify-center bg-orange-500 text-white">
+                {step.step_number}
+              </span>
+              <p class="text-sm font-semibold text-gray-700 leading-snug">{step.description}</p>
             </div>
             {#if step.rule_name}
               <span class="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full {rulePill(step.highlight_color)}">
@@ -261,31 +433,34 @@
             {/if}
           </div>
         {/key}
+      {/if}
 
-        <!-- Explanation (only during highlight) -->
-        {#if step.explanation && isHighlight}
-          <div in:fade={{ duration: 200, delay: 80 }} class="flex items-start gap-1.5 px-1">
-            <svg class="shrink-0 w-3.5 h-3.5 mt-0.5 text-gray-400" fill="none"
-                 viewBox="0 0 16 16" stroke="currentColor" stroke-width="1.5">
-              <circle cx="8" cy="8" r="6.5"/>
-              <path stroke-linecap="round" d="M8 7.5v4M8 5.5h.01"/>
-            </svg>
-            <p class="text-xs text-gray-500 leading-relaxed">{step.explanation}</p>
-          </div>
-        {/if}
-
-        <!-- Manual button -->
-        {#if showManual}
-          <button
-            in:fade={{ duration: 160 }}
-            onclick={advanceManual}
-            class="w-full flex items-center justify-center gap-2 py-3 rounded-xl
-                   border-2 border-dashed border-orange-300 text-orange-600 font-semibold text-sm
-                   hover:bg-orange-50 transition-colors duration-150 cursor-pointer"
-          >
-            {phase === 'show-plain' ? 'Ver resaltado →' : 'Siguiente paso →'}
-          </button>
-        {/if}
+      <!-- Manual buttons -->
+      {#if showManual}
+        <div class="flex gap-2">
+          {#if manualPhase !== 'next'}
+            <button
+              in:fade={{ duration: 160 }}
+              onclick={advanceManual}
+              class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl
+                     border-2 border-dashed border-orange-300 text-orange-600 font-semibold text-sm
+                     hover:bg-orange-50 transition-colors duration-150 cursor-pointer"
+            >
+              {phase === 'show-before' && !beforeLit ? 'Ver antes →' : 'Ver después →'}
+            </button>
+          {/if}
+          {#if phase === 'show-after' && afterLit}
+            <button
+              in:fade={{ duration: 160 }}
+              onclick={advanceManualNext}
+              class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl
+                     bg-orange-500 text-white font-semibold text-sm
+                     hover:bg-orange-600 transition-colors duration-150 cursor-pointer"
+            >
+              Siguiente paso →
+            </button>
+          {/if}
+        </div>
       {/if}
 
       <!-- Final result -->
@@ -350,80 +525,76 @@
 </section>
 
 <style>
-  /* ── Container ───────────────────────────────────────────────────────────── */
-  .math-box-outer {
-    position: relative;
-    min-height: 96px;
+  /* ── Before / After row ──────────────────────────────────────────────────── */
+  .before-after-row {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 0.75rem;
   }
 
-  /* ── The fixed box — border/background never disappear ───────────────────── */
-  .math-box {
-    width: 100%;
-    border-radius: 1rem;
+  .step-arrow {
+    flex-shrink: 0;
+    color: #d1d5db;
+    transition: color 300ms ease;
+  }
+
+  /* ── Individual panel ────────────────────────────────────────────────────── */
+  .math-panel {
+    flex: 1;
+    min-width: 0;
+    border-radius: 0.875rem;
     border: 2px solid #e5e7eb;
-    padding: 1.25rem;
+    padding: 0.875rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+    transition: border-color 300ms ease, box-shadow 300ms ease, opacity 300ms ease;
+    will-change: opacity, transform;
+  }
+
+  .math-panel.is-dim {
+    opacity: 0.38;
+    border-color: #e5e7eb;
+    box-shadow: none;
+  }
+
+  .math-panel.is-lit {
+    opacity: 1;
+    border-color: color-mix(in srgb, var(--pc) 55%, transparent);
+    box-shadow:
+      0 0 0 3px color-mix(in srgb, var(--pc) 10%, transparent),
+      0 6px 24px color-mix(in srgb, var(--pc) 14%, transparent);
+  }
+
+  /* When before is lit, arrow gets its color */
+  .math-panel.is-lit + .step-arrow {
+    color: #9ca3af;
+  }
+
+  /* ── Panel label ─────────────────────────────────────────────────────────── */
+  .panel-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #9ca3af;
+    transition: color 300ms ease;
+  }
+
+  .math-panel.is-lit .panel-label {
+    color: color-mix(in srgb, var(--pc) 80%, #374151);
+  }
+
+  /* ── Math content inside panel ───────────────────────────────────────────── */
+  .panel-math {
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Smooth border/shadow transitions for highlight state */
-    transition: border-color 200ms ease, box-shadow 200ms ease;
+    min-height: 2.5rem;
   }
 
-  /* ── Highlight state on the box: border glow only ───────────────────────── */
-  .math-box.is-highlighted {
-    border-color: color-mix(in srgb, var(--hc) 60%, transparent);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--hc) 10%, transparent),
-                0 8px 28px color-mix(in srgb, var(--hc) 12%, transparent);
-  }
-
-  /* ── Inner content wrapper — this is what morphs ────────────────────────── */
-  .math-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    transform-origin: center center;
-    will-change: transform, opacity, filter;
-  }
-
-  /* ── 1. Morph-IN: formula emerges from a blur ────────────────────────────── */
-  @keyframes morph-in {
-    0%   { opacity: 0; transform: scale(0.88); filter: blur(5px); }
-    60%  { opacity: 1; filter: blur(0px); }
-    100% { opacity: 1; transform: scale(1);    filter: blur(0px); }
-  }
-
-  .math-content.is-morphing-in {
-    animation: morph-in 340ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
-  }
-
-  /* ── 2. Morph-OUT: formula blurs out ─────────────────────────────────────── */
-  @keyframes morph-out {
-    0%   { opacity: 1; transform: scale(1);    filter: blur(0px); }
-    100% { opacity: 0; transform: scale(1.1);  filter: blur(6px); }
-  }
-
-  .math-content.is-morphing-out {
-    animation: morph-out 280ms cubic-bezier(0.4, 0, 1, 1) forwards;
-  }
-
-  /* ── 3. Photomath katex-pop on colored sub-expressions ───────────────────── */
-  @keyframes katex-pop {
-    0%   { transform: scale(1);    filter: brightness(1)   drop-shadow(0 0 0px   currentColor); }
-    35%  { transform: scale(1.22); filter: brightness(1.4) drop-shadow(0 0 10px  currentColor); }
-    65%  { transform: scale(1.1);  filter: brightness(1.2) drop-shadow(0 0 6px   currentColor); }
-    100% { transform: scale(1);    filter: brightness(1)   drop-shadow(0 0 0px   currentColor); }
-  }
-
-  :global(.math-box.is-highlighted .katex [style*="color:"]) {
+  /* ── katex-pop on lit colored spans ─────────────────────────────────────── */
+  :global(.math-panel.is-lit .katex [style*="color:"]) {
     display: inline-block;
-    animation: katex-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
-  :global(.math-box.is-highlighted .katex [style*="color:"]:nth-child(2)) { animation-delay: 0.07s; }
-  :global(.math-box.is-highlighted .katex [style*="color:"]:nth-child(3)) { animation-delay: 0.14s; }
-  :global(.math-box.is-highlighted .katex [style*="color:"]:nth-child(4)) { animation-delay: 0.21s; }
-  :global(.math-box.is-highlighted .katex [style*="color:"]:nth-child(5)) { animation-delay: 0.28s; }
 </style>

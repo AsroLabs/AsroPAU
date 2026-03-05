@@ -74,15 +74,15 @@ test('Solving an equation renders the step-by-step section', async ({ page }) =>
   expect(jsErrors).toHaveLength(0)
 })
 
-// ── Test 4: Steps actually appear (MorphSolver single-box) ──────────────────
+// ── Test 4: Steps actually appear (before/after panels) ─────────────────────
 test('At least one step card appears after solving', async ({ page }) => {
   const jsErrors: string[] = []
   page.on('pageerror', err => jsErrors.push(err.message))
 
   await solveProblem(page, '2x + 4 = 10')
 
-  // MorphSolver renders a single morphing math box with class .math-box
-  const morphBox = page.locator('section[aria-label="Resolución paso a paso"] .math-box').first()
+  // MorphSolver renders before/after panels with class .math-panel
+  const morphBox = page.locator('section[aria-label="Resolución paso a paso"] .math-panel').first()
   await expect(morphBox).toBeVisible({ timeout: 10000 })
 
   expect(jsErrors).toHaveLength(0)
@@ -167,9 +167,9 @@ test('Step cards have correct opacity (not invisible due to broken transform)', 
   // Wait a bit for spring animation to settle
   await page.waitForTimeout(2000)
 
-  // Find the morphing math box (MorphSolver uses .math-box class, rounded-2xl border-2)
-  // and check its computed opacity is not 0
-  const firstCard = page.locator('section[aria-label="Resolución paso a paso"] .math-box').first()
+  // Find the before/after math panels (MorphSolver uses .math-panel class)
+  // and check computed opacity is not 0
+  const firstCard = page.locator('section[aria-label="Resolución paso a paso"] .math-panel').first()
   await expect(firstCard).toBeVisible()
 
   const opacity = await firstCard.evaluate(el => {
@@ -195,9 +195,10 @@ test('Switching to Manual mode shows Siguiente button', async ({ page }) => {
   await expect(manualBtn).toBeVisible({ timeout: 10000 })
   await manualBtn.click()
 
-  // "Siguiente →" button should appear
-  const nextBtn = page.locator('button:has-text("Siguiente")')
-  await expect(nextBtn).toBeVisible({ timeout: 3000 })
+  // MorphSolver shows "Ver antes →" in show-before phase, "Ver después →" in show-after phase,
+  // or "Siguiente paso →" to advance. Any of these means the manual advance button is working.
+  const nextBtn = page.locator('button:has-text("Ver antes"), button:has-text("Ver después"), button:has-text("Siguiente")')
+  await expect(nextBtn.first()).toBeVisible({ timeout: 3000 })
 
   expect(jsErrors).toHaveLength(0)
 })
@@ -271,17 +272,17 @@ test('Active step card shows colored KaTeX sub-expressions', async ({ page }) =>
   await expect(section).toBeVisible({ timeout: 10000 })
 
   // The first step enters its highlight phase ~320ms after appearing.
-  // Wait for a bit — .math-box.is-highlighted should exist with colored spans.
+  // Wait for a bit — .math-panel.is-lit should exist with colored spans.
   // We need to wait for the highlight phase of the first step.
   await page.waitForTimeout(1200)
 
-  // MorphSolver uses .math-box.is-highlighted during the highlight phase
+  // MorphSolver uses .math-panel.is-lit during the highlight phase
   let found = false
   for (let i = 0; i < 16; i++) {
-    const activeWrap = page.locator('.math-box.is-highlighted')
+    const activeWrap = page.locator('.math-panel.is-lit')
     const count = await activeWrap.count()
     if (count > 0) {
-      // Check that this active wrap has a colored span inside (from \textcolor)
+      // Check that this active panel has a colored span inside (from \textcolor)
       const coloredSpan = activeWrap.locator('[style*="color:"]').first()
       if (await coloredSpan.count() > 0) {
         found = true
