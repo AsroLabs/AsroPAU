@@ -564,7 +564,7 @@
 
         <!-- ── Function graph ─────────────────────────────────────────────── -->
         {#if result && ['expression', 'derivative', 'integral'].includes(result.type)}
-          <FunctionPlot expr={result.latex ?? result.result ?? ''} />
+          <FunctionPlot expr={result.result ?? result.latex ?? ''} />
         {/if}
       {/if}
 

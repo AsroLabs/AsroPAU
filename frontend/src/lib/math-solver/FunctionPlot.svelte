@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
 
   interface Props {
@@ -11,7 +10,6 @@
 
   let containerEl: HTMLDivElement | undefined = $state()
   let error = $state(false)
-  let ready = $state(false)
 
   // Convert SymPy syntax → function-plot / math.js syntax
   function toJsSyntax(s: string): string {
@@ -20,16 +18,11 @@
       .replace(/\bE\b/g, 'e')
       .replace(/\bpi\b/gi, 'pi')
       .replace(/\boo\b/g, 'Infinity')
-      .replace(/\bsqrt\(/g, 'sqrt(')
-      .replace(/\babs\(/g, 'abs(')
-      // sympy ln → natural log
       .replace(/\bln\(/g, 'log(')
-      // Remove "+ C" from integrals
       .replace(/\s*\+\s*C\s*$/i, '')
       .trim()
   }
 
-  // Only render if the expression contains x (i.e. is a function of x)
   function isPlottable(s: string): boolean {
     return /\bx\b/.test(s)
   }
@@ -37,28 +30,31 @@
   const clean = $derived(toJsSyntax(expr))
   const plottable = $derived(isPlottable(clean))
 
-  onMount(async () => {
+  $effect(() => {
     if (!plottable || !containerEl) return
-    try {
-      const functionPlot = (await import('function-plot')).default
-      functionPlot({
-        target: containerEl,
-        width: containerEl.offsetWidth || 480,
-        height: 260,
-        grid: true,
-        xAxis: { domain: [-6, 6] },
-        yAxis: { domain: [-8, 8] },
-        data: [{
-          fn: clean,
-          color: '#EA580C',
-          graphType: 'polyline',
-        }],
-      })
-      ready = true
-    } catch (e) {
-      console.warn('[FunctionPlot] render error:', e)
+    error = false
+    const fn = clean  // capture reactive value
+    // Clear previous plot
+    containerEl.innerHTML = ''
+    import('function-plot').then(({ default: functionPlot }) => {
+      try {
+        functionPlot({
+          target: containerEl!,
+          width: containerEl!.offsetWidth || 480,
+          height: 260,
+          grid: true,
+          xAxis: { domain: [-6, 6] },
+          yAxis: { domain: [-8, 8] },
+          data: [{ fn, color: '#EA580C', graphType: 'polyline' }],
+        })
+      } catch (e) {
+        console.warn('[FunctionPlot] render error:', e)
+        error = true
+      }
+    }).catch(e => {
+      console.warn('[FunctionPlot] import error:', e)
       error = true
-    }
+    })
   })
 </script>
 
