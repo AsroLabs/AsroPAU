@@ -110,29 +110,6 @@
       insertSymbol('**')
     }
   }
-
-  /** Normalize Unicode characters on paste/input so the field always holds clean SymPy syntax */
-  function handleInput() {
-    if (!inputEl) return
-    const raw = value
-    const clean = raw
-      .replace(/⁰/g, '**0').replace(/¹/g, '**1').replace(/²/g, '**2')
-      .replace(/³/g, '**3').replace(/⁴/g, '**4').replace(/⁵/g, '**5')
-      .replace(/⁶/g, '**6').replace(/⁷/g, '**7').replace(/⁸/g, '**8')
-      .replace(/⁹/g, '**9')
-      .replace(/\^/g, '**')
-      .replace(/[−–—]/g, '-')
-      .replace(/[×·]/g, '*')
-      .replace(/∞/g, 'oo')
-      .replace(/π/g, 'pi')
-      .replace(/→/g, '->')
-    if (clean !== raw) {
-      const pos = inputEl.selectionStart ?? clean.length
-      value = clean
-      // Restore cursor after Svelte updates the DOM
-      requestAnimationFrame(() => inputEl?.setSelectionRange(pos, pos))
-    }
-  }
 </script>
 
 <div class="flex flex-col gap-3">
@@ -155,7 +132,6 @@
     bind:this={inputEl}
     bind:value
     onkeydown={handleKeydown}
-    oninput={handleInput}
     type="text"
     id="math-expression"
     name="math-expression"
