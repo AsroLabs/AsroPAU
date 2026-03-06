@@ -222,7 +222,7 @@
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: #0f172a;
+    background: #f9fafb;
     display: flex;
     flex-direction: column;
     overscroll-behavior: contain;
@@ -237,8 +237,9 @@
     align-items: center;
     justify-content: space-between;
     padding: 0.875rem 1.25rem;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid #e5e7eb;
     flex-shrink: 0;
+    background: white;
   }
 
   .fs-label {
@@ -246,7 +247,7 @@
     font-weight: 700;
     letter-spacing: 0.07em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.4);
+    color: #9ca3af;
   }
 
   .close-btn {
@@ -255,9 +256,9 @@
     gap: 0.4rem;
     padding: 0.4rem 0.875rem;
     border-radius: 0.625rem;
-    border: 1px solid rgba(255,255,255,0.15);
-    background: rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.85);
+    border: 1px solid #e5e7eb;
+    background: white;
+    color: #6b7280;
     font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
@@ -266,9 +267,9 @@
   }
 
   .close-btn:hover {
-    background: rgba(234,88,12,0.25);
-    border-color: rgba(234,88,12,0.5);
-    color: #fdba74;
+    background: #fff7ed;
+    border-color: #fed7aa;
+    color: #ea580c;
   }
 
   .close-btn:focus-visible {
