@@ -25,7 +25,7 @@
 
 <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
   <div class="flex items-center gap-3 mb-6">
-    <div class="w-5 h-5 bg-[#2b6cee] rounded-lg flex items-center justify-center text-white">
+    <div class="w-5 h-5 bg-orange-300 rounded-lg flex items-center justify-center text-white">
       <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
         <path d="M10.5 1.5H3.75A2.25 2.25 0 001.5 3.75v12.5A2.25 2.25 0 003.75 18.5h12.5a2.25 2.25 0 002.25-2.25V9.5" />
         <path d="M7 10l3 3 6-6" stroke="white" stroke-width="1.5" fill="none" />
@@ -38,7 +38,7 @@
   <div class="mb-8">
     <div class="flex justify-between items-center mb-3">
       <label for="bachGrade" class="text-sm font-medium text-slate-600">Media de Bachillerato (60%)</label>
-      <span class="text-xs font-bold text-[#2b6cee] bg-[#2b6cee]/10 px-2 py-0.5 rounded">Requerido</span>
+      <span class="text-xs font-bold text-orange-300 bg-orange-300/10 px-2 py-0.5 rounded">Requerido</span>
     </div>
     <input 
       id="bachGrade"
@@ -47,7 +47,7 @@
       step="0.01" min="0" max="10"
       name="bachGrade"
       autocomplete="off"
-      class="w-full bg-slate-50 border-slate-200 rounded-lg py-3 px-4 text-lg focus-visible:ring-2 focus-visible:ring-[#2b6cee] focus-visible:border-transparent outline-none transition-[border-color,box-shadow]"
+      class="w-full bg-slate-50 border-slate-200 rounded-lg py-3 px-4 text-lg focus-visible:ring-2 focus-visible:ring-orange-300 focus-visible:border-transparent outline-none transition-[border-color,box-shadow]"
       placeholder="Ej: 8.75"
     />
   </div>
@@ -70,7 +70,7 @@
           step="0.01" min="0" max="10"
           name="accesoLengua"
           autocomplete="off"
-          class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-[#2b6cee] outline-none transition-[border-color,box-shadow]"
+          class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-orange-300 outline-none transition-[border-color,box-shadow]"
           placeholder="0.00"
         />
       </div>
@@ -84,7 +84,7 @@
           step="0.01" min="0" max="10"
           name="accesoHistoriaFilosofia"
           autocomplete="off"
-          class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-[#2b6cee] outline-none transition-[border-color,box-shadow]"
+          class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-orange-300 outline-none transition-[border-color,box-shadow]"
           placeholder="0.00"
         />
       </div>
@@ -98,7 +98,7 @@
           step="0.01" min="0" max="10"
           name="accesoIngles"
           autocomplete="off"
-          class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-[#2b6cee] outline-none transition-[border-color,box-shadow]"
+          class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-orange-300 outline-none transition-[border-color,box-shadow]"
           placeholder="0.00"
         />
       </div>
@@ -111,7 +111,7 @@
             bind:value={accesoTroncal}
             name="accesoTroncal"
             autocomplete="off"
-            class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-[#2b6cee] outline-none transition-[border-color,box-shadow]"
+            class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-orange-300 outline-none transition-[border-color,box-shadow]"
           >
             <option value="">Selecciona asignatura...</option>
             {#each TRONCALES_OPTIONS as option}
@@ -128,7 +128,7 @@
             step="0.01" min="0" max="10"
             name="accesoTroncalGrade"
             autocomplete="off"
-            class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-[#2b6cee] outline-none transition-[border-color,box-shadow]"
+            class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-orange-300 outline-none transition-[border-color,box-shadow]"
             placeholder="0.00"
           />
         </div>
@@ -156,7 +156,7 @@
               bind:value={subject.name}
               name="admision-asignatura-{i}"
               autocomplete="off"
-              class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-[#2b6cee] outline-none transition-[border-color,box-shadow]"
+              class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-orange-300 outline-none transition-[border-color,box-shadow]"
             >
               <option value="">Selecciona asignatura...</option>
               {#each ADMISION_OPTIONS as option}
@@ -173,7 +173,7 @@
               step="0.01" min="0" max="10"
               name="admision-grade-{i}"
               autocomplete="off"
-              class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-[#2b6cee] outline-none transition-[border-color,box-shadow]"
+              class="w-full bg-white border-slate-200 rounded-lg text-sm p-2 focus-visible:ring-2 focus-visible:ring-orange-300 outline-none transition-[border-color,box-shadow]"
               placeholder="0.00"
             />
           </div>
@@ -184,7 +184,7 @@
             <button 
               type="button"
               aria-label="Ponderación 0.0"
-              class="flex-1 py-1 text-xs font-medium rounded-md transition-colors {subject.weight === 0.0 ? 'bg-white shadow-sm text-[#2b6cee]' : 'text-slate-500'}"
+              class="flex-1 py-1 text-xs font-medium rounded-md transition-colors {subject.weight === 0.0 ? 'bg-white shadow-sm text-orange-300' : 'text-slate-500'}"
               onclick={() => subject.weight = 0.0}
             >
               0.0
@@ -192,7 +192,7 @@
             <button 
               type="button"
               aria-label="Ponderación 0.1"
-              class="flex-1 py-1 text-xs font-medium rounded-md transition-colors {subject.weight === 0.1 ? 'bg-white shadow-sm text-[#2b6cee]' : 'text-slate-500'}"
+              class="flex-1 py-1 text-xs font-medium rounded-md transition-colors {subject.weight === 0.1 ? 'bg-white shadow-sm text-orange-300' : 'text-slate-500'}"
               onclick={() => subject.weight = 0.1}
             >
               0.1
@@ -200,7 +200,7 @@
             <button 
               type="button"
               aria-label="Ponderación 0.2"
-              class="flex-1 py-1 text-xs font-medium rounded-md transition-colors {subject.weight === 0.2 ? 'bg-white shadow-sm text-[#2b6cee]' : 'text-slate-500'}"
+              class="flex-1 py-1 text-xs font-medium rounded-md transition-colors {subject.weight === 0.2 ? 'bg-white shadow-sm text-orange-300' : 'text-slate-500'}"
               onclick={() => subject.weight = 0.2}
             >
               0.2
@@ -212,8 +212,8 @@
   </div>
 </div>
 
-<div class="bg-[#2b6cee]/5 rounded-xl border border-[#2b6cee]/20 p-4 flex items-start gap-3 mt-6">
-  <Info class="text-[#2b6cee] shrink-0" size={18} aria-hidden="true" />
+<div class="bg-orange-300/5 rounded-xl border border-orange-300/20 p-4 flex items-start gap-3 mt-6">
+  <Info class="text-orange-300 shrink-0" size={18} aria-hidden="true" />
   <p class="text-xs leading-relaxed text-slate-600">
     La nota final se calcula automáticamente sumando el 60% de tu media de Bachillerato y el 40% de la Fase de Acceso. La Fase de Admisión puede sumar hasta +0.4 puntos adicionales.
   </p>

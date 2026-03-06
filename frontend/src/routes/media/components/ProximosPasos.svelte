@@ -2,7 +2,7 @@
   import { CheckCircle } from '@lucide/svelte';
 </script>
 
-<div class="bg-[#2b6cee] p-6 rounded-xl text-white">
+<div class="bg-orange-300 p-6 rounded-xl text-white">
   <h3 class="text-sm font-bold mb-2">Próximos Pasos</h3>
   <ul class="space-y-3">
     <li class="flex items-center gap-2 text-xs">

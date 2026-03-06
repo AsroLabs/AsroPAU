@@ -76,7 +76,7 @@
             name="filterTitle"
             autocomplete="off"
             aria-label="Buscar grado universitario"
-            class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm w-full focus-visible:ring-2 focus-visible:ring-[#2b6cee] outline-none transition-[box-shadow]"
+            class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm w-full focus-visible:ring-2 focus-visible:ring-orange-300 outline-none transition-[box-shadow]"
             placeholder="Buscar grado universitario…"
           />
         </div>
@@ -89,7 +89,7 @@
             name="filterLocation"
             autocomplete="off"
             aria-label="Filtrar por localidad"
-            class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm w-full focus-visible:ring-2 focus-visible:ring-[#2b6cee] outline-none transition-[box-shadow]"
+            class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm w-full focus-visible:ring-2 focus-visible:ring-orange-300 outline-none transition-[box-shadow]"
             placeholder="Filtrar por localidad…"
           />
         </div>

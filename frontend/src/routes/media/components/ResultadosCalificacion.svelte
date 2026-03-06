@@ -26,7 +26,7 @@
     <div class="w-px h-8 bg-slate-200"></div>
     <div class="text-center">
       <p class="text-[10px] text-slate-400 font-bold uppercase">Fase Admisión</p>
-      <p class="text-sm font-semibold text-[#2b6cee]">+ {formatGrade(admisionPart)}</p>
+      <p class="text-sm font-semibold text-orange-300">+ {formatGrade(admisionPart)}</p>
     </div>
   </div>
 </div>
