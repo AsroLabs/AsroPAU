@@ -4,6 +4,7 @@
   import { animate, stagger } from 'animejs'
   import MathRenderer from './MathRenderer.svelte'
   import RulePopup from './RulePopup.svelte'
+  import FunctionPlot from './FunctionPlot.svelte'
 
   interface Step {
     step_number:        number
@@ -151,7 +152,17 @@
     const arrowEl = beforePanelEl?.parentElement?.querySelector<HTMLElement>('.step-arrow')
     if (arrowEl) arrowEl.style.opacity = '1'
 
-    if (!autoMode) return
+    if (!autoMode) {
+      // Manual mode: immediately show both panels with highlighted content
+      // User can click each panel to toggle its highlight
+      phase         = 'show-after'  // park in show-after so "Siguiente paso" shows
+      beforeDisplay = beforeHighlighted
+      afterDisplay  = afterHighlighted
+      beforeLit     = true
+      afterLit      = true
+      t(() => { popColoredSpans(beforeEl); popColoredSpans(afterEl) }, 30)
+      return
+    }
 
     // 1. Light up before
     t(() => {
@@ -202,29 +213,20 @@
     }, 40)
   }
 
-  // ── Manual advance ─────────────────────────────────────────────────────────
-  function advanceManual() {
-    clearAll()
-    const p = phase as string
-    if (p === 'show-before' && !beforeLit) {
-      // First click: show before highlight
-      const s = steps[currentIndex]
-      beforeDisplay = s.highlighted_latex ?? s.expr_latex ?? ''
-      beforeLit     = true
-      t(() => popColoredSpans(beforeEl), 30)
-    } else if (p === 'show-after' || (p === 'show-before' && beforeLit)) {
-      // Second click: advance to after highlight
-      const s    = steps[currentIndex]
-      const next = steps[currentIndex + 1]
-      phase         = 'show-after'
-      beforeDisplay = s.expr_latex ?? ''
-      beforeLit     = false
-      afterDisplay  = next?.highlighted_latex ?? next?.expr_latex ?? ''
-      afterLit      = true
-      t(() => popColoredSpans(afterEl), 30)
-    }
+  // ── Manual panel clicks ────────────────────────────────────────────────────
+  function toggleBeforePanel() {
+    if (!showManual) return
+    beforeLit = !beforeLit
+    if (beforeLit) t(() => popColoredSpans(beforeEl), 30)
   }
 
+  function toggleAfterPanel() {
+    if (!showManual) return
+    afterLit = !afterLit
+    if (afterLit) t(() => popColoredSpans(afterEl), 30)
+  }
+
+  // ── Manual next step ───────────────────────────────────────────────────────
   function advanceManualNext() {
     clearAll()
     const next = steps[currentIndex + 1]
@@ -271,12 +273,6 @@
   const nextStep    = $derived(steps[currentIndex + 1] ?? null)
   const isDone      = $derived(phase === 'done')
   const showManual  = $derived(!autoMode && (phase === 'show-before' || phase === 'show-after'))
-  const manualPhase = $derived(
-    phase === 'show-before' && !beforeLit ? 'see-before' :
-    phase === 'show-before' && beforeLit  ? 'see-after'  :
-    phase === 'show-after'  && !afterLit  ? 'see-after'  :
-    'next'
-  )
 
   async function copyLatex() {
     const text = result?.latex ?? result?.result ?? ''
@@ -363,9 +359,14 @@
 
           <!-- BEFORE panel -->
           <div
-            class="math-panel {beforeLit ? 'is-lit' : 'is-dim'}"
+            class="math-panel {beforeLit ? 'is-lit' : 'is-dim'} {showManual ? 'is-clickable' : ''}"
             style="--pc: {beforeColor}"
             bind:this={beforePanelEl}
+            onclick={toggleBeforePanel}
+            role={showManual ? 'button' : undefined}
+            tabindex={showManual ? 0 : undefined}
+            onkeydown={showManual ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleBeforePanel() } } : undefined}
+            aria-label={showManual ? 'Alternar resaltado del panel Antes' : undefined}
           >
             <div class="panel-label">Antes</div>
             <div class="panel-math" bind:this={beforeEl}>
@@ -383,9 +384,14 @@
 
           <!-- AFTER panel -->
           <div
-            class="math-panel {afterLit ? 'is-lit' : 'is-dim'}"
+            class="math-panel {afterLit ? 'is-lit' : 'is-dim'} {showManual ? 'is-clickable' : ''}"
             style="--pc: {afterColor}"
             bind:this={afterPanelEl}
+            onclick={toggleAfterPanel}
+            role={showManual ? 'button' : undefined}
+            tabindex={showManual ? 0 : undefined}
+            onkeydown={showManual ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleAfterPanel() } } : undefined}
+            aria-label={showManual ? 'Alternar resaltado del panel Después' : undefined}
           >
             <div class="panel-label">Después</div>
             <div class="panel-math" bind:this={afterEl}>
@@ -434,28 +440,15 @@
       <!-- Manual buttons -->
       {#if showManual}
         <div class="flex gap-2">
-          {#if manualPhase !== 'next'}
-            <button
-          in:fade={{ duration: prefersReduced ? 0 : 160 }}
-              onclick={advanceManual}
-              class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl
-                     border-2 border-dashed border-orange-300 text-orange-600 font-semibold text-sm
-                     hover:bg-orange-50 transition-colors duration-150 cursor-pointer"
-            >
-              {phase === 'show-before' && !beforeLit ? 'Ver antes →' : 'Ver después →'}
-            </button>
-          {/if}
-          {#if phase === 'show-after' && afterLit}
-            <button
-          in:fade={{ duration: prefersReduced ? 0 : 160 }}
-              onclick={advanceManualNext}
-              class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl
-                     bg-orange-500 text-white font-semibold text-sm
-                     hover:bg-orange-600 transition-colors duration-150 cursor-pointer"
-            >
-              Siguiente paso →
-            </button>
-          {/if}
+          <button
+            in:fade={{ duration: prefersReduced ? 0 : 160 }}
+            onclick={advanceManualNext}
+            class="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl
+                   bg-orange-500 text-white font-semibold text-sm
+                   hover:bg-orange-600 transition-colors duration-150 cursor-pointer"
+          >
+            Siguiente paso →
+          </button>
         </div>
       {/if}
 
@@ -571,6 +564,11 @@
             </ol>
           </div>
         {/if}
+
+        <!-- ── Function graph ─────────────────────────────────────────────── -->
+        {#if result && ['expression', 'derivative', 'integral'].includes(result.type)}
+          <FunctionPlot expr={result.latex ?? result.result ?? ''} />
+        {/if}
       {/if}
 
     </div>
@@ -625,6 +623,20 @@
     opacity: 0.38;
     border-color: #e5e7eb;
     box-shadow: none;
+  }
+
+  .math-panel.is-clickable {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .math-panel.is-clickable:hover {
+    border-color: color-mix(in srgb, var(--pc) 30%, transparent);
+    opacity: 0.72;
+  }
+
+  .math-panel.is-clickable.is-lit:hover {
+    opacity: 1;
   }
 
   .math-panel.is-lit {
