@@ -3,6 +3,7 @@
   import { backOut, cubicOut } from 'svelte/easing'
   import { animate, stagger } from 'animejs'
   import MathRenderer from './MathRenderer.svelte'
+  import RulePopup from './RulePopup.svelte'
 
   interface Step {
     step_number:        number
@@ -39,6 +40,7 @@
   let phase        = $state<Phase>('idle')
   let autoMode     = $state(true)
   let copyDone     = $state(false)
+  let whyOpen      = $state(false)
 
   // What each panel shows
   let beforeLatex  = $state('')   // always expr_latex of current step
@@ -245,9 +247,16 @@
     beforeLit     = false
     afterLit      = false
     copyDone      = false
+    whyOpen       = false
     if (!_len) return
     t(() => runStep(0), 80)
     return () => clearAll()
+  })
+
+  // ── Close why popup when step advances ────────────────────────────────────
+  $effect(() => {
+    currentIndex
+    whyOpen = false
   })
 
   // ── Stop auto when switching to Manual ────────────────────────────────────
@@ -403,9 +412,21 @@
               <p class="text-sm font-semibold text-gray-700 leading-snug">{step.description}</p>
             </div>
             {#if step.rule_name}
-              <span class="shrink-0 text-[10px] font-bold px-2 py-0.5 rounded-full {rulePill(step.highlight_color)}">
-                {step.rule_name}
-              </span>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full {rulePill(step.highlight_color)}">
+                  {step.rule_name}
+                </span>
+                <button
+                  type="button"
+                  onclick={() => whyOpen = true}
+                  aria-label="¿Por qué se aplica {step.rule_name}?"
+                  title="¿Por qué?"
+                  class="w-5 h-5 rounded-full bg-orange-100 text-orange-600 text-[11px] font-bold
+                         flex items-center justify-center leading-none
+                         hover:bg-orange-200 transition-colors cursor-pointer
+                         focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-400"
+                >?</button>
+              </div>
             {/if}
           </div>
         {/key}
@@ -544,6 +565,14 @@
     </div>
   {/if}
 </section>
+
+{#if whyOpen && step?.rule_name}
+  <RulePopup
+    ruleName={step.rule_name}
+    explanation={step.explanation}
+    onClose={() => whyOpen = false}
+  />
+{/if}
 
 <style>
   /* ── Before / After row ──────────────────────────────────────────────────── */
