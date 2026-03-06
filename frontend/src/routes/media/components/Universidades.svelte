@@ -2,6 +2,13 @@
   import { Search, MapPin, Landmark, CheckCircle, AlertCircle } from '@lucide/svelte';
   import { formatGrade } from '../lib';
 
+  // Map: university name → logo path (populated from manifest.json)
+  let LOGOS = $state<Record<string, string>>({});
+  fetch('/logos/manifest.json')
+    .then(r => r.json())
+    .then(data => { LOGOS = data; })
+    .catch(() => { /* logos remain empty — fallback to Landmark */ });
+
   interface Grado {
     id: number;
     title: string;
@@ -109,8 +116,18 @@
         <div class="p-6 hover:bg-slate-50 transition-colors">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="flex gap-4">
-              <div class="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center overflow-hidden">
-                <Landmark size={24} class="text-slate-400" aria-hidden="true" />
+              <div class="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center overflow-hidden flex-shrink-0">
+                {#if LOGOS[grado.university]}
+                  <img
+                    src="/{LOGOS[grado.university]}"
+                    alt={grado.university}
+                    class="w-full h-full object-contain p-1"
+                    loading="lazy"
+                    onerror={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                  />
+                {:else}
+                  <Landmark size={24} class="text-slate-400" aria-hidden="true" />
+                {/if}
               </div>
               <div>
                 <h4 class="font-bold text-slate-900">{grado.title}</h4>
