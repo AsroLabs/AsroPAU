@@ -51,10 +51,17 @@
 
   // Color per point kind
   const KIND_COLOR: Record<string, string> = {
-    root:       '#2563EB',   // blue
-    minimum:    '#16A34A',   // green
-    maximum:    '#DC2626',   // red
-    inflection: '#9333EA',   // purple
+    root:       '#2563EB',
+    minimum:    '#16A34A',
+    maximum:    '#DC2626',
+    inflection: '#9333EA',
+  }
+
+  const KIND_LABEL: Record<string, string> = {
+    root:       'Raíz',
+    minimum:    'Mínimo',
+    maximum:    'Máximo',
+    inflection: 'Inflexión',
   }
 
   function buildData(pts: CritPoint[]) {
@@ -157,18 +164,17 @@
       <div bind:this={containerEl} class="plot-container"></div>
       {#if critPoints.length > 0}
         <div class="plot-legend">
-          {#if critPoints.some(p => p.kind === 'root')}
-            <span class="legend-item"><span class="legend-dot" style="background:#2563EB"></span>Raíz</span>
-          {/if}
-          {#if critPoints.some(p => p.kind === 'minimum')}
-            <span class="legend-item"><span class="legend-dot" style="background:#16A34A"></span>Mínimo</span>
-          {/if}
-          {#if critPoints.some(p => p.kind === 'maximum')}
-            <span class="legend-item"><span class="legend-dot" style="background:#DC2626"></span>Máximo</span>
-          {/if}
-          {#if critPoints.some(p => p.kind === 'inflection')}
-            <span class="legend-item"><span class="legend-dot" style="background:#9333EA"></span>Inflexión</span>
-          {/if}
+          {#each critPoints as p}
+            {@const color = KIND_COLOR[p.kind] ?? '#6b7280'}
+            {@const label = KIND_LABEL[p.kind] ?? p.kind}
+            {@const fx = Number.isInteger(p.x) ? p.x.toString() : p.x.toFixed(2).replace(/\.?0+$/, '')}
+            {@const fy = Number.isInteger(p.y) ? p.y.toString() : p.y.toFixed(2).replace(/\.?0+$/, '')}
+            <span class="legend-item">
+              <span class="legend-dot" style="background:{color}"></span>
+              <span class="legend-kind" style="color:{color}">{label}</span>
+              <span class="legend-coord">({fx}, {fy})</span>
+            </span>
+          {/each}
         </div>
       {/if}
     {/if}
@@ -281,8 +287,8 @@
   .plot-legend {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    padding: 0.5rem 0.25rem 0;
+    gap: 0.35rem 0.75rem;
+    padding: 0.6rem 0.25rem 0;
   }
 
   .legend-item {
@@ -290,15 +296,23 @@
     align-items: center;
     gap: 0.3rem;
     font-size: 0.7rem;
-    color: #6b7280;
     font-weight: 500;
   }
 
   .legend-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     flex-shrink: 0;
+  }
+
+  .legend-kind {
+    font-weight: 600;
+  }
+
+  .legend-coord {
+    color: #9ca3af;
+    font-variant-numeric: tabular-nums;
   }
 
   /* ── Fullscreen overlay ─────────────────────────────────────────────── */
