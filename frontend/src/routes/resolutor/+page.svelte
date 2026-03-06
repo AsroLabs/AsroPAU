@@ -102,8 +102,24 @@
 
   /** Normalize user input before sending to SymPy backend */
   function normalizeInput(s: string): string {
-    // Replace ^ with ** so users can type x^2 instead of x**2
-    return s.replace(/\^/g, '**')
+    return s
+      // Unicode superscript digits → **n
+      .replace(/⁰/g, '**0').replace(/¹/g, '**1').replace(/²/g, '**2')
+      .replace(/³/g, '**3').replace(/⁴/g, '**4').replace(/⁵/g, '**5')
+      .replace(/⁶/g, '**6').replace(/⁷/g, '**7').replace(/⁸/g, '**8')
+      .replace(/⁹/g, '**9')
+      // ^ caret → **
+      .replace(/\^/g, '**')
+      // Unicode minus/dash variants → regular minus
+      .replace(/[−–—]/g, '-')
+      // Unicode multiplication signs → *
+      .replace(/[×·]/g, '*')
+      // Unicode infinity → oo
+      .replace(/∞/g, 'oo')
+      // Unicode π → pi
+      .replace(/π/g, 'pi')
+      // Arrow variants for limits
+      .replace(/→/g, '->')
   }
 
   async function solve() {
