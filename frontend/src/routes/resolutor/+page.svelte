@@ -4,7 +4,6 @@
   import LatexInput from '$lib/math-solver/LatexInput.svelte'
   import MathKeyboard from '$lib/math-solver/MathKeyboard.svelte'
   import MorphSolver from '$lib/math-solver/MorphSolver.svelte'
-  const API_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8001'
 
   type Mode = 'text' | 'keyboard'
 
@@ -111,7 +110,7 @@
     result  = null
 
     try {
-      const res = await fetch(`${API_URL}/api/solve`, {
+      const res = await fetch(`/api/solve`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ input: trimmed, mode: activeMode })
@@ -147,7 +146,7 @@
     { label: '3x + 5 = 14',         val: '3*x + 5 = 14',           category: 'Álgebra' },
     { label: "d/dx(x³ + 2x²)",      val: 'd/dx(x**3 + 2*x**2)',    category: 'Derivadas' },
     { label: 'd/dx(sin(x)·x²)',     val: 'd/dx(sin(x)*x**2)',      category: 'Derivadas' },
-    { label: '∫(x² + 3x)dx',        val: 'x**2 + 3*x',             category: 'Integrales' },
+    { label: '∫(x² + 3x)dx',        val: 'integrate(x**2 + 3*x, x)', category: 'Integrales' },
     { label: '∫sin(x)dx',           val: 'integrate(sin(x), x)',   category: 'Integrales' },
     { label: 'lim x→0 sin(x)/x',    val: 'lim x->0 sin(x)/x',     category: 'Límites' },
     { label: 'lim x→∞ 1/x',         val: 'lim x->oo 1/x',         category: 'Límites' },

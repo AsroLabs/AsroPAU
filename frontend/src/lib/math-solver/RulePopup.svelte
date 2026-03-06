@@ -19,9 +19,10 @@
     if (e.key === 'Escape') onClose()
   }
 
-  // Trap focus inside dialog
+  // Trap focus inside dialog (client-only — $effect can run during SSR)
   let dialogEl: HTMLDivElement | undefined = $state()
   $effect(() => {
+    if (typeof window === 'undefined') return
     if (dialogEl) {
       const first = dialogEl.querySelector<HTMLElement>(
         'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'

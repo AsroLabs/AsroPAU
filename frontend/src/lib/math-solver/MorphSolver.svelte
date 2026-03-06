@@ -127,6 +127,7 @@
 
     currentIndex = index
     phase        = 'show-before'
+    whyOpen      = false
 
     // Set panel content
     beforeLatex      = s.expr_latex ?? ''
@@ -254,10 +255,7 @@
   })
 
   // ── Close why popup when step advances ────────────────────────────────────
-  $effect(() => {
-    currentIndex
-    whyOpen = false
-  })
+  // Done inline in runStep() to avoid a reactive effect that writes state it doesn't own.
 
   // ── Stop auto when switching to Manual ────────────────────────────────────
   $effect(() => {

@@ -47,7 +47,7 @@ router.get('/', async (req: Request, res: Response) => {
   } else 
   {
     const whereClause = `WHERE ${conditions.join(' AND ')}`;
-    finalQuery = `SELECT id, title, location, university, "cutOff" FROM "Grados" ${whereClause} ORDER BY "cutOff" DESC`;
+    finalQuery = `SELECT id, title, location, university, "cutOff" FROM "Grados" ${whereClause} ORDER BY "cutOff" DESC LIMIT 50`;
   }
 
   try {
@@ -81,7 +81,7 @@ router.get('/:id', async (req: Request, res: Response) => {
       [id]
     );
 
-    if (result.rowCount === 0) {
+    if ((result.rowCount ?? 0) === 0) {
       return res.status(404).json({
         success: false,
         message: 'Grado no encontrado',

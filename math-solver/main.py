@@ -736,7 +736,20 @@ def solve_limit(expr_str: str) -> SolveResponse:
 
         func_str = re.sub(r'^lim\s*', '', raw, flags=re.I)
         func_str = re.sub(r'x\s*->\s*[+-]?\s*(?:inf(?:inity)?|oo|\d+(?:\.\d+)?)\s*', '', func_str, flags=re.I).strip()
-        func_str = func_str.strip('()')
+        # Only strip a single pair of outer parentheses when the whole expression is wrapped
+        if func_str.startswith('(') and func_str.endswith(')'):
+            depth = 0
+            wrapped = True
+            for i, ch in enumerate(func_str[:-1]):
+                if ch == '(':
+                    depth += 1
+                elif ch == ')':
+                    depth -= 1
+                if depth == 0 and i < len(func_str) - 1:
+                    wrapped = False
+                    break
+            if wrapped:
+                func_str = func_str[1:-1]
 
         expr = _safe_parse(func_str)
 
