@@ -231,11 +231,8 @@
     clearAll()
     const next = steps[currentIndex + 1]
     if (!next) { phase = 'done'; return }
-    phase    = 'chain-out'
-    afterLit = false
-    chainFade(() => {
-      t(() => runStep(currentIndex + 1), T_SETTLE)
-    })
+    // Manual mode: skip all fade/settle animations, jump instantly
+    runStep(currentIndex + 1)
   }
 
   // ── Reset when steps change ────────────────────────────────────────────────
