@@ -11,7 +11,7 @@ export interface ExplanationOutput {
 export interface StepAnalysis {
   before: string
   after: string
-  diff: DiffResult
+  diff: DiffResult[]
   transformation: TransformationType
 }
 

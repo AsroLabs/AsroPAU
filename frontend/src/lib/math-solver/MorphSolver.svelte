@@ -5,6 +5,7 @@
   import MathRenderer from './MathRenderer.svelte'
   import RulePopup from './RulePopup.svelte'
   import FunctionPlot from './FunctionPlot.svelte'
+  import { analyzeTransformation, generateExplanation, type ExplanationOutput } from './explanation-engine'
 
   interface Step {
     step_number:        number
@@ -43,6 +44,9 @@
   let copyDone     = $state(false)
   let whyOpen      = $state(false)
   let breakdownWhyStep = $state<Step | null>(null)
+
+  // ── Explanation engine ─────────────────────────────────────────────────────
+  let currentExplanation = $state<ExplanationOutput | null>(null)
 
   // What each panel shows
   let beforeLatex  = $state('')   // always expr_latex of current step
@@ -136,9 +140,19 @@
     beforeHighlighted = s.highlighted_latex ?? s.expr_latex ?? ''
     beforeColor      = s.highlight_color ?? '#EA580C'
 
-    afterLatex       = next?.expr_latex ?? ''
-    afterHighlighted  = next?.highlighted_latex ?? next?.expr_latex ?? ''
+    // When there is no next step, show the final result in the "Después" panel
+    const finalExpr   = result?.latex ?? result?.result ?? s.expr_latex ?? ''
+    afterLatex       = next?.expr_latex ?? finalExpr
+    afterHighlighted  = next?.highlighted_latex ?? next?.expr_latex ?? finalExpr
     afterColor       = next?.highlight_color ?? '#EA580C'
+
+    // Compute pedagogical explanation for this transition
+    try {
+      const analysis = analyzeTransformation(beforeLatex, afterLatex)
+      currentExplanation = generateExplanation(analysis)
+    } catch {
+      currentExplanation = null
+    }
 
     // Start with plain versions, before lit
     beforeDisplay = beforeLatex
@@ -239,16 +253,17 @@
   $effect(() => {
     const _len = steps.length
     clearAll()
-    currentIndex  = 0
-    phase         = _len > 0 ? 'show-before' : 'idle'
-    beforeLatex   = ''
-    afterLatex    = ''
-    beforeDisplay = ''
-    afterDisplay  = ''
-    beforeLit     = false
-    afterLit      = false
-    copyDone      = false
-    whyOpen       = false
+    currentIndex       = 0
+    phase              = _len > 0 ? 'show-before' : 'idle'
+    beforeLatex        = ''
+    afterLatex         = ''
+    beforeDisplay      = ''
+    afterDisplay       = ''
+    beforeLit          = false
+    afterLit           = false
+    copyDone           = false
+    whyOpen            = false
+    currentExplanation = null
     if (!_len) return
     t(() => runStep(0), 80)
     return () => clearAll()
@@ -430,6 +445,29 @@
                 >?</button>
               </div>
             {/if}
+          </div>
+        {/key}
+      {/if}
+
+      <!-- ── Explanation panel ──────────────────────────────────────────────── -->
+      {#if !isDone && currentExplanation && phase === 'show-after'}
+        {#key currentIndex}
+          <div
+            in:fade={{ duration: prefersReduced ? 0 : 260, delay: prefersReduced ? 0 : 80, easing: cubicOut }}
+            class="explanation-panel"
+            aria-label="Explicación pedagógica del paso"
+          >
+            <div class="explanation-header">
+              <span class="explanation-pill">{currentExplanation.rule_category}</span>
+              <span class="explanation-rule">{currentExplanation.rule_name}</span>
+            </div>
+            <p class="explanation-text">{currentExplanation.explanation}</p>
+            <details class="explanation-details">
+              <summary class="explanation-summary">Razonamiento conceptual</summary>
+              <p class="explanation-detail-text">{currentExplanation.conceptual_reasoning}</p>
+              <p class="explanation-detail-text explanation-justification">{currentExplanation.algebraic_justification}</p>
+            </details>
+            <p class="explanation-note">{currentExplanation.educational_note}</p>
           </div>
         {/key}
       {/if}
@@ -797,5 +835,82 @@
     .panel-label {
       transition: none !important;
     }
+  }
+
+  /* ── Explanation panel ────────────────────────────────────────────────────── */
+  .explanation-panel {
+    border-radius: 0.875rem;
+    border: 1.5px solid #fed7aa;
+    background: #fff7ed;
+    padding: 0.875rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .explanation-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .explanation-pill {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    background: #ea580c;
+    color: #fff;
+  }
+
+  .explanation-rule {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #c2410c;
+    line-height: 1.3;
+  }
+
+  .explanation-text {
+    font-size: 0.8rem;
+    color: #374151;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .explanation-details {
+    margin: 0;
+  }
+
+  .explanation-summary {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: #ea580c;
+    cursor: pointer;
+    user-select: none;
+    padding: 0.1rem 0;
+  }
+
+  .explanation-detail-text {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin: 0.25rem 0 0;
+    line-height: 1.5;
+  }
+
+  .explanation-justification {
+    font-style: italic;
+    color: #9ca3af;
+  }
+
+  .explanation-note {
+    font-size: 0.72rem;
+    color: #b45309;
+    margin: 0;
+    line-height: 1.5;
+    padding-top: 0.25rem;
+    border-top: 1px solid #fed7aa;
   }
 </style>
