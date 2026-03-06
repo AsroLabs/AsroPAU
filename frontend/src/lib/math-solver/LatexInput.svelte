@@ -26,6 +26,59 @@
   let inputEl: HTMLInputElement | null = null
 
   /**
+   * Convert SymPy/plain-text syntax to LaTeX for the live preview.
+   * This is best-effort — covers the most common patterns a student types.
+   */
+  function sympyToLatex(s: string): string {
+    let r = s.trim()
+
+    // d/dx(...) → \frac{d}{dx}\left(...\right)
+    r = r.replace(/d\/d([a-zA-Z])\(([^)]*)\)/g, (_m, v, body) =>
+      `\\frac{d}{d${v}}\\left(${sympyToLatex(body)}\\right)`)
+
+    // lim x->a  or  lim x→a
+    r = r.replace(/lim\s+([a-zA-Z])\s*(?:->|→)\s*([^\s(]+)/g,
+      (_m, v, a) => `\\lim_{${v}\\to ${a}}`)
+
+    // integral: int(f, x, a, b) or int(f, x)
+    r = r.replace(/int\(([^,]+),\s*([a-zA-Z])(?:,\s*([^,)]+),\s*([^)]+))?\)/g,
+      (_m, f, v, a, b) =>
+        a !== undefined
+          ? `\\int_{${a}}^{${b}} ${sympyToLatex(f)}\\,d${v}`
+          : `\\int ${sympyToLatex(f)}\\,d${v}`)
+
+    // a**b → {a}^{b}  (handle multi-char bases/exponents)
+    r = r.replace(/(\w+|\([^)]+\))\*\*(\w+|\([^)]+\)|-\d+)/g,
+      (_m, base, exp) => `{${base}}^{${exp}}`)
+
+    // sqrt(x) → \sqrt{x}
+    r = r.replace(/sqrt\(([^)]+)\)/g, (_m, inner) => `\\sqrt{${sympyToLatex(inner)}}`)
+
+    // abs(x) → |x|
+    r = r.replace(/abs\(([^)]+)\)/g, (_m, inner) => `\\left|${sympyToLatex(inner)}\\right|`)
+
+    // log(x) → \ln(x),  ln(x) → \ln(x)
+    r = r.replace(/\b(log|ln)\(/g, '\\ln(')
+
+    // sin/cos/tan/sec/csc/cot/asin/acos/atan
+    r = r.replace(/\b(sin|cos|tan|sec|csc|cot|asin|acos|atan)\(/g, '\\$1(')
+
+    // pi → \pi,  oo → \infty,  E → e
+    r = r.replace(/\bpi\b/g, '\\pi')
+    r = r.replace(/\boo\b/g, '\\infty')
+    r = r.replace(/\bE\b/g, 'e')
+
+    // explicit multiplication a*b → a \cdot b  (but not ** already handled)
+    r = r.replace(/(\w)\*(\w)/g, '$1 \\cdot $2')
+
+    // = sign stays as-is (KaTeX handles it)
+
+    return r
+  }
+
+  const latexPreview = $derived(sympyToLatex(value))
+
+  /**
    * Insert text at the cursor position (or append if no cursor).
    * BUG FIX: previously just appended to the end, ignoring cursor position.
    */
@@ -95,7 +148,7 @@
         rounded-xl min-h-[3rem] flex items-center overflow-x-auto"
       aria-label="Vista previa de la expresión"
     >
-      <MathRenderer latex={value} inline={false} />
+      <MathRenderer latex={latexPreview} inline={false} />
     </div>
   {/if}
 </div>
