@@ -15,7 +15,7 @@
   const recursos = [
     { label: 'Exámenes',    href: '/examen',    icon: BookIcon },
     { label: 'Resolutor',   href: '/resolutor', icon: Sigma },
-    { label: 'Calculadora', href: '/calc',      icon: CalculatorIcon },
+    { label: 'Calculadora', href: '/media',     icon: CalculatorIcon },
   ]
 
   function isActive(href: string) {
