@@ -2,7 +2,6 @@
     import DatosAcademicos from "./components/FormularioNotas.svelte";
     import ResultadosCalificacion from "./components/ResultadosCalificacion.svelte";
     import Universidades from "./components/Universidades.svelte";
-    import Header from "../../components/Header.svelte";
 
     // State
     let notaBachiller = $state(0);
@@ -108,9 +107,6 @@
 </script>
 
 <div class="min-h-screen bg-[#f6f6f8] text-slate-800">
-    <!-- Navigation -->
-    <Header fixed={false}/>
-
     <main class="max-w-360 mx-auto p-6">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <!-- Left Column: Inputs -->
