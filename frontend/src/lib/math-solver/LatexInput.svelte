@@ -9,9 +9,9 @@
   let { value = $bindable(''), onsubmit }: Props = $props()
 
   const quickSymbols: { label: string; insert: string; tip?: string }[] = [
-    { label: 'x²',  insert: '**2',   tip: 'Elevar al cuadrado' },
-    { label: 'x³',  insert: '**3',   tip: 'Elevar al cubo' },
-    { label: 'xⁿ',  insert: '**',    tip: 'Potencia' },
+    { label: 'x²',  insert: '^2',  tip: 'Elevar al cuadrado' },
+    { label: 'x³',  insert: '^3',  tip: 'Elevar al cubo' },
+    { label: 'xⁿ',  insert: '^',   tip: 'Potencia' },
     { label: '√',   insert: 'sqrt(', tip: 'Raíz cuadrada' },
     { label: 'π',   insert: 'pi',    tip: 'Número pi' },
     { label: '∞',   insert: 'oo',    tip: 'Infinito' },
@@ -47,8 +47,8 @@
           ? `\\int_{${a}}^{${b}} ${sympyToLatex(f)}\\,d${v}`
           : `\\int ${sympyToLatex(f)}\\,d${v}`)
 
-    // a**b → {a}^{b}  (handle multi-char bases/exponents)
-    r = r.replace(/(\w+|\([^)]+\))\*\*(\w+|\([^)]+\)|-\d+)/g,
+    // a**b or a^b → {a}^{b}  (handle multi-char bases/exponents)
+    r = r.replace(/(\w+|\([^)]+\))(?:\*\*|\^)(\w+|\([^)]+\)|-\d+)/g,
       (_m, base, exp) => `{${base}}^{${exp}}`)
 
     // sqrt(x) → \sqrt{x}
@@ -133,7 +133,7 @@
     aria-label="Expresión matemática"
     autocomplete="off"
     spellcheck="false"
-    placeholder="Ej: x**2 - 5*x + 6 = 0  |  d/dx(x**3)  |  lim x->0 sin(x)/x"
+    placeholder="Ej: x^2 - 5*x + 6 = 0  |  d/dx(x^3)  |  lim x->0 sin(x)/x"
     class="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-slate-600
       bg-gray-50 dark:bg-slate-700 font-mono text-base
       focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-400

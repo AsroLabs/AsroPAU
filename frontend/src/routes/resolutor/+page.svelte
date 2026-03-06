@@ -90,7 +90,7 @@
   // Friendly error messages for common backend errors
   function humanizeError(raw: string): string {
     if (raw.includes('SyntaxError') || raw.includes('parse_expr'))
-      return 'No se pudo analizar la expresión. Revisa la sintaxis (usa ** para potencias, * para multiplicar).'
+      return 'No se pudo analizar la expresión. Revisa la sintaxis (usa ^ o ** para potencias, * para multiplicar).'
     if (raw.includes('antiderivada en forma cerrada'))
       return raw // Already friendly
     if (raw.includes('vacía'))
@@ -100,8 +100,14 @@
     return raw
   }
 
+  /** Normalize user input before sending to SymPy backend */
+  function normalizeInput(s: string): string {
+    // Replace ^ with ** so users can type x^2 instead of x**2
+    return s.replace(/\^/g, '**')
+  }
+
   async function solve() {
-    const trimmed = inputValue.trim()
+    const trimmed = normalizeInput(inputValue.trim())
     if (!trimmed) return
 
     loading = true
@@ -352,9 +358,9 @@
           <p class="font-semibold text-red-700 mb-1 text-sm">Error al resolver</p>
           <p class="text-sm text-red-600">{error}</p>
           <p class="text-xs text-red-400 mt-2">
-            Sintaxis: usa <code class="font-mono bg-red-100 px-1 rounded">**</code> para potencias,
+            Sintaxis: usa <code class="font-mono bg-red-100 px-1 rounded">^</code> o <code class="font-mono bg-red-100 px-1 rounded">**</code> para potencias,
             <code class="font-mono bg-red-100 px-1 rounded">*</code> para multiplicar.
-            Ej: <code class="font-mono bg-red-100 px-1 rounded">x**2 + 2*x - 3 = 0</code>
+            Ej: <code class="font-mono bg-red-100 px-1 rounded">x^2 + 2*x - 3 = 0</code>
           </p>
         </div>
       </div>
