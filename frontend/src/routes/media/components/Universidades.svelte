@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Search, MapPin, Landmark, CheckCircle, AlertCircle, TrendingUp, TrendingDown, Minus } from '@lucide/svelte';
+  import { Search, MapPin, Landmark, CheckCircle, AlertCircle } from '@lucide/svelte';
   import { formatGrade } from '../lib';
 
   interface Grado {
@@ -60,34 +60,6 @@
     totalGrade;
     scheduleSearch();
   });
-
-  /**
-   * Synthetic year-over-year trend: deterministic per grado.id so it doesn't flicker.
-   * Returns delta vs "last year" cut-off (simulated). Replace with real data when DB has cutOffPrev.
-   */
-  function syntheticTrend(grado: Grado): { delta: number; dir: 'up' | 'down' | 'flat' } {
-    // Simple deterministic hash from id: alternates up/down/flat
-    const seed = grado.id % 7;
-    if (seed === 0 || seed === 3) return { delta: 0, dir: 'flat' };
-    const isUp = seed % 2 === 1;
-    const magnitude = ((grado.id * 13) % 5 + 1) * 0.02; // 0.02 – 0.10
-    const delta = isUp ? magnitude : -magnitude;
-    return { delta, dir: isUp ? 'up' : 'down' };
-  }
-
-  /** Returns how far the student is from the cut-off, with a label. */
-  function marginLabel(margin: number): string {
-    const abs = Math.abs(margin);
-    if (margin >= 0) {
-      if (abs < 0.1)  return '¡Al límite! +' + formatGrade(abs);
-      if (abs < 0.5)  return 'Margen ajustado +' + formatGrade(abs);
-      return 'Bien posicionado +' + formatGrade(abs);
-    } else {
-      if (abs < 0.1)  return 'Casi — te faltan ' + formatGrade(abs);
-      if (abs < 0.5)  return 'Te faltan ' + formatGrade(abs);
-      return 'Fuera por ' + formatGrade(abs);
-    }
-  }
 </script>
 
 <div class="bg-white rounded-xl shadow-sm border border-slate-200">
@@ -134,10 +106,7 @@
       <div class="p-8 text-center text-slate-400 text-sm">No se encontraron grados con los filtros aplicados.</div>
     {:else}
       {#each grados as grado}
-        {@const margin = totalGrade - Number(grado.cutOff)}
-        {@const inside = margin >= 0}
-        {@const trend = syntheticTrend(grado)}
-        <div class="p-5 hover:bg-slate-50 transition-colors">
+        <div class="p-6 hover:bg-slate-50 transition-colors">
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="flex gap-4">
               <div class="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center overflow-hidden">
@@ -155,48 +124,22 @@
                 </div>
               </div>
             </div>
-            <div class="flex items-center justify-between md:justify-end gap-6">
-
-              <!-- Cut-off + trend arrow -->
+            <div class="flex items-center justify-between md:justify-end gap-8">
               <div class="text-right">
                 <p class="text-[10px] font-bold text-slate-400 uppercase">Corte</p>
-                <div class="flex items-center gap-1.5">
-                  <p class="text-lg font-bold text-slate-900">{formatGrade(Number(grado.cutOff))}</p>
-                  {#if trend.dir === 'up'}
-                    <span class="flex items-center gap-0.5 text-[10px] font-bold text-red-500" title="La nota de corte subió el año pasado">
-                      <TrendingUp size={13} />
-                      +{formatGrade(Math.abs(trend.delta))}
-                    </span>
-                  {:else if trend.dir === 'down'}
-                    <span class="flex items-center gap-0.5 text-[10px] font-bold text-green-600" title="La nota de corte bajó el año pasado">
-                      <TrendingDown size={13} />
-                      -{formatGrade(Math.abs(trend.delta))}
-                    </span>
-                  {:else}
-                    <span class="flex items-center gap-0.5 text-[10px] font-bold text-slate-400" title="Sin cambio respecto al año pasado">
-                      <Minus size={12} />
-                    </span>
-                  {/if}
-                </div>
+                <p class="text-lg font-bold text-slate-900">{formatGrade(Number(grado.cutOff))}</p>
               </div>
-
-              <!-- DENTRO / FUERA badge with margin context -->
-              <div class="flex flex-col items-end gap-1">
-                {#if inside}
+              <div class="flex flex-col items-end">
+                {#if totalGrade >= Number(grado.cutOff)}
                   <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-green-100 text-green-600 flex items-center gap-1">
-                    <CheckCircle size={12} aria-hidden="true" />
-                    {margin < 0.1 ? '¡Justo!' : 'DENTRO'}
+                    <CheckCircle size={12} aria-hidden="true" /> DENTRO (+{formatGrade(totalGrade - Number(grado.cutOff))})
                   </span>
                 {:else}
                   <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-red-100 text-red-600 flex items-center gap-1">
-                    <AlertCircle size={12} aria-hidden="true" /> FUERA
+                    <AlertCircle size={12} aria-hidden="true" /> FUERA ({formatGrade(totalGrade - Number(grado.cutOff))})
                   </span>
                 {/if}
-                {#if totalGrade > 0}
-                  <span class="text-[10px] text-slate-400">{marginLabel(margin)}</span>
-                {/if}
               </div>
-
             </div>
           </div>
         </div>
