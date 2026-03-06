@@ -55,19 +55,30 @@
     })
   }
 
-  // Normal plot
+  // Normal plot — use ResizeObserver to avoid forced reflow inside $effect
   $effect(() => {
     if (!plottable || !containerEl) return
     error = false
-    drawPlot(containerEl, containerEl.offsetWidth || 480, 260)
+    const el = containerEl
+    const ro = new ResizeObserver(entries => {
+      const w = entries[0]?.contentRect.width || 480
+      drawPlot(el, w, 260)
+    })
+    ro.observe(el)
+    return () => ro.disconnect()
   })
 
-  // Fullscreen plot — rerenders whenever fsContainerEl mounts or clean changes
+  // Fullscreen plot — defer dimension read to rAF to avoid forced reflow
   $effect(() => {
     if (!fullscreen || !fsContainerEl) return
-    const w = fsContainerEl.offsetWidth  || window.innerWidth
-    const h = fsContainerEl.offsetHeight || window.innerHeight - 80
-    drawPlot(fsContainerEl, w, h)
+    const el = fsContainerEl
+    // Track reactive deps above; read layout in rAF (outside reactive context)
+    const id = requestAnimationFrame(() => {
+      const w = el.offsetWidth  || window.innerWidth
+      const h = el.offsetHeight || window.innerHeight - 80
+      drawPlot(el, w, h)
+    })
+    return () => cancelAnimationFrame(id)
   })
 
   // Close on Escape
@@ -90,7 +101,7 @@
         title="Pantalla completa"
       >
         <!-- Expand icon -->
-        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <svg aria-hidden="true" width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
           <path d="M9 1h5v5M6 14H1V9M14 1l-5 5M1 14l5-5"/>
         </svg>
       </button>
@@ -110,10 +121,10 @@
       out:fade={{ duration: 120 }}
       role="dialog"
       aria-modal="true"
-      aria-label="Gráfica en pantalla completa"
+      aria-labelledby="fs-dialog-label"
     >
       <div class="fs-header">
-        <span class="fs-label">Gráfica</span>
+        <span class="fs-label" id="fs-dialog-label">Gráfica</span>
         <button
           type="button"
           onclick={() => (fullscreen = false)}
@@ -122,7 +133,7 @@
           title="Cerrar (Esc)"
         >
           <!-- Compress / close icon -->
-          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <svg aria-hidden="true" width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
             <path d="M1 9h5v5M14 6H9V1M6 9l-5 5M14 1l-5 5"/>
           </svg>
           <span>Cerrar</span>
@@ -168,6 +179,7 @@
     background: white;
     color: #6b7280;
     cursor: pointer;
+    touch-action: manipulation;
     transition: background 150ms, color 150ms, border-color 150ms;
   }
 
@@ -175,6 +187,11 @@
     background: #fff7ed;
     color: #ea580c;
     border-color: #fed7aa;
+  }
+
+  .expand-btn:focus-visible {
+    outline: 2px solid #ea580c;
+    outline-offset: 2px;
   }
 
   .plot-container {
@@ -208,6 +225,11 @@
     background: #0f172a;
     display: flex;
     flex-direction: column;
+    overscroll-behavior: contain;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
   }
 
   .fs-header {
@@ -239,13 +261,19 @@
     font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background 150ms, border-color 150ms;
+    touch-action: manipulation;
+    transition: background 150ms, border-color 150ms, color 150ms;
   }
 
   .close-btn:hover {
     background: rgba(234,88,12,0.25);
     border-color: rgba(234,88,12,0.5);
     color: #fdba74;
+  }
+
+  .close-btn:focus-visible {
+    outline: 2px solid #ea580c;
+    outline-offset: 2px;
   }
 
   .fs-container {
