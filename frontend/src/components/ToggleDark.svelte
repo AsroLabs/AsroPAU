@@ -4,6 +4,7 @@
 	let checked = $state(false);
 
 	$effect(() => {
+		if (typeof window === 'undefined') return;
 		const mode = localStorage.getItem('mode') || 'light';
 		checked = mode === 'dark';
 	});
@@ -19,7 +20,7 @@
 <svelte:head>
 	<script>
 		if (typeof localStorage !== 'undefined') {
-			document.documentElement.setAttribute('data-mode', localStorage.getItem('mode') || 'dark');
+			document.documentElement.setAttribute('data-mode', localStorage.getItem('mode') || 'light');
 		}
 	</script>
 </svelte:head>

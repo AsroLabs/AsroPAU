@@ -20,7 +20,7 @@
 
   const navLinks = [
     { href: "/examen",    label: "Exámenes",    Icon: BookOpen },
-    { href: "/media",     label: "Calculadora", Icon: Calculator },
+    { href: "/calc",     label: "Calculadora", Icon: Calculator },
     { href: "/resolutor", label: "Resolutor",   Icon: FlaskConical },
   ];
 </script>

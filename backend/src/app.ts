@@ -4,7 +4,6 @@ import { config } from './config';
 import logger from './middleware/logger';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import routes from './routes';
-import { execArgv } from 'node:process';
 
 
 const app: Application = express();
@@ -13,7 +12,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
-
 
 app.get('/', (req: Request, res: Response) => {
   res.json({
@@ -25,6 +23,8 @@ app.get('/', (req: Request, res: Response) => {
     },
   });
 });
+
+app.use(config.apiPrefix, routes);
 
 app.use(notFoundHandler);
 
