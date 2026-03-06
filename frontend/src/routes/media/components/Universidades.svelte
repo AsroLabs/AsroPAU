@@ -69,22 +69,28 @@
       <div class="flex flex-col md:flex-row gap-3">
         <!-- Filtro por grado -->
         <div class="relative flex-1">
-          <Search class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+          <Search class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} aria-hidden="true" />
           <input
             type="text"
             bind:value={filterTitle}
-            class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm w-full focus:ring-2 focus:ring-[#2b6cee] outline-none transition-all"
-            placeholder="Buscar grado universitario..."
+            name="filterTitle"
+            autocomplete="off"
+            aria-label="Buscar grado universitario"
+            class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm w-full focus-visible:ring-2 focus-visible:ring-[#2b6cee] outline-none transition-[box-shadow]"
+            placeholder="Buscar grado universitario…"
           />
         </div>
         <!-- Filtro por localidad -->
         <div class="relative flex-1">
-          <MapPin class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={16} />
+          <MapPin class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} aria-hidden="true" />
           <input
             type="text"
             bind:value={filterLocation}
-            class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm w-full focus:ring-2 focus:ring-[#2b6cee] outline-none transition-all"
-            placeholder="Filtrar por localidad..."
+            name="filterLocation"
+            autocomplete="off"
+            aria-label="Filtrar por localidad"
+            class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-full text-sm w-full focus-visible:ring-2 focus-visible:ring-[#2b6cee] outline-none transition-[box-shadow]"
+            placeholder="Filtrar por localidad…"
           />
         </div>
       </div>
@@ -93,7 +99,7 @@
 
   <div class="divide-y divide-slate-100">
     {#if loading}
-      <div class="p-8 text-center text-slate-400 text-sm">Cargando grados...</div>
+      <div class="p-8 text-center text-slate-400 text-sm">Cargando grados…</div>
     {:else if error}
       <div class="p-8 text-center text-red-400 text-sm">{error}</div>
     {:else if grados.length === 0}
@@ -104,16 +110,16 @@
           <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div class="flex gap-4">
               <div class="w-12 h-12 rounded-lg bg-slate-100 flex items-center justify-center overflow-hidden">
-                <Landmark size={24} class="text-slate-400" />
+                <Landmark size={24} class="text-slate-400" aria-hidden="true" />
               </div>
               <div>
                 <h4 class="font-bold text-slate-900">{grado.title}</h4>
                 <div class="flex items-center gap-3 mt-1">
                   <span class="text-xs text-slate-500 flex items-center gap-1">
-                    <MapPin size={12} /> {grado.location}
+                    <MapPin size={12} aria-hidden="true" /> {grado.location}
                   </span>
                   <span class="text-xs text-slate-500 flex items-center gap-1">
-                    <Landmark size={12} /> {grado.university}
+                    <Landmark size={12} aria-hidden="true" /> {grado.university}
                   </span>
                 </div>
               </div>
@@ -126,11 +132,11 @@
               <div class="flex flex-col items-end">
                 {#if totalGrade >= Number(grado.cutOff)}
                   <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-green-100 text-green-600 flex items-center gap-1">
-                    <CheckCircle size={12} /> DENTRO (+{formatGrade(totalGrade - Number(grado.cutOff))})
+                    <CheckCircle size={12} aria-hidden="true" /> DENTRO (+{formatGrade(totalGrade - Number(grado.cutOff))})
                   </span>
                 {:else}
                   <span class="px-3 py-1 rounded-full text-[11px] font-bold bg-red-100 text-red-600 flex items-center gap-1">
-                    <AlertCircle size={12} /> FUERA ({formatGrade(totalGrade - Number(grado.cutOff))})
+                    <AlertCircle size={12} aria-hidden="true" /> FUERA ({formatGrade(totalGrade - Number(grado.cutOff))})
                   </span>
                 {/if}
               </div>

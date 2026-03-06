@@ -61,49 +61,6 @@
     // notaAdmision = notaAcceso + mejorAportacion1 + mejorAportacion2
     let totalGrade = $derived(notaAcceso + admisionPart);
 
-    // Debounce timer para el fetch de totalGrade
-    let debounceTimer: number | undefined;
-
-    // Efecto para ejecutar el debounce fetch cuando cambie totalGrade
-    $effect(() => {
-        // Trigger el efecto cuando totalGrade cambia
-        totalGrade;
-
-        // Limpiar el timer anterior
-        clearTimeout(debounceTimer);
-
-        // Establecer nuevo timer con delay de 500ms
-        debounceTimer = setTimeout(() => {
-            handleTotalGradeChange();
-        }, 500);
-    });
-
-    // Función que manejará el cambio de nota total
-    function handleTotalGradeChange() {
-        console.log('Total grade changed:', totalGrade);
-        
-        // TODO: Fetch comentado para futura implementación
-        // fetch('/api/notas', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         totalGrade,
-        //         notaAcceso,
-        //         admisionPart,
-        //         timestamp: new Date().toISOString()
-        //     })
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     console.log('Fetch successful:', data);
-        // })
-        // .catch(error => {
-        //     console.error('Fetch error:', error);
-        // });
-    }
-
 </script>
 
 <div class="min-h-screen bg-[#f6f6f8] text-slate-800">

@@ -14,7 +14,7 @@
   <div class="bg-orange-300 p-8 text-center text-white">
     <p class="text-sm font-medium opacity-80 mb-2 uppercase tracking-widest">Tu Calificación de Acceso Estimada</p>
     <div class="flex items-baseline justify-center gap-2">
-      <span class="text-6xl font-bold tracking-tighter">{formatGrade(totalGrade)}</span>
+      <span class="text-6xl font-bold tracking-tighter tabular-nums">{formatGrade(totalGrade)}</span>
       <span class="text-2xl font-light opacity-60">/ 14,000</span>
     </div>
   </div>
