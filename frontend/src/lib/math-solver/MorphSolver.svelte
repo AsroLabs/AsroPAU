@@ -5,7 +5,9 @@
   import MathRenderer from './MathRenderer.svelte'
   import RulePopup from './RulePopup.svelte'
   import FunctionPlot from './FunctionPlot.svelte'
-  import { analyzeTransformation, generateExplanation, type ExplanationOutput } from './explanation-engine'
+  import { analyzeTransformation, generateExplanation, diffTrees, type ExplanationOutput } from './explanation-engine'
+  import { buildStepAnimation, getColoredSpans } from './animation-engine'
+  import type { Timeline } from './animation-engine'
 
   interface Step {
     step_number:        number
@@ -47,6 +49,7 @@
 
   // ── Explanation engine ─────────────────────────────────────────────────────
   let currentExplanation = $state<ExplanationOutput | null>(null)
+  let currentTimeline    = $state<Timeline | null>(null)
 
   // What each panel shows
   let beforeLatex  = $state('')   // always expr_latex of current step
@@ -124,7 +127,67 @@
     activeAnims.push(a)
   }
 
-  // ── Core step runner ───────────────────────────────────────────────────────
+  // ── Animation timeline player ──────────────────────────────────────────────
+  // Plays a Timeline against a KaTeX container using animejs.
+  // Each entry targets the colored spans (highlighted nodes from the backend).
+  function playTimeline(timeline: Timeline, container: HTMLElement | undefined) {
+    if (!container || prefersReduced || timeline.animations.length === 0) return
+
+    for (const entry of timeline.animations) {
+      const id = t(() => {
+        const targets = getColoredSpans(container)
+        if (!targets.length) return
+
+        // Ensure spans are inline-block so transforms work
+        targets.forEach(el => { el.style.display = 'inline-block' })
+
+        const op = entry.op
+        let anim: ReturnType<typeof animate> | null = null
+
+        if (op.type === 'highlight_term') {
+          anim = animate(targets, {
+            scale:    [1, 1.25, 1.08, 1],
+            duration: op.duration,
+            easing:   'cubicBezier(0.34, 1.56, 0.64, 1)',
+            delay:    stagger(40),
+            onComplete: () => { if (anim) activeAnims = activeAnims.filter(x => x !== anim) }
+          })
+        } else if (op.type === 'fade_out') {
+          anim = animate(targets, {
+            opacity:  [1, 0],
+            scale:    [1, 0.7],
+            duration: op.duration,
+            easing:   'easeInCubic',
+            onComplete: () => { if (anim) activeAnims = activeAnims.filter(x => x !== anim) }
+          })
+        } else if (op.type === 'move_term') {
+          // Slide in from off-screen (approximate; exact offset requires measuring)
+          const fromRight = op.from === 'left' // moving right → slides in from left
+          anim = animate(targets, {
+            translateX: [fromRight ? -40 : 40, 0],
+            opacity:    [0, 1],
+            duration:   op.duration,
+            easing:     'cubicBezier(0.16, 1, 0.3, 1)',
+            onComplete: () => { if (anim) activeAnims = activeAnims.filter(x => x !== anim) }
+          })
+        } else if (op.type === 'simplify_number' || op.type === 'rewrite_expression') {
+          anim = animate(targets, {
+            scale:    [1, 1.18, 1],
+            opacity:  [0.5, 1],
+            duration: op.duration,
+            easing:   'cubicBezier(0.34, 1.56, 0.64, 1)',
+            delay:    stagger(35),
+            onComplete: () => { if (anim) activeAnims = activeAnims.filter(x => x !== anim) }
+          })
+        }
+
+        if (anim) activeAnims.push(anim)
+      }, entry.time)
+      timers.push(id)
+    }
+  }
+
+
   function runStep(index: number) {
     if (index >= steps.length) { phase = 'done'; return }
 
@@ -146,12 +209,15 @@
     afterHighlighted  = next?.highlighted_latex ?? next?.expr_latex ?? finalExpr
     afterColor       = next?.highlight_color ?? '#EA580C'
 
-    // Compute pedagogical explanation for this transition
+    // Compute pedagogical explanation + animation timeline for this transition
     try {
       const analysis = analyzeTransformation(beforeLatex, afterLatex)
       currentExplanation = generateExplanation(analysis)
+      const ops = diffTrees(beforeLatex, afterLatex)
+      currentTimeline = buildStepAnimation(analysis.transformation, ops)
     } catch {
       currentExplanation = null
+      currentTimeline    = null
     }
 
     // Start with plain versions, before lit
@@ -174,7 +240,14 @@
       afterDisplay  = afterHighlighted
       beforeLit     = true
       afterLit      = true
-      t(() => { popColoredSpans(beforeEl); popColoredSpans(afterEl) }, 30)
+      t(() => {
+        popColoredSpans(beforeEl)
+        popColoredSpans(afterEl)
+        if (currentTimeline) {
+          playTimeline(currentTimeline, beforeEl)
+          playTimeline(currentTimeline, afterEl)
+        }
+      }, 30)
       return
     }
 
@@ -182,7 +255,10 @@
     t(() => {
       beforeDisplay = beforeHighlighted
       beforeLit     = true
-      t(() => popColoredSpans(beforeEl), 30)
+      t(() => {
+        popColoredSpans(beforeEl)
+        if (currentTimeline) playTimeline(currentTimeline, beforeEl)
+      }, 30)
 
       if (!autoMode) return
 
@@ -193,7 +269,10 @@
         beforeLit     = false
         afterDisplay  = afterHighlighted
         afterLit      = true
-        t(() => popColoredSpans(afterEl), 30)
+        t(() => {
+          popColoredSpans(afterEl)
+          if (currentTimeline) playTimeline(currentTimeline, afterEl)
+        }, 30)
 
         if (!autoMode) return
 
@@ -264,6 +343,7 @@
     copyDone           = false
     whyOpen            = false
     currentExplanation = null
+    currentTimeline    = null
     if (!_len) return
     t(() => runStep(0), 80)
     return () => clearAll()
