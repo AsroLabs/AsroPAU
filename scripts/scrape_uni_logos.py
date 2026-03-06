@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-scrape_uni_logos.py
--------------------
-Fetches university logos via the Wikimedia REST API (no 403 blocking).
-Uses the /page/summary endpoint which returns a thumbnail URL, then
-upgrades to original resolution via the Action API.
+scrape_uni_logos.py  (v3)
+------------------------
+Strategy: fetch the Spanish Wikipedia article HTML for each university,
+parse the infobox <td class="imagen"> and grab the FIRST <img> src inside it.
+That img is always the escudo/logo rendered as a Wikimedia PNG thumbnail.
+Use the highest-res srcset URL available (2x).
 
 Output:
-  - frontend/static/logos/<slug>.png   (128×128 white-bg PNG)
-  - frontend/static/logos/manifest.json  { "Universidad de Granada": "logos/universidad-de-granada.png", ... }
+  - frontend/static/logos/<slug>.png   (256×256 white-bg PNG, no upscale)
+  - frontend/static/logos/manifest.json
 """
 
 import csv
@@ -16,8 +17,10 @@ import json
 import re
 import time
 import unicodedata
+from html.parser import HTMLParser
 from io import BytesIO
 from pathlib import Path
+from urllib.parse import urljoin, unquote
 
 import requests
 from PIL import Image
@@ -26,65 +29,64 @@ from PIL import Image
 CSV_PATH      = Path("backend/src/db/data/notas_corte.csv")
 OUTPUT_DIR    = Path("frontend/static/logos")
 MANIFEST_PATH = OUTPUT_DIR / "manifest.json"
-LOGO_SIZE     = (128, 128)
-DELAY_S       = 0.6
+LOGO_SIZE     = (256, 256)
+DELAY_S       = 0.8
 
 HEADERS = {
-    "User-Agent": "AsroPAU/1.0 (https://github.com/AsroLabs/AsroPAU; educational) python-requests/2",
-    "Referer": "https://es.wikipedia.org/",
-    "Accept": "image/png,image/jpeg,image/*,*/*",
+    "User-Agent": "Mozilla/5.0 (compatible; AsroPAU/1.0; +https://github.com/AsroLabs/AsroPAU)",
+    "Accept-Language": "es",
 }
 
-# Wikipedia article title overrides  (CSV name → Spanish Wikipedia title)
-WIKI_TITLES: dict[str, str] = {
-    "Universidad Autónoma de Madrid":              "Universidad Autónoma de Madrid",
-    "Universidad Carlos III de Madrid":            "Universidad Carlos III de Madrid",
-    "Universidad Complutense de Madrid":           "Universidad Complutense de Madrid",
-    "Universidad Miguel Hernández de Elche":       "Universidad Miguel Hernández de Elche",
-    "Universidad Nacional de Educación a Distancia": "Universidad Nacional de Educación a Distancia",
-    "Universidad Pablo de Olavide":                "Universidad Pablo de Olavide",
-    "Universidad Politécnica de Cartagena":        "Universidad Politécnica de Cartagena",
-    "Universidad Politécnica de Madrid":           "Universidad Politécnica de Madrid",
-    "Universidad Pública de Navarra":              "Universidad Pública de Navarra",
-    "Universidad Rey Juan Carlos":                 "Universidad Rey Juan Carlos",
-    "Universidad de Alcalá":                       "Universidad de Alcalá",
-    "Universidad de Alicante":                     "Universidad de Alicante",
-    "Universidad de Almería":                      "Universidad de Almería",
-    "Universidad de Burgos":                       "Universidad de Burgos",
-    "Universidad de Cantabria":                    "Universidad de Cantabria",
-    "Universidad de Castilla - La Mancha":         "Universidad de Castilla-La Mancha",
-    "Universidad de Cádiz":                        "Universidad de Cádiz",
-    "Universidad de Córdoba":                      "Universidad de Córdoba (España)",
-    "Universidad de Extremadura":                  "Universidad de Extremadura",
-    "Universidad de Granada":                      "Universidad de Granada",
-    "Universidad de Huelva":                       "Universidad de Huelva",
-    "Universidad de Jaén":                         "Universidad de Jaén",
-    "Universidad de La Laguna":                    "Universidad de La Laguna",
-    "Universidad de La Rioja":                     "Universidad de La Rioja",
-    "Universidad de Las Palmas de Gran Canaria":   "Universidad de Las Palmas de Gran Canaria",
-    "Universidad de León":                         "Universidad de León",
-    "Universidad de Murcia":                       "Universidad de Murcia",
-    "Universidad de Málaga":                       "Universidad de Málaga",
-    "Universidad de Oviedo":                       "Universidad de Oviedo",
-    "Universidad de Salamanca":                    "Universidad de Salamanca",
-    "Universidad de Sevilla":                      "Universidad de Sevilla",
-    "Universidad de Valladolid":                   "Universidad de Valladolid",
-    "Universidad de Zaragoza":                     "Universidad de Zaragoza",
-    "Universidad del País Vasco":                  "Universidad del País Vasco",
-    "Universidade da Coruña":                      "Universidad de La Coruña",
-    "Universidade de Santiago de Compostela":      "Universidad de Santiago de Compostela",
-    "Universidade de Vigo":                        "Universidad de Vigo",
-    "Universitat Autònoma de Barcelona":           "Universidad Autónoma de Barcelona",
-    "Universitat Jaume I":                         "Universidad Jaume I",
-    "Universitat Politècnica de Catalunya":        "Universidad Politécnica de Cataluña",
-    "Universitat Politècnica de València":         "Universidad Politécnica de Valencia",
-    "Universitat Pompeu Fabra":                    "Universidad Pompeu Fabra",
-    "Universitat Rovira i Virgili":                "Universidad Rovira i Virgili",
-    "Universitat de Barcelona":                    "Universidad de Barcelona",
-    "Universitat de Girona":                       "Universidad de Girona",
-    "Universitat de Lleida":                       "Universidad de Lleida",
-    "Universitat de València":                     "Universidad de Valencia",
-    "Universitat de les Illes Balears":            "Universidad de las Islas Baleares",
+# CSV university name → Spanish Wikipedia article slug (URL path segment)
+WIKI_SLUGS: dict[str, str] = {
+    "Universidad Autónoma de Madrid":              "Universidad_Autónoma_de_Madrid",
+    "Universidad Carlos III de Madrid":            "Universidad_Carlos_III_de_Madrid",
+    "Universidad Complutense de Madrid":           "Universidad_Complutense_de_Madrid",
+    "Universidad Miguel Hernández de Elche":       "Universidad_Miguel_Hernández_de_Elche",
+    "Universidad Nacional de Educación a Distancia": "Universidad_Nacional_de_Educación_a_Distancia",
+    "Universidad Pablo de Olavide":                "Universidad_Pablo_de_Olavide",
+    "Universidad Politécnica de Cartagena":        "Universidad_Politécnica_de_Cartagena",
+    "Universidad Politécnica de Madrid":           "Universidad_Politécnica_de_Madrid",
+    "Universidad Pública de Navarra":              "Universidad_Pública_de_Navarra",
+    "Universidad Rey Juan Carlos":                 "Universidad_Rey_Juan_Carlos",
+    "Universidad de Alcalá":                       "Universidad_de_Alcalá",
+    "Universidad de Alicante":                     "Universidad_de_Alicante",
+    "Universidad de Almería":                      "Universidad_de_Almería",
+    "Universidad de Burgos":                       "Universidad_de_Burgos",
+    "Universidad de Cantabria":                    "Universidad_de_Cantabria",
+    "Universidad de Castilla - La Mancha":         "Universidad_de_Castilla-La_Mancha",
+    "Universidad de Cádiz":                        "Universidad_de_Cádiz",
+    "Universidad de Córdoba":                      "Universidad_de_Córdoba_(España)",
+    "Universidad de Extremadura":                  "Universidad_de_Extremadura",
+    "Universidad de Granada":                      "Universidad_de_Granada",
+    "Universidad de Huelva":                       "Universidad_de_Huelva",
+    "Universidad de Jaén":                         "Universidad_de_Jaén",
+    "Universidad de La Laguna":                    "Universidad_de_La_Laguna",
+    "Universidad de La Rioja":                     "Universidad_de_La_Rioja",
+    "Universidad de Las Palmas de Gran Canaria":   "Universidad_de_Las_Palmas_de_Gran_Canaria",
+    "Universidad de León":                         "Universidad_de_León",
+    "Universidad de Murcia":                       "Universidad_de_Murcia",
+    "Universidad de Málaga":                       "Universidad_de_Málaga",
+    "Universidad de Oviedo":                       "Universidad_de_Oviedo",
+    "Universidad de Salamanca":                    "Universidad_de_Salamanca",
+    "Universidad de Sevilla":                      "Universidad_de_Sevilla",
+    "Universidad de Valladolid":                   "Universidad_de_Valladolid",
+    "Universidad de Zaragoza":                     "Universidad_de_Zaragoza",
+    "Universidad del País Vasco":                  "Universidad_del_País_Vasco",
+    "Universidade da Coruña":                      "Universidad_de_La_Coruña",
+    "Universidade de Santiago de Compostela":      "Universidad_de_Santiago_de_Compostela",
+    "Universidade de Vigo":                        "Universidad_de_Vigo",
+    "Universitat Autònoma de Barcelona":           "Universidad_Autónoma_de_Barcelona",
+    "Universitat Jaume I":                         "Universidad_Jaume_I",
+    "Universitat Politècnica de Catalunya":        "Universidad_Politécnica_de_Cataluña",
+    "Universitat Politècnica de València":         "Universidad_Politécnica_de_Valencia",
+    "Universitat Pompeu Fabra":                    "Universidad_Pompeu_Fabra",
+    "Universitat Rovira i Virgili":                "Universidad_Rovira_i_Virgili",
+    "Universitat de Barcelona":                    "Universidad_de_Barcelona",
+    "Universitat de Girona":                       "Universidad_de_Girona",
+    "Universitat de Lleida":                       "Universidad_de_Lleida",
+    "Universitat de València":                     "Universidad_de_Valencia",
+    "Universitat de les Illes Balears":            "Universidad_de_las_Islas_Baleares",
 }
 
 
@@ -95,149 +97,105 @@ def slugify(name: str) -> str:
     return re.sub(r"[\s_]+", "-", slug)
 
 
-def get_logo_url_via_action_api(wiki_title: str) -> str | None:
+class InfoboxImageParser(HTMLParser):
     """
-    Uses the Wikipedia Action API to get all images in the article,
-    then picks the best one (escudo/logo/seal keywords first).
-    Then gets the actual file URL via imageinfo.
+    Finds the first <img> inside a <td class="imagen"> inside an infobox.
+    Returns src and best srcset URL.
     """
-    session = requests.Session()
-    session.headers.update(HEADERS)
+    def __init__(self) -> None:
+        super().__init__()
+        self._in_infobox = False
+        self._infobox_depth = 0
+        self._in_imagen_td = False
+        self._imagen_td_depth = 0
+        self._depth = 0
+        self.img_src: str | None = None
+        self.img_srcset_best: str | None = None
 
-    # Step 1: get list of images used in the article
-    params = {
-        "action": "query",
-        "titles": wiki_title,
-        "prop": "images",
-        "imlimit": "30",
-        "format": "json",
-        "redirects": "1",
-    }
+    def handle_starttag(self, tag: str, attrs: list) -> None:
+        self._depth += 1
+        attr = dict(attrs)
+
+        if tag == "table" and "infobox" in attr.get("class", ""):
+            self._in_infobox = True
+            self._infobox_depth = self._depth
+
+        if self._in_infobox and tag == "td" and "imagen" in attr.get("class", ""):
+            self._in_imagen_td = True
+            self._imagen_td_depth = self._depth
+
+        if self._in_imagen_td and tag == "img" and self.img_src is None:
+            src = attr.get("src", "")
+            # Normalise protocol-relative URLs
+            if src.startswith("//"):
+                src = "https:" + src
+            self.img_src = src
+
+            # Parse srcset to find highest-resolution entry
+            srcset = attr.get("srcset", "")
+            if srcset:
+                best_url = None
+                best_mult = 0.0
+                for entry in srcset.split(","):
+                    entry = entry.strip()
+                    parts = entry.split()
+                    if len(parts) >= 1:
+                        url = parts[0]
+                        mult = float(parts[1].rstrip("x")) if len(parts) >= 2 else 1.0
+                        if mult > best_mult:
+                            best_mult = mult
+                            best_url = url
+                if best_url:
+                    if best_url.startswith("//"):
+                        best_url = "https:" + best_url
+                    self.img_srcset_best = best_url
+
+    def handle_endtag(self, tag: str) -> None:
+        if self._in_imagen_td and self._depth == self._imagen_td_depth:
+            self._in_imagen_td = False
+        if self._in_infobox and self._depth == self._infobox_depth:
+            self._in_infobox = False
+        self._depth -= 1
+
+    @property
+    def best_url(self) -> str | None:
+        return self.img_srcset_best or self.img_src
+
+
+def get_infobox_logo_url(wiki_slug: str) -> str | None:
+    """
+    Fetches the Wikipedia article HTML and extracts the infobox logo URL.
+    """
+    url = f"https://es.wikipedia.org/wiki/{wiki_slug}"
     try:
-        r = session.get("https://es.wikipedia.org/w/api.php", params=params, timeout=15)
+        r = requests.get(url, headers=HEADERS, timeout=20)
         r.raise_for_status()
-        data = r.json()
     except Exception as e:
-        print(f"    [WARN] Action API images query failed: {e}")
+        print(f"    [WARN] fetch failed for {url}: {e}")
         return None
 
-    pages = data.get("query", {}).get("pages", {})
-    images: list[str] = []
-    for page in pages.values():
-        for img in page.get("images", []):
-            title = img.get("title", "")
-            if title:
-                images.append(title)
-
-    if not images:
-        return None
-
-    # Step 2: rank images — prefer logo/escudo/seal keywords
-    priority_kw = ["escudo", "logo", "logotipo", "seal", "emblema", "crest", "marca",
-                   "insignia", "blazon", "shield", "arms"]
-    skip_kw     = ["flag", "bandera", "campus", "edificio", "fachada", "archivo", "map",
-                   "mapa", "spain", "espana", "icono", "commons-logo", "ambox", "question",
-                   "emblem-question", "pallium", "bus", "aula", "biblio", "foto",
-                   "archivo", ".jpg", ".jpeg"]  # skip photos — prefer SVG/PNG logos
-
-    # Separate logo candidates from generic images
-    logo_candidates = [img for img in images if any(kw in img.lower() for kw in priority_kw)]
-    non_photo_candidates = [img for img in images
-                            if not any(kw in img.lower() for kw in ["flag", "bandera", "campus",
-                               "edificio", "fachada", "ambox", "commons-logo", "question",
-                               "pallium", "bus"])
-                            and (img.lower().endswith(".svg") or img.lower().endswith(".png"))]
-
-    def score(title: str) -> int:
-        t = title.lower()
-        if any(kw in t for kw in ["commons-logo", "ambox", "question", "pallium",
-                                   "bus-", "flag", "bandera"]):
-            return -100
-        s = 0
-        for i, kw in enumerate(priority_kw):
-            if kw in t:
-                s += len(priority_kw) - i + 10
-        # Prefer SVG/PNG over JPEG photos
-        if t.endswith(".svg") or t.endswith(".png"):
-            s += 5
-        if t.endswith(".jpg") or t.endswith(".jpeg"):
-            s -= 3
-        return s
-
-    ranked = sorted(images, key=score, reverse=True)
-    # Prioritize real logo candidates; fall back to non-photo SVG/PNG; last resort: all
-    if logo_candidates:
-        ranked = sorted(logo_candidates, key=score, reverse=True) + \
-                 [x for x in ranked if x not in logo_candidates]
-    elif non_photo_candidates:
-        ranked = sorted(non_photo_candidates, key=score, reverse=True) + \
-                 [x for x in ranked if x not in non_photo_candidates]
-    ranked = [img for img in ranked if score(img) > -100]
-    if not ranked:
-        ranked = images  # absolute fallback
-
-    # Step 3: get imageinfo URL for top candidate
-    for candidate in ranked[:5]:
-        params2 = {
-            "action": "query",
-            "titles": candidate,
-            "prop": "imageinfo",
-            "iiprop": "url|mime",
-            "format": "json",
-        }
-        try:
-            r2 = session.get("https://es.wikipedia.org/w/api.php", params=params2, timeout=15)
-            r2.raise_for_status()
-            data2 = r2.json()
-        except Exception as e:
-            print(f"    [WARN] imageinfo failed for {candidate}: {e}")
-            continue
-
-        for p in data2.get("query", {}).get("pages", {}).values():
-            ii = p.get("imageinfo", [])
-            if ii:
-                url  = ii[0].get("url", "")
-                mime = ii[0].get("mime", "")
-                if url:
-                    return url
-
-    return None
+    parser = InfoboxImageParser()
+    parser.feed(r.text)
+    return parser.best_url
 
 
 def download_and_save(img_url: str, dest: Path) -> bool:
     try:
-        session = requests.Session()
-        session.headers.update(HEADERS)
-        resp = session.get(img_url, timeout=20)
+        resp = requests.get(img_url, headers=HEADERS, timeout=20)
         resp.raise_for_status()
 
-        content_type = resp.headers.get("Content-Type", "")
         raw = BytesIO(resp.content)
-
-        # SVG → try cairosvg, else skip
-        if "svg" in content_type or img_url.lower().endswith(".svg"):
-            try:
-                import cairosvg  # type: ignore
-                png_data = cairosvg.svg2png(bytestring=resp.content, output_width=256, output_height=256)
-                raw = BytesIO(png_data)
-            except ImportError:
-                # No cairosvg: try to open as-is (will likely fail for SVG)
-                pass
-            except Exception as e:
-                print(f"    [WARN] cairosvg conversion failed: {e}")
-                return False
-
         img = Image.open(raw).convert("RGBA")
 
-        # White background
+        # White background composite
         bg = Image.new("RGBA", img.size, (255, 255, 255, 255))
         bg.paste(img, mask=img.split()[3])
         img = bg.convert("RGB")
 
-        # Contain within 128×128 (no upscale)
+        # Contain within LOGO_SIZE (no upscale beyond original)
         img.thumbnail(LOGO_SIZE, Image.LANCZOS)
 
-        # Pad to exact square
+        # Pad to exact square with white
         square = Image.new("RGB", LOGO_SIZE, (255, 255, 255))
         offset = ((LOGO_SIZE[0] - img.width) // 2, (LOGO_SIZE[1] - img.height) // 2)
         square.paste(img, offset)
@@ -245,27 +203,8 @@ def download_and_save(img_url: str, dest: Path) -> bool:
         return True
 
     except Exception as e:
-        print(f"    [WARN] download/convert failed ({img_url[:60]}): {e}")
+        print(f"    [WARN] download/save failed ({img_url[:70]}): {e}")
         return False
-
-
-def get_logo_url_via_rest_summary(wiki_title: str) -> str | None:
-    """Fallback: Wikimedia REST summary API returns a page thumbnail."""
-    session = requests.Session()
-    session.headers.update(HEADERS)
-    encoded = requests.utils.quote(wiki_title.replace(" ", "_"))
-    url = f"https://es.wikipedia.org/api/rest_v1/page/summary/{encoded}"
-    try:
-        r = session.get(url, timeout=15)
-        if r.status_code != 200:
-            return None
-        data = r.json()
-        orig = data.get("originalimage", {}).get("source")
-        thumb = data.get("thumbnail", {}).get("source")
-        return orig or thumb
-    except Exception as e:
-        print(f"    [WARN] REST summary fallback failed: {e}")
-        return None
 
 
 def main() -> None:
@@ -289,28 +228,18 @@ def main() -> None:
         slug = slugify(uni)
         dest = OUTPUT_DIR / f"{slug}.png"
 
-        if dest.exists() and uni in manifest:
-            print(f"  [SKIP] {uni}")
-            skipped += 1
+        wiki_slug = WIKI_SLUGS.get(uni, uni.replace(" ", "_"))
+        print(f"  [{uni}]")
+
+        img_url = get_infobox_logo_url(wiki_slug)
+        if not img_url:
+            print(f"    [FAIL] no infobox logo found")
+            failed += 1
+            time.sleep(DELAY_S)
             continue
 
-        wiki_title = WIKI_TITLES.get(uni, uni)
-        print(f"  [{uni}]  wp:{wiki_title}")
-
-        img_url = get_logo_url_via_action_api(wiki_title)
-
-        ok = False
-        if img_url:
-            print(f"    url: {img_url[:80]}")
-            ok = download_and_save(img_url, dest)
-
-        # Fallback: REST summary thumbnail
-        if not ok:
-            print(f"    [FALLBACK] trying REST summary thumbnail...")
-            img_url2 = get_logo_url_via_rest_summary(wiki_title)
-            if img_url2 and img_url2 != img_url:
-                print(f"    url2: {img_url2[:80]}")
-                ok = download_and_save(img_url2, dest)
+        print(f"    url: {img_url[:90]}")
+        ok = download_and_save(img_url, dest)
 
         if ok:
             manifest[uni] = f"logos/{slug}.png"
@@ -319,8 +248,8 @@ def main() -> None:
             success += 1
             print(f"    [OK]")
         else:
-            print(f"    [FAIL] all strategies exhausted")
             failed += 1
+            print(f"    [FAIL]")
 
         time.sleep(DELAY_S)
 
