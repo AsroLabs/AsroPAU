@@ -41,6 +41,7 @@
   let autoMode     = $state(true)
   let copyDone     = $state(false)
   let whyOpen      = $state(false)
+  let breakdownWhyStep = $state<Step | null>(null)
 
   // What each panel shows
   let beforeLatex  = $state('')   // always expr_latex of current step
@@ -543,7 +544,19 @@
                     <div class="breakdown-header">
                       <p class="breakdown-desc">{s.description}</p>
                       {#if s.rule_name}
-                        <span class="breakdown-pill {rulePill(s.highlight_color)}">{s.rule_name}</span>
+                        <div class="flex items-center gap-1">
+                          <span class="breakdown-pill {rulePill(s.highlight_color)}">{s.rule_name}</span>
+                          <button
+                            type="button"
+                            onclick={() => breakdownWhyStep = s}
+                            aria-label="¿Por qué se aplica {s.rule_name}?"
+                            title="¿Por qué?"
+                            class="w-5 h-5 rounded-full bg-orange-100 text-orange-600 text-[11px] font-bold
+                                   flex items-center justify-center leading-none shrink-0
+                                   hover:bg-orange-200 transition-colors cursor-pointer
+                                   focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-400"
+                          >?</button>
+                        </div>
                       {/if}
                     </div>
                     <div class="breakdown-math">
@@ -569,6 +582,14 @@
     ruleName={step.rule_name}
     explanation={step.explanation}
     onClose={() => whyOpen = false}
+  />
+{/if}
+
+{#if breakdownWhyStep?.rule_name}
+  <RulePopup
+    ruleName={breakdownWhyStep.rule_name}
+    explanation={breakdownWhyStep.explanation}
+    onClose={() => breakdownWhyStep = null}
   />
 {/if}
 
