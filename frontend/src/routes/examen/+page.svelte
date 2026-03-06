@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { Search, Filter, BookOpen, Download, Star, Clock, ChevronRight, Flame, Trophy, GraduationCap, Calculator } from '@lucide/svelte'
+  import { Search, Filter, BookOpen, Download, Star, Clock, ChevronRight, Flame, Trophy, GraduationCap, Calculator, Sparkles } from '@lucide/svelte'
 
   // ── Data ─────────────────────────────────────────────────────────
   const subjects = ['Todos', 'Matemáticas', 'Física', 'Química', 'Historia', 'Lengua', 'Inglés', 'Biología']
@@ -19,25 +19,27 @@
     rating: number
     hot?: boolean
     isNew?: boolean
+    /** Representative expression for the math solver (only math/science exams) */
+    solverQuery?: string
   }
 
   const allExams: Exam[] = [
-    { id:1,  title: 'Matemáticas CCSS — Fase General',    subject: 'Matemáticas', region: 'Madrid',       year: 2024, difficulty: 'Medio',  pages: 4, downloads: 1840, rating: 4.8, isNew: true },
-    { id:2,  title: 'Matemáticas II — Opción A',           subject: 'Matemáticas', region: 'Cataluña',     year: 2024, difficulty: 'Difícil', pages: 6, downloads: 2210, rating: 4.9, hot: true },
-    { id:3,  title: 'Física — Electricidad y Magnetismo',  subject: 'Física',      region: 'Andalucía',    year: 2024, difficulty: 'Difícil', pages: 5, downloads: 980,  rating: 4.6 },
-    { id:4,  title: 'Química Orgánica — Reacciones',       subject: 'Química',     region: 'Madrid',       year: 2023, difficulty: 'Difícil', pages: 5, downloads: 1120, rating: 4.7, hot: true },
+    { id:1,  title: 'Matemáticas CCSS — Fase General',    subject: 'Matemáticas', region: 'Madrid',       year: 2024, difficulty: 'Medio',  pages: 4, downloads: 1840, rating: 4.8, isNew: true, solverQuery: 'x**2 - 5*x + 6 = 0' },
+    { id:2,  title: 'Matemáticas II — Opción A',           subject: 'Matemáticas', region: 'Cataluña',     year: 2024, difficulty: 'Difícil', pages: 6, downloads: 2210, rating: 4.9, hot: true,   solverQuery: 'd/dx(x**3 - 3*x**2 + 2*x)' },
+    { id:3,  title: 'Física — Electricidad y Magnetismo',  subject: 'Física',      region: 'Andalucía',    year: 2024, difficulty: 'Difícil', pages: 5, downloads: 980,  rating: 4.6,              solverQuery: 'd/dx(x**2 + 4*x - 7)' },
+    { id:4,  title: 'Química Orgánica — Reacciones',       subject: 'Química',     region: 'Madrid',       year: 2023, difficulty: 'Difícil', pages: 5, downloads: 1120, rating: 4.7, hot: true,   solverQuery: '2*x**2 + 3*x - 5 = 0' },
     { id:5,  title: 'Historia de España — Siglo XX',       subject: 'Historia',    region: 'C. Valenciana',year: 2024, difficulty: 'Medio',  pages: 4, downloads: 760,  rating: 4.5 },
     { id:6,  title: 'Lengua Castellana — Comentario',      subject: 'Lengua',      region: 'País Vasco',   year: 2023, difficulty: 'Fácil',  pages: 3, downloads: 430,  rating: 4.3 },
-    { id:7,  title: 'Matemáticas CCSS — Fase Específica',  subject: 'Matemáticas', region: 'Galicia',      year: 2023, difficulty: 'Medio',  pages: 4, downloads: 620,  rating: 4.4 },
+    { id:7,  title: 'Matemáticas CCSS — Fase Específica',  subject: 'Matemáticas', region: 'Galicia',      year: 2023, difficulty: 'Medio',  pages: 4, downloads: 620,  rating: 4.4,              solverQuery: 'integrate(x**2 + 3*x, x)' },
     { id:8,  title: 'Inglés — Reading & Writing',          subject: 'Inglés',      region: 'Aragón',       year: 2024, difficulty: 'Fácil',  pages: 4, downloads: 890,  rating: 4.6 },
     { id:9,  title: 'Biología Celular y Genética',         subject: 'Biología',    region: 'Canarias',     year: 2024, difficulty: 'Difícil', pages: 6, downloads: 1350, rating: 4.8, isNew: true },
-    { id:10, title: 'Física — Ondas y Óptica',             subject: 'Física',      region: 'Madrid',       year: 2023, difficulty: 'Medio',  pages: 5, downloads: 740,  rating: 4.5 },
-    { id:11, title: 'Química — Equilibrio Químico',        subject: 'Química',     region: 'Cataluña',     year: 2023, difficulty: 'Medio',  pages: 4, downloads: 680,  rating: 4.4 },
+    { id:10, title: 'Física — Ondas y Óptica',             subject: 'Física',      region: 'Madrid',       year: 2023, difficulty: 'Medio',  pages: 5, downloads: 740,  rating: 4.5,              solverQuery: 'lim x->0 sin(x)/x' },
+    { id:11, title: 'Química — Equilibrio Químico',        subject: 'Química',     region: 'Cataluña',     year: 2023, difficulty: 'Medio',  pages: 4, downloads: 680,  rating: 4.4,              solverQuery: 'x**2 - 4 = 0' },
     { id:12, title: 'Historia del Arte — Contemporáneo',   subject: 'Historia',    region: 'Andalucía',    year: 2022, difficulty: 'Fácil',  pages: 3, downloads: 390,  rating: 4.2 },
-    { id:13, title: 'Matemáticas II — Cálculo Integral',   subject: 'Matemáticas', region: 'Madrid',       year: 2022, difficulty: 'Difícil', pages: 5, downloads: 1560, rating: 4.7, hot: true },
+    { id:13, title: 'Matemáticas II — Cálculo Integral',   subject: 'Matemáticas', region: 'Madrid',       year: 2022, difficulty: 'Difícil', pages: 5, downloads: 1560, rating: 4.7, hot: true,   solverQuery: 'integrate(sin(x)*x, x)' },
     { id:14, title: 'Biología — Ecología y Medio Ambiente',subject: 'Biología',    region: 'C. Valenciana',year: 2023, difficulty: 'Fácil',  pages: 4, downloads: 480,  rating: 4.3 },
     { id:15, title: 'Inglés — Use of English',             subject: 'Inglés',      region: 'País Vasco',   year: 2022, difficulty: 'Medio',  pages: 3, downloads: 560,  rating: 4.4 },
-    { id:16, title: 'Física — Mecánica y Energía',         subject: 'Física',      region: 'Galicia',      year: 2022, difficulty: 'Medio',  pages: 5, downloads: 820,  rating: 4.6 },
+    { id:16, title: 'Física — Mecánica y Energía',         subject: 'Física',      region: 'Galicia',      year: 2022, difficulty: 'Medio',  pages: 5, downloads: 820,  rating: 4.6,              solverQuery: 'd/dx(sin(x)*x**2)' },
   ]
 
   // ── Filters ───────────────────────────────────────────────────────
@@ -261,16 +263,15 @@
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {#each filtered as exam, i (exam.id)}
           {@const diff = difficultyColors[exam.difficulty]}
-          <button
-            type="button"
-            class="group bg-white rounded-2xl border-2 border-orange-50 hover:border-orange-300 shadow-sm hover:shadow-lg hover:shadow-orange-100 transition-all duration-200 overflow-hidden cursor-pointer text-left w-full section-reveal"
+          <div
+            class="group bg-white rounded-2xl border-2 border-orange-50 hover:border-orange-300 shadow-sm hover:shadow-lg hover:shadow-orange-100 transition-all duration-200 overflow-hidden section-reveal flex flex-col"
             style="border-bottom: 4px solid #FED7AA; animation-delay: {Math.min(i, 8) * 40}ms;"
             class:show={visible}
           >
             <!-- Card top color bar by subject -->
             <div class="h-1.5 w-full bg-gradient-to-r from-orange-500 to-orange-400" aria-hidden="true"></div>
 
-            <div class="p-5">
+            <div class="p-5 flex flex-col flex-1">
               <!-- Badges row -->
               <div class="flex items-center gap-2 mb-3 flex-wrap">
                 <!-- Difficulty badge -->
@@ -297,7 +298,7 @@
               <p class="text-xs text-slate-400 mb-4">{exam.region} · {exam.pages} páginas</p>
 
               <!-- Meta row -->
-              <div class="flex items-center justify-between text-xs text-slate-400">
+              <div class="flex items-center justify-between text-xs text-slate-400 mt-auto">
                 <div class="flex items-center gap-3">
                   <!-- Star rating -->
                   <span class="flex items-center gap-1">
@@ -321,8 +322,25 @@
                   <ChevronRight size={14} class="text-orange-400 group-hover:text-white transition-colors" />
                 </div>
               </div>
+
+              <!-- Resolver CTA — only for math/science exams -->
+              {#if exam.solverQuery}
+                <div class="mt-4 pt-4 border-t border-slate-100">
+                  <a
+                    href="/resolutor?q={encodeURIComponent(exam.solverQuery)}"
+                    class="flex items-center justify-center gap-2 w-full py-2 px-3 rounded-xl
+                      bg-orange-50 hover:bg-orange-600 border border-orange-200 hover:border-orange-600
+                      text-orange-700 hover:text-white text-xs font-bold
+                      transition-all duration-150"
+                    title="Resolver una ecuación típica de este examen paso a paso"
+                  >
+                    <Sparkles size={13} />
+                    Resolver paso a paso
+                  </a>
+                </div>
+              {/if}
             </div>
-          </button>
+          </div>
         {/each}
       </div>
     {/if}

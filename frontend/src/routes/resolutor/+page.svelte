@@ -1,9 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte'
-  import { History, Trash2, X, Sparkles, RotateCcw, AlertCircle } from '@lucide/svelte'
+  import { History, Trash2, X, Sparkles, RotateCcw, AlertCircle, Share2, Check } from '@lucide/svelte'
   import LatexInput from '$lib/math-solver/LatexInput.svelte'
   import MathKeyboard from '$lib/math-solver/MathKeyboard.svelte'
   import MorphSolver from '$lib/math-solver/MorphSolver.svelte'
+  import { page } from '$app/stores'
 
   type Mode = 'text' | 'keyboard'
 
@@ -33,12 +34,13 @@
     highlight_color?:  string
   }
 
-  let activeMode = $state<Mode>('text')
+  let activeMode  = $state<Mode>('text')
   let inputValue  = $state('')
   let steps       = $state<SolveStep[]>([])
   let result      = $state<SolveResult | null>(null)
   let loading     = $state(false)
   let error       = $state<string | null>(null)
+  let copied      = $state(false)
 
   // ── History ────────────────────────────────────────────────────────
   let history     = $state<HistoryEntry[]>([])
@@ -80,6 +82,14 @@
 
   onMount(() => {
     loadHistory()
+    // Pre-fill from ?q= deep-link (e.g. from exam bank or share URL)
+    const q = $page.url.searchParams.get('q')
+    if (q) {
+      inputValue = q
+      activeMode = 'text'
+      // Auto-solve after a short tick so the DOM is ready
+      setTimeout(() => solve(), 50)
+    }
   })
 
   // ── Solver ─────────────────────────────────────────────────────────
@@ -159,6 +169,19 @@
     steps      = []
     result     = null
     error      = null
+  }
+
+  async function shareUrl() {
+    const encoded = encodeURIComponent(inputValue.trim())
+    const url = `${window.location.origin}/resolutor?q=${encoded}`
+    try {
+      await navigator.clipboard.writeText(url)
+      copied = true
+      setTimeout(() => (copied = false), 2000)
+    } catch {
+      // Fallback: open prompt
+      window.prompt('Copia este enlace:', url)
+    }
   }
 
   // ── Example presets ────────────────────────────────────────────────
@@ -360,6 +383,22 @@
           <RotateCcw size={15} />
           Limpiar
         </button>
+        {#if steps.length > 0 && inputValue.trim()}
+          <button
+            onclick={shareUrl}
+            class="flex items-center gap-2 px-4 py-3 rounded-xl font-semibold border transition-colors duration-150 cursor-pointer
+              {copied ? 'border-green-400 bg-green-50 text-green-700' : 'border-slate-200 hover:bg-slate-50 text-slate-600'}"
+            aria-label="Compartir enlace a esta solución"
+            title="Compartir solución"
+          >
+            {#if copied}
+              <Check size={15} />
+              Copiado
+            {:else}
+              <Share2 size={15} />
+            {/if}
+          </button>
+        {/if}
       </div>
     </div>
 
