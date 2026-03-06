@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { Calculator } from "@lucide/svelte";
     import DatosAcademicos from "./components/FormularioNotas.svelte";
     import ResultadosCalificacion from "./components/ResultadosCalificacion.svelte";
     import Universidades from "./components/Universidades.svelte";
@@ -62,17 +61,6 @@
     
     // notaAdmision = notaAcceso + mejorAportacion1 + mejorAportacion2
     let totalGrade = $derived(notaAcceso + admisionPart);
-    
-    // Para mostrar en los resultados
-    let bachPart = $derived(notaBachiller * 0.6);
-    let accesoPart = $derived(
-        ((accesoLengua +
-            accesoHistoriaFilosofia +
-            accesoIngles +
-            accesoTroncalGrade) /
-            4) *
-            0.4
-    );
 
     // Debounce timer para el fetch de totalGrade
     let debounceTimer: number | undefined;
@@ -119,7 +107,7 @@
 
 </script>
 
-<main class="min-h-screen bg-[#f6f6f8] text-slate-800">
+<div class="min-h-screen bg-[#f6f6f8] text-slate-800">
     <!-- Navigation -->
     <Header fixed={false}/>
 
@@ -180,7 +168,7 @@
             </div>
         </div>
     </footer>
-</main>
+</div>
 
 <style>
     :global(body) {

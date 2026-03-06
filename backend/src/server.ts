@@ -1,11 +1,15 @@
 import app from './app';
 import { config, validateConfig } from './config';
 import logger from './middleware/logger';
+import { runMigrations } from './db/migrations/001_create_grados';
 
-const startServer = (): void => {
+const startServer = async (): Promise<void> => {
   try {
     // Validar configuración
     validateConfig();
+
+    // Ejecutar migraciones antes de arrancar
+    await runMigrations();
 
     // Iniciar servidor
     app.listen(config.port, () => {

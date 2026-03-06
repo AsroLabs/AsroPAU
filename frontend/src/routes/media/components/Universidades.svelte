@@ -35,7 +35,7 @@
       if (filterLocation) params.set('location', filterLocation);
       if (totalGrade > 0) params.set('cutOff', totalGrade.toString());
 
-      const res = await fetch(`http://localhost:3000/grados?${params.toString()}`);
+      const res = await fetch(`/api/v1/grados?${params.toString()}`);
       if (!res.ok) throw new Error('Error al obtener los grados');
       const json = await res.json();
       grados = json.data ?? [];
