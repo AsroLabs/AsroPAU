@@ -88,17 +88,17 @@
   const T_CHAIN   = prefersReduced ? 0 : 500   // fade-out duration between steps
   const T_SETTLE  = prefersReduced ? 0 : 80    // gap after fade before next step
 
-  // ── katex-pop on a container's colored spans ───────────────────────────────
+  // ── katex-highlight on a container's colored spans ────────────────────────
   function popColoredSpans(container: HTMLElement | undefined) {
     if (!container || prefersReduced) return
     const targets = Array.from(container.querySelectorAll<HTMLElement>('.katex [style*="color:"]'))
     if (!targets.length) return
     targets.forEach(el => { el.style.display = 'inline-block' })
     const a = animate(targets, {
-      scale:    [1, 1.30, 1.08, 1],
-      duration: 480,
-      delay:    stagger(55),
-      easing:   'cubicBezier(0.34, 1.56, 0.64, 1)',
+      opacity:  [0.3, 1],
+      duration: 380,
+      delay:    stagger(40),
+      easing:   'easeOutCubic',
       onComplete: () => { activeAnims = activeAnims.filter(x => x !== a) }
     })
     activeAnims.push(a)
@@ -146,16 +146,15 @@
 
         if (op.type === 'highlight_term') {
           anim = animate(targets, {
-            scale:    [1, 1.25, 1.08, 1],
+            opacity:  [0.3, 1],
             duration: op.duration,
-            easing:   'cubicBezier(0.34, 1.56, 0.64, 1)',
             delay:    stagger(40),
+            easing:   'easeOutCubic',
             onComplete: () => { if (anim) activeAnims = activeAnims.filter(x => x !== anim) }
           })
         } else if (op.type === 'fade_out') {
           anim = animate(targets, {
             opacity:  [1, 0],
-            scale:    [1, 0.7],
             duration: op.duration,
             easing:   'easeInCubic',
             onComplete: () => { if (anim) activeAnims = activeAnims.filter(x => x !== anim) }
@@ -172,11 +171,10 @@
           })
         } else if (op.type === 'simplify_number' || op.type === 'rewrite_expression') {
           anim = animate(targets, {
-            scale:    [1, 1.18, 1],
-            opacity:  [0.5, 1],
+            opacity:  [0.3, 1],
             duration: op.duration,
-            easing:   'cubicBezier(0.34, 1.56, 0.64, 1)',
             delay:    stagger(35),
+            easing:   'easeOutCubic',
             onComplete: () => { if (anim) activeAnims = activeAnims.filter(x => x !== anim) }
           })
         }
