@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test'
 
-const BASE = 'http://localhost:5173'
+const BASE = 'http://localhost:5174'
 const API  = 'http://localhost:8001'
 
 // ── helpers ─────────────────────────────────────────────────────────────────
@@ -127,7 +127,7 @@ test('Multiple step cards appear sequentially', async ({ page }) => {
   await page.waitForTimeout(4000)
 
   // There should be progress dots rendered (multiple steps → multiple dots)
-  const dots = page.locator('section[aria-label="Resolución paso a paso"] span[title^="Paso"]')
+  const dots = page.locator('section[aria-label="Resolución paso a paso"] button[title^="Paso"]')
   const dotCount = await dots.count()
   expect(dotCount).toBeGreaterThanOrEqual(3)
 

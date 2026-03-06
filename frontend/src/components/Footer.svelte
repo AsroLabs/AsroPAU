@@ -71,7 +71,7 @@
             </a>
           </li>
           <li>
-            <a href="/calc" class="flex items-center gap-2 text-orange-200/80 hover:text-white transition-colors cursor-pointer group">
+            <a href="/media" class="flex items-center gap-2 text-orange-200/80 hover:text-white transition-colors cursor-pointer group">
               <Calculator size={13} class="opacity-60 group-hover:opacity-100 text-orange-400" />
               Calculadora de Notas
             </a>

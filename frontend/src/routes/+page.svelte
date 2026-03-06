@@ -2,6 +2,7 @@
     import Hero from "../components/Hero.svelte";
     import ExamSearch from "../components/ExamSearch.svelte";
     import Features from "../components/Features.svelte";
+    import spain from "$lib/assets/spain.svg";
     import Footer from "../components/Footer.svelte";
     import SpainSection from "../components/SpainSection.svelte";
 </script>
