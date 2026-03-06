@@ -860,6 +860,131 @@ def health_check():
     return {"status": "healthy", "service": "math-solver-api"}
 
 
+class CriticalPointsRequest(BaseModel):
+    expr: str   # SymPy syntax, e.g. "x**2 - 5*x + 6"
+
+
+class CriticalPoint(BaseModel):
+    x: float
+    y: float
+    kind: str   # "root" | "minimum" | "maximum" | "inflection"
+
+
+@app.post("/api/critical-points")
+def get_critical_points(request: CriticalPointsRequest):
+    """
+    Given a SymPy expression in x, return notable points:
+      - roots (y = 0)
+      - local minima / maxima (f' = 0, classified by f'')
+      - inflection points (f'' = 0, sign change in f'')
+    All values are floated and filtered to finite reals only.
+    At most 20 points total to avoid flooding the graph.
+    """
+    try:
+        x = symbols('x')
+        expr = _safe_parse(request.expr)
+
+        if not expr.has(x):
+            return {"points": []}
+
+        results: list[dict] = []
+
+        def _safe_float(val) -> float | None:
+            try:
+                nval = sympy.N(val)
+                if sympy.im(nval) != 0:
+                    return None   # complex root — skip
+                f = float(sympy.re(nval))
+                if abs(f) > 1e6:
+                    return None
+                return round(f, 6)
+            except Exception:
+                return None
+
+        def _eval_y(xval: float) -> float | None:
+            try:
+                f = float(sympy.re(sympy.N(expr.subs(x, xval))))
+                if abs(f) > 1e6:
+                    return None
+                return round(f, 6)
+            except Exception:
+                return None
+
+        # ── Roots ────────────────────────────────────────────────────────────
+        try:
+            raw_roots = solve(expr, x)
+            for r in raw_roots:
+                xv = _safe_float(r)
+                if xv is not None:
+                    results.append({"x": xv, "y": 0.0, "kind": "root"})
+        except Exception:
+            pass
+
+        # ── Critical points (f' = 0) ─────────────────────────────────────────
+        try:
+            fp  = diff(expr, x)
+            fpp = diff(fp,   x)
+            crit_xs = solve(fp, x)
+            for cx in crit_xs:
+                xv = _safe_float(cx)
+                if xv is None:
+                    continue
+                yv = _eval_y(xv)
+                if yv is None:
+                    continue
+                try:
+                    concavity = float(sympy.N(fpp.subs(x, xv)))
+                    if concavity > 1e-9:
+                        kind = "minimum"
+                    elif concavity < -1e-9:
+                        kind = "maximum"
+                    else:
+                        kind = "inflection"
+                except Exception:
+                    kind = "inflection"
+                results.append({"x": xv, "y": yv, "kind": kind})
+        except Exception:
+            pass
+
+        # ── Inflection points (f'' = 0, sign change) ────────────────────────
+        try:
+            fpp = diff(diff(expr, x), x)
+            inf_xs = solve(fpp, x)
+            for ix in inf_xs:
+                xv = _safe_float(ix)
+                if xv is None:
+                    continue
+                # verify sign change in f'' around the point
+                eps = 1e-4
+                try:
+                    left  = float(sympy.N(fpp.subs(x, xv - eps)))
+                    right = float(sympy.N(fpp.subs(x, xv + eps)))
+                    if left * right >= 0:   # no sign change → not a true inflection
+                        continue
+                except Exception:
+                    continue
+                yv = _eval_y(xv)
+                if yv is None:
+                    continue
+                # avoid duplicating a point already found as min/max
+                if any(abs(p["x"] - xv) < 1e-4 and p["kind"] != "root" for p in results):
+                    continue
+                results.append({"x": xv, "y": yv, "kind": "inflection"})
+        except Exception:
+            pass
+
+        # De-duplicate by proximity and cap
+        deduped: list[dict] = []
+        for p in results:
+            if not any(abs(q["x"] - p["x"]) < 1e-4 and q["kind"] == p["kind"] for q in deduped):
+                deduped.append(p)
+
+        return {"points": deduped[:20]}
+
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error computing critical points: {str(e)}")
+
+
 @app.post("/api/solve", response_model=SolveResponse)
 def solve_equation(request: SolveRequest):
     start_time = time.time()

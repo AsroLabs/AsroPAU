@@ -11,6 +11,10 @@ export default defineConfig({
 				target: process.env.MATH_SOLVER_PROXY_TARGET ?? 'http://localhost:8001',
 				changeOrigin: true,
 			},
+			'/api/critical-points': {
+				target: process.env.MATH_SOLVER_PROXY_TARGET ?? 'http://localhost:8001',
+				changeOrigin: true,
+			},
 			'/api': {
 				target: process.env.API_PROXY_TARGET ?? 'http://localhost:3000',
 				changeOrigin: true,

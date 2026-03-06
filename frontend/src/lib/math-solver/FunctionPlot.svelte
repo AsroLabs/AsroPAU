@@ -13,6 +13,9 @@
   let error      = $state(false)
   let fullscreen = $state(false)
 
+  interface CritPoint { x: number; y: number; kind: 'root' | 'minimum' | 'maximum' | 'inflection' }
+  let critPoints = $state<CritPoint[]>([])
+
   // Convert SymPy syntax → function-plot / math.js syntax
   function toJsSyntax(s: string): string {
     return s
@@ -32,6 +35,43 @@
   const clean     = $derived(toJsSyntax(expr))
   const plottable = $derived(isPlottable(clean))
 
+  // Fetch critical points from backend whenever expr changes
+  $effect(() => {
+    if (!plottable) { critPoints = []; return }
+    const currentExpr = expr
+    fetch('/api/critical-points', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ expr: currentExpr })
+    })
+      .then(r => r.json())
+      .then(d => { critPoints = d.points ?? [] })
+      .catch(() => { critPoints = [] })
+  })
+
+  // Color per point kind
+  const KIND_COLOR: Record<string, string> = {
+    root:       '#2563EB',   // blue
+    minimum:    '#16A34A',   // green
+    maximum:    '#DC2626',   // red
+    inflection: '#9333EA',   // purple
+  }
+
+  function buildData(pts: CritPoint[]) {
+    // Group by kind → separate scatter series so each gets its own color
+    const groups: Record<string, number[][]> = {}
+    for (const p of pts) {
+      if (!groups[p.kind]) groups[p.kind] = []
+      groups[p.kind].push([p.x, p.y])
+    }
+    return Object.entries(groups).map(([kind, points]) => ({
+      points,
+      fnType: 'points' as const,
+      graphType: 'scatter' as const,
+      color: KIND_COLOR[kind] ?? '#6b7280',
+    }))
+  }
+
   function drawPlot(target: HTMLDivElement, width: number, height: number) {
     target.innerHTML = ''
     import('function-plot').then(({ default: functionPlot }) => {
@@ -43,7 +83,10 @@
           grid: true,
           xAxis: { domain: [-6, 6] },
           yAxis: { domain: [-8, 8] },
-          data: [{ fn: clean, color: '#EA580C', graphType: 'polyline' }],
+          data: [
+            { fn: clean, color: '#EA580C', graphType: 'polyline' },
+            ...buildData(critPoints),
+          ],
         })
       } catch (e) {
         console.warn('[FunctionPlot] render error:', e)
@@ -60,6 +103,8 @@
     if (!plottable || !containerEl) return
     error = false
     const el = containerEl
+    // also re-run when critPoints change
+    const _pts = critPoints
     const ro = new ResizeObserver(entries => {
       const w = entries[0]?.contentRect.width || 480
       drawPlot(el, w, 260)
@@ -72,7 +117,7 @@
   $effect(() => {
     if (!fullscreen || !fsContainerEl) return
     const el = fsContainerEl
-    // Track reactive deps above; read layout in rAF (outside reactive context)
+    const _pts = critPoints
     const id = requestAnimationFrame(() => {
       const w = el.offsetWidth  || window.innerWidth
       const h = el.offsetHeight || window.innerHeight - 80
@@ -110,6 +155,22 @@
       <p class="plot-error">No se pudo representar la función gráficamente.</p>
     {:else}
       <div bind:this={containerEl} class="plot-container"></div>
+      {#if critPoints.length > 0}
+        <div class="plot-legend">
+          {#if critPoints.some(p => p.kind === 'root')}
+            <span class="legend-item"><span class="legend-dot" style="background:#2563EB"></span>Raíz</span>
+          {/if}
+          {#if critPoints.some(p => p.kind === 'minimum')}
+            <span class="legend-item"><span class="legend-dot" style="background:#16A34A"></span>Mínimo</span>
+          {/if}
+          {#if critPoints.some(p => p.kind === 'maximum')}
+            <span class="legend-item"><span class="legend-dot" style="background:#DC2626"></span>Máximo</span>
+          {/if}
+          {#if critPoints.some(p => p.kind === 'inflection')}
+            <span class="legend-item"><span class="legend-dot" style="background:#9333EA"></span>Inflexión</span>
+          {/if}
+        </div>
+      {/if}
     {/if}
   </div>
 
@@ -215,6 +276,29 @@
     color: #9ca3af;
     text-align: center;
     padding: 1.5rem 0;
+  }
+
+  .plot-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    padding: 0.5rem 0.25rem 0;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.7rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
   }
 
   /* ── Fullscreen overlay ─────────────────────────────────────────────── */
