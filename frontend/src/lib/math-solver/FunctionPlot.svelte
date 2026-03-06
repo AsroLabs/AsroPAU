@@ -33,8 +33,7 @@
   $effect(() => {
     if (!plottable || !containerEl) return
     error = false
-    const fn = clean  // capture reactive value
-    // Clear previous plot
+    const fn = clean
     containerEl.innerHTML = ''
     import('function-plot').then(({ default: functionPlot }) => {
       try {
@@ -89,9 +88,9 @@
   .plot-container {
     width: 100%;
     border-radius: 0.75rem;
-    overflow: hidden;
     background: #fafafa;
     border: 1px solid #e5e7eb;
+    /* overflow:hidden removed — it blocks mouse/touch drag events */
   }
 
   /* function-plot injects an svg — make it fill the container */
@@ -101,6 +100,8 @@
 
   .plot-container :global(svg) {
     border-radius: 0.75rem;
+    /* Prevent the page from scrolling when the user drags inside the graph on mobile */
+    touch-action: none;
   }
 
   .plot-error {
