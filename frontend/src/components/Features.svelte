@@ -56,7 +56,7 @@
         "Comparativa con notas de corte",
       ],
       image: calculator,
-      href: "/media",
+      href: "/calc",
       bgColor: "#F59E0B",
       borderColor: "#d97706",
       shadowColor: "rgba(245,158,11,0.25)",

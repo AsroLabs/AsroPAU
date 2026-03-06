@@ -263,9 +263,9 @@
           {@const diff = difficultyColors[exam.difficulty]}
           <button
             type="button"
-            class="group bg-white rounded-2xl border-2 border-orange-50 hover:border-orange-300 shadow-sm hover:shadow-lg hover:shadow-orange-100 transition-all duration-200 overflow-hidden cursor-pointer text-left w-full"
+            class="group bg-white rounded-2xl border-2 border-orange-50 hover:border-orange-300 shadow-sm hover:shadow-lg hover:shadow-orange-100 transition-all duration-200 overflow-hidden cursor-pointer text-left w-full section-reveal"
             style="border-bottom: 4px solid #FED7AA; animation-delay: {Math.min(i, 8) * 40}ms;"
-            class:section-reveal={!visible}
+            class:show={visible}
           >
             <!-- Card top color bar by subject -->
             <div class="h-1.5 w-full bg-gradient-to-r from-orange-500 to-orange-400" aria-hidden="true"></div>
@@ -358,6 +358,10 @@
     opacity: 0;
     transform: translateY(16px);
     transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .section-reveal.show {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   @media (prefers-reduced-motion: reduce) {
