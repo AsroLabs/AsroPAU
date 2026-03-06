@@ -104,6 +104,11 @@
       e.preventDefault()
       onsubmit?.()
     }
+    // Intercept ^ and insert ** instead so SymPy receives valid syntax
+    if (e.key === '^') {
+      e.preventDefault()
+      insertSymbol('**')
+    }
   }
 </script>
 
