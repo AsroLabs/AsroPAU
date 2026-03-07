@@ -1,0 +1,105 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: asropau-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: asropau
+      POSTGRES_PASSWORD: asropau_pass
+      POSTGRES_DB: asropau
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - asropau-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U asropau -d asropau"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Python Math Solver Microservice
+  math-solver:
+    build:
+      context: ./math-solver
+      dockerfile: Dockerfile
+    container_name: asropau-math-solver
+    ports:
+      - "8001:8001"
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - asropau-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Node.js Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: asropau-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - API_PREFIX=/api/v1
+      - CORS_ORIGIN=http://localhost:5173
+      - LOG_LEVEL=info
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=asropau
+      - POSTGRES_USER=asropau
+      - POSTGRES_PASSWORD=asropau_pass
+      - MATH_SOLVER_URL=http://math-solver:8001
+    networks:
+      - asropau-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      math-solver:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Svelte Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: asropau-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:3000
+      - API_PROXY_TARGET=http://asropau-backend:3000
+      - MATH_SOLVER_PROXY_TARGET=http://asropau-math-solver:8001
+    networks:
+      - asropau-network
+    depends_on:
+      backend:
+        condition: service_healthy
+      math-solver:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5173"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  asropau-network:
+    driver: bridge

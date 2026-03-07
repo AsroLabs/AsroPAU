@@ -27,6 +27,8 @@ app.get('/', (req: Request, res: Response) => {
   });
 });
 
+app.use(config.apiPrefix, routes);
+
 app.use(notFoundHandler);
 
 app.use(errorHandler);

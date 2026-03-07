@@ -1,7 +1,4 @@
 import { Router, Request, Response } from "express";
-import { time, timeStamp } from "node:console";
-import { env, uptime } from "node:process";
-import { startTimer } from "winston";
 
 const router = Router();
 

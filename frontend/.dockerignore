@@ -4,4 +4,3 @@ node_modules
 .gitignore
 .svelte-kit
 out
-static
