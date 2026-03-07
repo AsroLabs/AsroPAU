@@ -88,81 +88,6 @@
   const T_CHAIN   = prefersReduced ? 0 : 500   // fade-out duration between steps
   const T_SETTLE  = prefersReduced ? 0 : 80    // gap after fade before next step
 
-  // ── flyToken: clone a KaTeX span and arc it to the matching span in target ──
-  // Ported from math-ui-solver.js flyToken(), translated to animejs v4 syntax.
-  function flyTokens(fromContainer: HTMLElement, toContainer: HTMLElement) {
-    if (prefersReduced) return
-    const fromSpans = Array.from(fromContainer.querySelectorAll<HTMLElement>('.katex [style*="color:"]'))
-    const toSpans   = Array.from(toContainer.querySelectorAll<HTMLElement>('.katex [style*="color:"]'))
-    if (!fromSpans.length || !toSpans.length) return
-
-    fromSpans.forEach((src, i) => {
-      const dst = toSpans[i] ?? toSpans[toSpans.length - 1]
-
-      const srcR = src.getBoundingClientRect()
-      const dstR = dst.getBoundingClientRect()
-
-      // Absolute position of source relative to document
-      const srcTop  = srcR.top  + window.scrollY
-      const srcLeft = srcR.left + window.scrollX
-
-      // Delta from source to destination
-      const dx = (dstR.left + window.scrollX + dstR.width  / 2) - (srcR.left + window.scrollX + srcR.width  / 2)
-      const dy = (dstR.top  + window.scrollY + dstR.height / 2) - (srcR.top  + window.scrollY + srcR.height / 2)
-      const arcHeight = -70  // upward arc in px
-
-      // Create absolutely-positioned flying clone on <body>
-      const clone = src.cloneNode(true) as HTMLElement
-      const style = window.getComputedStyle(src)
-      clone.style.cssText = ''
-      clone.style.position    = 'absolute'
-      clone.style.top         = srcTop  + 'px'
-      clone.style.left        = srcLeft + 'px'
-      clone.style.width       = srcR.width  + 'px'
-      clone.style.height      = srcR.height + 'px'
-      clone.style.margin      = '0'
-      clone.style.fontSize    = style.fontSize
-      clone.style.fontFamily  = style.fontFamily
-      clone.style.fontWeight  = style.fontWeight
-      clone.style.lineHeight  = style.lineHeight
-      clone.style.color       = style.color
-      clone.style.zIndex      = '9999'
-      clone.style.pointerEvents = 'none'
-      clone.style.willChange  = 'transform, opacity'
-      document.body.appendChild(clone)
-
-      const duration = 700 + i * 60
-
-      // First half: arc up toward midpoint
-      const a1 = animate(clone, {
-        translateX: dx / 2,
-        translateY: dy / 2 + arcHeight,
-        scale:      1.25,
-        opacity:    0.9,
-        duration:   duration * 0.5,
-        easing:     'easeOutCubic',
-        onComplete: () => {
-          // Second half: descend to destination
-          const a2 = animate(clone, {
-            translateX: dx,
-            translateY: dy,
-            scale:      0.8,
-            opacity:    0,
-            duration:   duration * 0.5,
-            easing:     'easeInCubic',
-            onComplete: () => {
-              clone.remove()
-              activeAnims = activeAnims.filter(x => x !== a1 && x !== a2)
-            }
-          })
-          activeAnims.push(a2)
-          activeAnims = activeAnims.filter(x => x !== a1)
-        }
-      })
-      activeAnims.push(a1)
-    })
-  }
-
   // ── katex-highlight on a container's colored spans ────────────────────────
   function popColoredSpans(container: HTMLElement | undefined) {
     if (!container || prefersReduced) return
@@ -335,11 +260,8 @@
 
       if (!autoMode) return
 
-      // 2. After T_BEFORE: fly tokens from before → after, then light up after
+      // 2. After T_BEFORE: dim before, light up after
       t(() => {
-        // Launch flyToken arcs while both panels are still visible
-        if (beforeEl && afterEl) flyTokens(beforeEl, afterEl)
-
         phase         = 'show-after'
         beforeDisplay = beforeLatex   // back to plain
         beforeLit     = false
@@ -1068,11 +990,5 @@
     line-height: 1.5;
     padding-top: 0.25rem;
     border-top: 1px solid #fed7aa;
-  }
-
-  /* ── Flying token clones (appended to <body> by flyTokens()) ─────────────── */
-  :global(.mth-flying-token) {
-    will-change: transform, opacity;
-    pointer-events: none;
   }
 </style>
