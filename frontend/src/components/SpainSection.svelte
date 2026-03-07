@@ -20,28 +20,6 @@
     if (sectionRef) observer.observe(sectionRef);
     return () => observer.disconnect();
   });
-<script lang="ts">
-  import { onMount } from "svelte";
-  import { MapPin } from "@lucide/svelte";
-  import spain from "$lib/assets/spain.svg";
-
-  const regions = [
-    "Madrid", "Cataluña", "C. Valenciana",
-    "Andalucía", "País Vasco", "Galicia",
-    "Castilla-La Mancha", "Aragón", "Canarias",
-  ];
-
-  let sectionRef: HTMLElement;
-  let visible = $state(false);
-
-  onMount(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) visible = true; },
-      { threshold: 0.2 }
-    );
-    if (sectionRef) observer.observe(sectionRef);
-    return () => observer.disconnect();
-  });
 </script>
 
 <section

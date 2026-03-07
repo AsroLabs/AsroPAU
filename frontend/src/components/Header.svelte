@@ -22,7 +22,7 @@
   const { fixed = true }: Props = $props();
 
   const navLinks = [
-    { href: "/examen", label: "Exámenes", Icon: BookOpen },
+    { href: "/examenes", label: "Exámenes", Icon: BookOpen },
     { href: "/media", label: "Calculadora", Icon: Calculator },
     { href: "/iae", label: "Exámenes IA", Icon: Sparkles },
     { href: "/resolutor", label: "Resolutor", Icon: FlaskConical },

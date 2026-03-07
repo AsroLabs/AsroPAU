@@ -121,7 +121,7 @@
 
 <main class="min-h-screen bg-[#f6f6f8] text-slate-800">
     <!-- Navigation -->
-    <Header fixed={false}/>
+    <!-- <Header fixed={false}/> -->
 
     <main class="max-w-360 mx-auto p-6">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
