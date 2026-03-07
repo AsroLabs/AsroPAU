@@ -77,7 +77,7 @@
         "Soluciones detalladas con IA",
       ],
       image: printer,
-      href: "/resolutor",
+      href: "/examenes-ia",
       bgColor: "#8B5CF6",
       borderColor: "#6d28d9",
       shadowColor: "rgba(139,92,246,0.25)",
@@ -109,7 +109,6 @@
   id="features"
   bind:this={sectionRef}
   class="py-28 px-6 relative overflow-hidden"
-  style="background: linear-gradient(180deg, #fff 0%, #FFF7ED 100%);"
 >
   <!-- Background decoration -->
   <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -143,20 +142,6 @@
     >
       <div class="inline-flex gap-2 p-1.5 bg-slate-100 rounded-2xl border border-slate-200">
         {#each features as feature}
-          <button
-            onclick={() => (activeTab = feature.id)}
-            class="
-              flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold
-              transition-all duration-200 cursor-pointer
-              {activeTab === feature.id ? 'text-white shadow-lg' : 'text-slate-500 hover:text-slate-700 hover:bg-white/60'}
-            "
-            style={activeTab === feature.id
-              ? `background-color:${feature.bgColor}; box-shadow:0 4px 14px ${feature.shadowColor}; border-bottom:2px solid ${feature.borderColor};`
-              : ""}
-          >
-            <feature.Icon size={14} />
-            {feature.label}
-          </button>
           <button
             onclick={() => (activeTab = feature.id)}
             class="

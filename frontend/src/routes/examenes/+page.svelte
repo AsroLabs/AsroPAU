@@ -28,20 +28,69 @@
     type: 'Ordinaria' | 'Extraordinaria';
   }
 
-  const EXAMS: Exam[] = [
-    { id: 1, region: 'Madrid', subject: 'Historia de España', year: 2024, session: 'Convocatoria Ordinaria', type: 'Ordinaria' },
-    { id: 2, region: 'Andalucía', subject: 'Historia de España', year: 2024, session: 'Convocatoria Ordinaria', type: 'Ordinaria' },
-    { id: 3, region: 'Cataluña', subject: 'Historia de España', year: 2024, session: 'Extraordinaria', type: 'Extraordinaria' },
-    { id: 4, region: 'Galicia', subject: 'Historia de España', year: 2023, session: 'Convocatoria Ordinaria', type: 'Ordinaria' },
-    { id: 5, region: 'C. Valenciana', subject: 'Historia de España', year: 2023, session: 'Convocatoria Ordinaria', type: 'Ordinaria' },
-    { id: 6, region: 'Castilla y León', subject: 'Historia de España', year: 2023, session: 'Extraordinaria', type: 'Extraordinaria' },
-  ];
-
+  // State
+  let selectedRegion = $state('');
+  let selectedSubjects = $state<string[]>([]);
   let selectedYear = $state(2024);
+  let selectedConvocatoria = $state('');
+  let exams = $state<Exam[]>([]);
+  let loading = $state(false);
+  let error = $state<string | null>(null);
   let viewMode = $state<'grid' | 'list'>('grid');
+  let searchSubject = $state('');
 
+  const regions = ['Madrid', 'Andalucía', 'Cataluña', 'Galicia', 'C. Valenciana', 'Castilla y León'];
   const subjects = ['Matemáticas II', 'Historia de España', 'Lengua y Literatura', 'Inglés', 'Física', 'Química', 'Biología'];
+  const convocatorias = ['Ordinaria', 'Extraordinaria', 'Modelo'];
   const years = [2024, 2023, 2022, 2021, 2020, 'Anteriores'];
+
+  // Fetch exams from backend
+  async function fetchExams() {
+    loading = true;
+    error = null;
+    try {
+      const params = new URLSearchParams();
+      
+      if (selectedRegion) params.append('localidad', selectedRegion);
+      if (selectedSubjects.length > 0) params.append('asignatura', selectedSubjects.join(','));
+      params.append('anyo', String(selectedYear));
+      if (selectedConvocatoria) params.append('convocatoria', selectedConvocatoria);
+
+      const response = await fetch(`http://localhost:3000/exams?${params.toString()}`);
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const data = await response.json();
+      exams = Array.isArray(data) ? data : data.data || [];
+    } catch (err) {
+      error = err instanceof Error ? err.message : 'Error desconocido';
+      exams = [];
+    } finally {
+      loading = false;
+    }
+  }
+
+  // Filter subjects based on search
+  const filteredSubjects = $derived(
+    searchSubject
+      ? subjects.filter(s => s.toLowerCase().includes(searchSubject.toLowerCase()))
+      : subjects
+  );
+
+  // Fetch exams when filters change (debounced 500ms)
+  $effect(() => {
+    selectedRegion;
+    selectedSubjects;
+    selectedYear;
+    selectedConvocatoria;
+
+    const timer = setTimeout(() => {
+      fetchExams();
+    }, 500);
+
+    return () => clearTimeout(timer);
+  });
 </script>
 
 <div class="min-h-screen flex flex-col">
@@ -55,12 +104,11 @@
           <MapIcon size={18} class="text-orange-600" />
           Comunidad Autónoma
         </h3>
-        <select class="w-full bg-slate-50 border border-slate-200 rounded-xl text-sm py-2.5 px-3 focus:ring-2 focus:ring-orange-300 focus:border-orange-400 outline-none transition-all text-slate-700">
-          <option>Todas las comunidades</option>
-          <option>Madrid</option>
-          <option>Andalucía</option>
-          <option>Cataluña</option>
-          <option>Galicia</option>
+        <select bind:value={selectedRegion} class="w-full bg-slate-50 border border-slate-200 rounded-xl text-sm py-2.5 px-3 focus:ring-2 focus:ring-orange-300 focus:border-orange-400 outline-none transition-all text-slate-700">
+          <option value="">Todas las comunidades</option>
+          {#each regions as region}
+            <option value={region}>{region}</option>
+          {/each}
         </select>
       </section>
 
@@ -73,20 +121,28 @@
         <div class="relative mb-4">
           <input 
             type="text" 
+            bind:value={searchSubject}
             placeholder="Buscar asignatura..." 
             class="w-full bg-slate-50 border border-slate-200 rounded-xl text-sm pl-10 py-2.5 focus:ring-2 focus:ring-orange-300 focus:border-orange-400 outline-none text-slate-700 placeholder:text-slate-400"
           />
           <Search size={16} class="absolute left-3.5 top-3 text-slate-400" />
         </div>
         <div class="space-y-1 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
-          {#each subjects as subject}
+          {#each filteredSubjects as subject}
             <label class="flex items-center gap-3 p-2 rounded-lg hover:bg-orange-50 cursor-pointer group transition-colors">
               <input 
                 type="checkbox" 
-                checked={subject === 'Historia de España'}
+                checked={selectedSubjects.includes(subject)}
+                onchange={(e) => {
+                  if (e.currentTarget.checked) {
+                    selectedSubjects = [...selectedSubjects, subject];
+                  } else {
+                    selectedSubjects = selectedSubjects.filter(s => s !== subject);
+                  }
+                }}
                 class="w-4 h-4 rounded border-slate-300 accent-orange-600 focus:ring-orange-400" 
               />
-              <span class="text-sm {subject === 'Historia de España' ? 'text-orange-600 font-semibold' : 'text-slate-600 group-hover:text-slate-900'}">
+              <span class="text-sm {selectedSubjects.includes(subject) ? 'text-orange-600 font-semibold' : 'text-slate-600 group-hover:text-slate-900'}">
                 {subject}
               </span>
             </label>
@@ -116,6 +172,28 @@
         </div>
       </section>
 
+      <!-- Convocatoria Filter -->
+      <section class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+        <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+          <Calendar size={18} class="text-orange-600" />
+          Convocatoria
+        </h3>
+        <div class="space-y-2">
+          {#each convocatorias as convocatoria}
+            <button 
+              onclick={() => (selectedConvocatoria = selectedConvocatoria === convocatoria ? '' : convocatoria)}
+              class="w-full text-left text-sm py-2.5 px-4 rounded-xl border font-medium transition-all {
+                selectedConvocatoria === convocatoria 
+                  ? 'bg-orange-50 border-orange-400 text-orange-600' 
+                  : 'bg-white border-slate-200 text-slate-600 hover:border-orange-200 hover:bg-orange-50'
+              }"
+            >
+              {convocatoria}
+            </button>
+          {/each}
+        </div>
+      </section>
+
       <!-- Ad Banner -->
       <div class="bg-slate-100/50 border-2 border-dashed border-slate-200 rounded-2xl p-6 text-center">
         <span class="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] block mb-4">Patrocinado</span>
@@ -139,11 +217,26 @@
         <div>
           <h2 class="font-display text-2xl font-bold text-slate-900">Exámenes Encontrados</h2>
           <p class="text-slate-500 text-sm mt-1">
-            Mostrando 42 resultados para <span class="text-orange-600 font-semibold">Historia de España</span> en <span class="text-orange-600 font-semibold">{selectedYear}</span>
+            Mostrando <span class="text-orange-600 font-semibold">{loading ? '...' : exams.length}</span> resultados
+            {#if selectedSubjects.length > 0}
+              para <span class="text-orange-600 font-semibold">{selectedSubjects.join(', ')}</span>
+            {/if}
+            {#if selectedRegion}
+              en <span class="text-orange-600 font-semibold">{selectedRegion}</span>
+            {/if}
           </p>
         </div>
         <div class="flex items-center gap-3">
-          <button class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all">
+          <button 
+            onclick={() => {
+              selectedRegion = '';
+              selectedSubjects = [];
+              selectedYear = 2024;
+              selectedConvocatoria = '';
+              searchSubject = '';
+            }}
+            class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition-all"
+          >
             <Filter size={16} />
             Limpiar Filtros
           </button>
@@ -187,44 +280,85 @@
       </div>
 
       <!-- Exam Grid -->
-      <div class="grid gap-6 {viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}">
-        {#each EXAMS as exam}
-          <div 
-            class="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-orange-100/60 hover:border-orange-200 transition-all duration-300"
-          >
-            <div class="p-6">
-              <div class="flex justify-between items-start mb-5">
-                <div class="flex flex-col">
-                  <span class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-1">{exam.region}</span>
-                  <h4 class="font-bold text-slate-900 group-hover:text-orange-600 transition-colors text-lg">{exam.subject}</h4>
-                </div>
-                <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center group-hover:bg-orange-100 transition-colors">
-                  <FileText class="text-orange-500" size={28} />
-                </div>
-              </div>
-              
-              <div class="flex flex-wrap gap-2 mb-8">
-                <span class="px-3 py-1 bg-slate-100 rounded-lg text-[10px] font-bold text-slate-600">{exam.year}</span>
-                <span class="px-3 py-1 rounded-lg text-[10px] font-bold {
-                  exam.type === 'Ordinaria' ? 'bg-orange-50 text-orange-600' : 'bg-amber-50 text-amber-600'
-                }">
-                  {exam.session}
-                </span>
-              </div>
+      {#if error}
+        <div class="rounded-2xl border border-red-200 bg-red-50 p-6 text-center mb-8">
+          <p class="text-red-600 font-medium">Error al cargar los exámenes: {error}</p>
+        </div>
+      {/if}
 
+      {#if loading}
+        <div class="grid gap-6 {viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}">
+          {#each { length: 6 } as _}
+            <div class="group bg-white border border-slate-200 rounded-2xl overflow-hidden p-6 animate-pulse">
+              <div class="flex justify-between items-start mb-5">
+                <div class="flex flex-col gap-2 flex-1">
+                  <div class="h-3 bg-slate-200 rounded w-16"></div>
+                  <div class="h-5 bg-slate-200 rounded w-32"></div>
+                </div>
+                <div class="w-12 h-12 bg-slate-200 rounded-xl"></div>
+              </div>
+              <div class="flex flex-wrap gap-2 mb-8">
+                <div class="h-6 bg-slate-200 rounded w-12"></div>
+                <div class="h-6 bg-slate-200 rounded w-20"></div>
+              </div>
               <div class="flex gap-2">
-                <button class="flex-1 flex items-center justify-center gap-2 py-3 bg-orange-600 text-white text-xs font-bold rounded-xl hover:bg-orange-700 transition-all shadow-sm shadow-orange-300/30 active:scale-95" style="border-bottom: 2px solid #9a3412;">
-                  <Download size={16} />
-                  Descargar
-                </button>
-                <button class="px-4 py-3 border border-slate-200 rounded-xl text-slate-400 hover:text-orange-600 hover:border-orange-200 hover:bg-orange-50 transition-all active:scale-95">
-                  <Eye size={18} />
-                </button>
+                <div class="flex-1 h-10 bg-slate-200 rounded-xl"></div>
+                <div class="w-12 h-10 bg-slate-200 rounded-xl"></div>
               </div>
             </div>
-          </div>
-        {/each}
-      </div>
+          {/each}
+        </div>
+      {:else if exams.length === 0}
+        <div class="rounded-2xl border border-slate-200 bg-slate-50 p-12 text-center">
+          <p class="text-slate-600 font-medium">No se encontraron exámenes con estos filtros</p>
+          <p class="text-slate-500 text-sm mt-2">Intenta cambiar los criterios de búsqueda</p>
+        </div>
+      {:else}
+        <div class="grid gap-6 {viewMode === 'grid' ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' : 'grid-cols-1'}">
+          {#each exams as exam}
+            <div 
+              class="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-xl hover:shadow-orange-100/60 hover:border-orange-200 transition-all duration-300"
+            >
+              <div class="p-6">
+                <div class="flex justify-between items-start mb-5">
+                  <div class="flex flex-col">
+                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.15em] mb-1">{exam.region}</span>
+                    <h4 class="font-bold text-slate-900 group-hover:text-orange-600 transition-colors text-lg">{exam.subject}</h4>
+                  </div>
+                  <div class="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center group-hover:bg-orange-100 transition-colors">
+                    <FileText class="text-orange-500" size={28} />
+                  </div>
+                </div>
+                
+                <div class="flex flex-wrap gap-2 mb-8">
+                  <span class="px-3 py-1 bg-slate-100 rounded-lg text-[10px] font-bold text-slate-600">{exam.year}</span>
+                  <span class="px-3 py-1 rounded-lg text-[10px] font-bold {
+                    exam.type === 'Ordinaria' ? 'bg-orange-50 text-orange-600' : exam.type === 'Extraordinaria' ? 'bg-amber-50 text-amber-600' : 'bg-blue-50 text-blue-600'
+                  }">
+                    {exam.session}
+                  </span>
+                </div>
+
+                <div class="flex gap-2">
+                  <a
+                    href="http://localhost:3000/exams/{exam.id}/download"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex-1 flex items-center justify-center gap-2 py-3 bg-orange-600 text-white text-xs font-bold rounded-xl hover:bg-orange-700 transition-all shadow-sm shadow-orange-300/30 active:scale-95"
+                    style="border-bottom: 2px solid #9a3412;"
+                  >
+                    <Download size={16} />
+                    Descargar
+                  </a>
+                  <button class="px-4 py-3 border border-slate-200 rounded-xl text-slate-400 hover:text-orange-600 hover:border-orange-200 hover:bg-orange-50 transition-all active:scale-95">
+                    <Eye size={18} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          {/each}
+        </div>
+      {/if}
 
       <!-- Pagination -->
       <div class="mt-12 flex items-center justify-center gap-2">
