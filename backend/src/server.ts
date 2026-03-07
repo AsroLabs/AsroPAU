@@ -1,7 +1,8 @@
 import app from './app';
 import { config, validateConfig } from './config';
 import logger from './middleware/logger';
-import { runMigrations } from './db/migrations/001_create_grados';
+import { runMigrations as gradosMigrations } from './db/migrations/001_create_grados';
+import { runMigrations as examsMigrations} from './db/migrations/002_create_examenes';
 
 const startServer = async (): Promise<void> => {
   try {
@@ -9,8 +10,8 @@ const startServer = async (): Promise<void> => {
     validateConfig();
 
     // Ejecutar migraciones antes de arrancar
-    await runMigrations();
-
+    await gradosMigrations();
+    await examsMigrations();
     // Iniciar servidor
     app.listen(config.port || 3000, () => {
       logger.info(`

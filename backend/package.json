@@ -7,7 +7,9 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "migrate": "ts-node-dev --transpile-only src/db/migrations/001_create_grados.ts"
+    "migrate": "ts-node-dev --transpile-only src/db/migrations/001_create_grados.ts",
+    "migrate:examenes": "ts-node-dev --transpile-only src/db/migrations/002_create_examenes.ts",
+    "migrate:all": "ts-node-dev --transpile-only src/db/migrations/run_all.ts"
   },
   "keywords": [],
   "author": "",
