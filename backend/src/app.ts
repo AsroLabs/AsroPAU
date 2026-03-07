@@ -3,15 +3,18 @@ import cors from 'cors';
 import { config } from './config';
 import logger from './middleware/logger';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
-import routes from './routes';
+import routes from './routes/index';
+import { execArgv } from 'node:process';
 
 
 const app: Application = express();
 
+app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
+app.use(routes);
 
 app.get('/', (req: Request, res: Response) => {
   res.json({

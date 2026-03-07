@@ -1,7 +1,9 @@
 <script lang="ts">
+    import { Calculator } from "@lucide/svelte";
     import DatosAcademicos from "./components/FormularioNotas.svelte";
     import ResultadosCalificacion from "./components/ResultadosCalificacion.svelte";
     import Universidades from "./components/Universidades.svelte";
+    import Header from "../../components/Header.svelte";
 
     // State
     let notaBachiller = $state(0);
@@ -60,10 +62,67 @@
     
     // notaAdmision = notaAcceso + mejorAportacion1 + mejorAportacion2
     let totalGrade = $derived(notaAcceso + admisionPart);
+    
+    // Para mostrar en los resultados
+    let bachPart = $derived(notaBachiller * 0.6);
+    let accesoPart = $derived(
+        ((accesoLengua +
+            accesoHistoriaFilosofia +
+            accesoIngles +
+            accesoTroncalGrade) /
+            4) *
+            0.4
+    );
+
+    // Debounce timer para el fetch de totalGrade
+    let debounceTimer: number | undefined;
+
+    // Efecto para ejecutar el debounce fetch cuando cambie totalGrade
+    $effect(() => {
+        // Trigger el efecto cuando totalGrade cambia
+        totalGrade;
+
+        // Limpiar el timer anterior
+        clearTimeout(debounceTimer);
+
+        // Establecer nuevo timer con delay de 500ms
+        debounceTimer = setTimeout(() => {
+            handleTotalGradeChange();
+        }, 500);
+    });
+
+    // Función que manejará el cambio de nota total
+    function handleTotalGradeChange() {
+        console.log('Total grade changed:', totalGrade);
+        
+        // TODO: Fetch comentado para futura implementación
+        // fetch('/api/notas', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         totalGrade,
+        //         notaAcceso,
+        //         admisionPart,
+        //         timestamp: new Date().toISOString()
+        //     })
+        // })
+        // .then(response => response.json())
+        // .then(data => {
+        //     console.log('Fetch successful:', data);
+        // })
+        // .catch(error => {
+        //     console.error('Fetch error:', error);
+        // });
+    }
 
 </script>
 
-<div class="min-h-screen bg-[#f6f6f8] text-slate-800">
+<main class="min-h-screen bg-[#f6f6f8] text-slate-800">
+    <!-- Navigation -->
+    <Header fixed={false}/>
+
     <main class="max-w-360 mx-auto p-6">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <!-- Left Column: Inputs -->
@@ -121,7 +180,7 @@
             </div>
         </div>
     </footer>
-</div>
+</main>
 
 <style>
     :global(body) {

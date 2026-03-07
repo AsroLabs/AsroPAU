@@ -1,7 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
-
 @import 'tailwindcss';
-@import 'katex/dist/katex.min.css';
 
 @import '@skeletonlabs/skeleton'; 
 @import '@skeletonlabs/skeleton-svelte'; 
@@ -13,27 +10,14 @@ html {
     scroll-behavior: smooth;
 }
 
-/* ── Base font ── */
-body {
-    font-family: 'Inter', sans-serif;
+@font-face {
+    font-family: "Ubuntu-normal";
+    src: url('../lib/assets/Ubuntu-Regular.woff2') format('woff2');
+    font-weight: 400;
 }
 
-/* ── Display/heading font ── */
-.font-display {
-    font-family: 'Baloo 2', sans-serif;
+@font-face {
+    font-family: "Ubuntu-bold";
+    src: url('../lib/assets/Ubuntu-Bold.woff2') format('woff2');
+    font-weight: 700;
 }
-
-/* ── Anti-aliasing ── */
-*, *::before, *::after {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* ── Custom scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #FDBA74; border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: #FB923C; }
-
-/* ── Selection color ── */
-::selection { background: rgba(234, 88, 12, 0.15); color: #431407; }

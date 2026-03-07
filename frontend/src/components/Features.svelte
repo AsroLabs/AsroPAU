@@ -157,6 +157,20 @@
             <feature.Icon size={14} />
             {feature.label}
           </button>
+          <button
+            onclick={() => (activeTab = feature.id)}
+            class="
+              flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold
+              transition-all duration-200 cursor-pointer
+              {activeTab === feature.id ? 'text-white shadow-lg' : 'text-slate-500 hover:text-slate-700 hover:bg-white/60'}
+            "
+            style={activeTab === feature.id
+              ? `background-color:${feature.bgColor}; box-shadow:0 4px 14px ${feature.shadowColor}; border-bottom:2px solid ${feature.borderColor};`
+              : ""}
+          >
+            <feature.Icon size={14} />
+            {feature.label}
+          </button>
         {/each}
       </div>
     </div>
