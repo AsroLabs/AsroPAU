@@ -104,6 +104,85 @@
     activeAnims.push(a)
   }
 
+  // ── flyTokens: arc-fly colored spans from before panel to after panel ────
+  function flyTokens(from: HTMLElement | undefined, to: HTMLElement | undefined) {
+    if (!from || !to || prefersReduced) return
+
+    const srcs = Array.from(from.querySelectorAll<HTMLElement>('.katex [style*="color:"]'))
+    const dsts = Array.from(to.querySelectorAll<HTMLElement>('.katex [style*="color:"]'))
+    if (!srcs.length || !dsts.length) return
+
+    // Pair each source span with the closest-indexed dest span
+    const count = Math.min(srcs.length, dsts.length)
+
+    for (let i = 0; i < count; i++) {
+      const srcEl = srcs[i]
+      const dstEl = dsts[i]
+
+      // Measure positions in document coordinates
+      const sr = srcEl.getBoundingClientRect()
+      const dr = dstEl.getBoundingClientRect()
+
+      const srcCx = sr.left + window.scrollX + sr.width  / 2
+      const srcCy = sr.top  + window.scrollY + sr.height / 2
+      const dstCx = dr.left + window.scrollX + dr.width  / 2
+      const dstCy = dr.top  + window.scrollY + dr.height / 2
+
+      const dx = dstCx - srcCx
+      const dy = dstCy - srcCy
+      const arcH = -70  // px upward
+
+      // Clone source span and position it absolutely on <body>
+      const srcStyle = window.getComputedStyle(srcEl)
+      const clone = srcEl.cloneNode(true) as HTMLElement
+      clone.classList.add('mth-flying-token')
+      clone.style.position   = 'absolute'
+      clone.style.top        = (sr.top  + window.scrollY) + 'px'
+      clone.style.left       = (sr.left + window.scrollX) + 'px'
+      clone.style.width      = sr.width  + 'px'
+      clone.style.height     = sr.height + 'px'
+      clone.style.margin     = '0'
+      clone.style.fontSize   = srcStyle.fontSize
+      clone.style.fontFamily = srcStyle.fontFamily
+      clone.style.fontWeight = srcStyle.fontWeight
+      clone.style.lineHeight = srcStyle.lineHeight
+      clone.style.color      = srcStyle.color
+      clone.style.zIndex     = '9999'
+      clone.style.pointerEvents = 'none'
+      document.body.appendChild(clone)
+
+      const dur = 700  // ms per token
+
+      // First half of arc: ease out to midpoint
+      const a1 = animate(clone, {
+        translateX: [0, dx / 2],
+        translateY: [0, dy / 2 + arcH],
+        opacity:    [1, 0.85],
+        scale:      [1, 1.25],
+        duration:   dur * 0.5,
+        easing:     'easeOutCubic',
+        onComplete: () => {
+          activeAnims = activeAnims.filter(x => x !== a1)
+          // Second half: ease in to destination
+          const a2 = animate(clone, {
+            translateX: [dx / 2, dx],
+            translateY: [dy / 2 + arcH, dy],
+            opacity:    [0.85, 0],
+            scale:      [1.25, 0.7],
+            duration:   dur * 0.5,
+            easing:     'easeInCubic',
+            onComplete: () => {
+              activeAnims = activeAnims.filter(x => x !== a2)
+              clone.remove()
+            }
+          })
+          activeAnims.push(a2)
+        }
+      })
+      activeAnims.push(a1)
+    }
+  }
+
   // ── Chain transition: both panels fade out, next step fades in ───────────
   function chainFade(onComplete: () => void) {
     if (prefersReduced) { onComplete(); return }
@@ -262,6 +341,9 @@
 
       // 2. After T_BEFORE: dim before, light up after
       t(() => {
+        // Launch arc-fly animation before swapping panels
+        flyTokens(beforeEl, afterEl)
+
         phase         = 'show-after'
         beforeDisplay = beforeLatex   // back to plain
         beforeLit     = false
@@ -792,6 +874,12 @@
   /* ── katex-pop on lit colored spans ─────────────────────────────────────── */
   :global(.math-panel.is-lit .katex [style*="color:"]) {
     display: inline-block;
+  }
+
+  /* ── Flying token clones (appended to <body> during arc animation) ───────── */
+  :global(.mth-flying-token) {
+    will-change: transform, opacity;
+    pointer-events: none;
   }
 
   /* ── Steps breakdown ─────────────────────────────────────────────────────── */
