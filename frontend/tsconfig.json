@@ -15,6 +15,9 @@
 			"vite/client"
 		],
 		"paths": {
+			"$lib/*": [
+				"./src/lib/*"
+			],
 			"$features/*": [
 				"./src/features/*"
 			]
