@@ -1,8 +1,12 @@
 <script lang="ts">
-    import { Calculator } from "@lucide/svelte";
-    import DatosAcademicos from "./components/FormularioNotas.svelte";
-    import ResultadosCalificacion from "./components/ResultadosCalificacion.svelte";
-    import Universidades from "./components/Universidades.svelte";
+    import {
+        AcademicForm,
+        GradeResults,
+        UniversityComparator,
+        NextSteps,
+        calculateNotaAcceso,
+        calculateAdmisionPart,
+    } from "$features/media";
 
     let notaBachiller = $state(0);
     
@@ -24,94 +28,22 @@
 
     // notaAcceso = (0.6 * mediaBachiller) + (0.4 * mediaFaseAcceso)
     let notaAcceso = $derived(
-        (notaBachiller * 0.6) +
-        (((accesoLengua +
-            accesoHistoriaFilosofia +
-            accesoIngles +
-            accesoTroncalGrade) /
-            4) *
-            0.4)
+        calculateNotaAcceso(
+            notaBachiller,
+            accesoLengua,
+            accesoHistoriaFilosofia,
+            accesoIngles,
+            accesoTroncalGrade
+        )
     );
     
     // Obtiene las dos mejores aportaciones ponderadas de admisión
-    // aportacion = notaEspecifica * ponderacion
-    let admisionPart = $derived.by(() => {
-        // Calcular aportación ponderada para cada asignatura
-        const aportaciones = admisionAsignaturas
-            .filter(a => a.grade > 0)
-            .map(a => ({
-                aportacion: a.grade * a.weight,
-                nombre: a.name,
-                nota: a.grade,
-                ponderacion: a.weight
-            }))
-            .sort((a, b) => b.aportacion - a.aportacion);
-        
-        if (aportaciones.length === 0) return 0;
-        
-        // Tomar las 2 mejores aportaciones
-        const mejores = aportaciones.slice(0, 2);
-        
-        // Suma de las 2 mejores aportaciones
-        return mejores.reduce((acc, a) => acc + a.aportacion, 0);
-    });
+    let admisionPart = $derived(
+        calculateAdmisionPart(admisionAsignaturas)
+    );
     
     // notaAdmision = notaAcceso + mejorAportacion1 + mejorAportacion2
     let totalGrade = $derived(notaAcceso + admisionPart);
-    
-    // Para mostrar en los resultados
-    let bachPart = $derived(notaBachiller * 0.6);
-    let accesoPart = $derived(
-        ((accesoLengua +
-            accesoHistoriaFilosofia +
-            accesoIngles +
-            accesoTroncalGrade) /
-            4) *
-            0.4
-    );
-
-    // Debounce timer para el fetch de totalGrade
-    let debounceTimer: number | undefined;
-
-    // Efecto para ejecutar el debounce fetch cuando cambie totalGrade
-    $effect(() => {
-        // Trigger el efecto cuando totalGrade cambia
-        totalGrade;
-
-        // Limpiar el timer anterior
-        clearTimeout(debounceTimer);
-
-        // Establecer nuevo timer con delay de 500ms
-        debounceTimer = setTimeout(() => {
-            handleTotalGradeChange();
-        }, 500);
-    });
-
-    // Función que manejará el cambio de nota total
-    function handleTotalGradeChange() {
-        console.log('Total grade changed:', totalGrade);
-        
-        // TODO: Fetch comentado para futura implementación
-        // fetch('/api/notas', {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({
-        //         totalGrade,
-        //         notaAcceso,
-        //         admisionPart,
-        //         timestamp: new Date().toISOString()
-        //     })
-        // })
-        // .then(response => response.json())
-        // .then(data => {
-        //     console.log('Fetch successful:', data);
-        // })
-        // .catch(error => {
-        //     console.error('Fetch error:', error);
-        // });
-    }
 
 </script>
 
@@ -123,7 +55,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <!-- Left Column: Inputs -->
             <aside class="lg:col-span-5 space-y-6">
-                <DatosAcademicos
+                <AcademicForm
                     bind:notaBachiller
                     bind:accesoLengua
                     bind:accesoHistoriaFilosofia
@@ -137,16 +69,17 @@
             <!-- Right Column: Results -->
             <div class="lg:col-span-7 space-y-6">
                 <!-- Result Hero -->
-                <ResultadosCalificacion
+                <GradeResults
                     {totalGrade}
                     {notaAcceso}
                     {admisionPart}
                 />
 
                 <!-- Comparison List -->
-                <Universidades {totalGrade} bind:searchQuery />
+                <UniversityComparator {totalGrade} bind:searchQuery />
 
-                <!-- Map/Location Shortcut -->
+                <!-- Next Steps -->
+                <NextSteps />
             </div>
         </div>
     </main>
