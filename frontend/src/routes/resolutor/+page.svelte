@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte'
+  import { page } from '$app/state'
   import { History, Trash2, X, Sparkles, RotateCcw, AlertCircle, Share2, Check } from '@lucide/svelte'
-  import LatexInput from '$lib/math-solver/LatexInput.svelte'
-  import MathKeyboard from '$lib/math-solver/MathKeyboard.svelte'
-  import MorphSolver from '$lib/math-solver/MorphSolver.svelte'
-  import { page } from '$app/stores'
+  import LatexInput from "$features/math-solver/components/LatexInput.svelte"
+  import MathKeyboard from '$features/math-solver/components/MathKeyboard.svelte'
+  import MorphSolver from '$features/math-solver/components/MorphSolver.svelte'
 
   type Mode = 'text' | 'keyboard'
 
@@ -83,7 +83,7 @@
   onMount(() => {
     loadHistory()
     // Pre-fill from ?q= deep-link (e.g. from exam bank or share URL)
-    const q = $page.url.searchParams.get('q')
+    const q = page.url.searchParams.get('q')
     if (q) {
       inputValue = q
       activeMode = 'text'

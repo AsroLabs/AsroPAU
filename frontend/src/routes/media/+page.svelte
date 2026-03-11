@@ -3,12 +3,9 @@
     import DatosAcademicos from "./components/FormularioNotas.svelte";
     import ResultadosCalificacion from "./components/ResultadosCalificacion.svelte";
     import Universidades from "./components/Universidades.svelte";
-    import Header from "../../components/Header.svelte";
 
-    // State
     let notaBachiller = $state(0);
-
-    // Fase de Acceso - 4 asignaturas fijas
+    
     let accesoLengua = $state(0.0);
     let accesoHistoriaFilosofia = $state(0.0);
     let accesoIngles = $state(0.0);
@@ -25,7 +22,6 @@
 
     let searchQuery = $state("");
 
-    // Derived
     // notaAcceso = (0.6 * mediaBachiller) + (0.4 * mediaFaseAcceso)
     let notaAcceso = $derived(
         (notaBachiller * 0.6) +

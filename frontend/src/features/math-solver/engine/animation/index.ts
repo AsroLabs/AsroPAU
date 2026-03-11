@@ -20,8 +20,8 @@ export type { TokenSpan } from './token-mapper'
 
 import { mapTransformationToAnimation } from './mapper'
 import { buildTimeline } from './timeline'
-import type { TransformationType } from '../explanation-engine/templates'
-import type { DiffOp } from '../explanation-engine/ast-diff'
+import type { TransformationType } from '../explanation/templates'
+import type { DiffOp } from '../explanation/ast-diff'
 import type { Timeline } from './timeline'
 
 /**

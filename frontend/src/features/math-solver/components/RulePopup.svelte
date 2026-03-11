@@ -2,7 +2,7 @@
   import { fade, scale } from 'svelte/transition'
   import { backOut, cubicOut } from 'svelte/easing'
   import MathRenderer from './MathRenderer.svelte'
-  import { getRuleExample } from './ruleExamples'
+  import { getRuleExample } from '../ruleExamples'
 
   interface Props {
     ruleName: string

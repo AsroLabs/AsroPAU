@@ -1,9 +1,9 @@
 <script>
-    import Hero from "../components/Hero.svelte";
-    import ExamSearch from "../components/ExamSearch.svelte";
-    import Features from "../components/Features.svelte";
-    import Footer from "../components/Footer.svelte";
-    import SpainSection from "../components/SpainSection.svelte";
+    import Hero from "$lib/components/Hero.svelte";
+    import ExamSearch from "$lib/components/ExamSearch.svelte";
+    import Features from "$lib/components/Features.svelte";
+    import Footer from "$lib/components/Footer.svelte";
+    import SpainSection from "$lib/components/SpainSection.svelte";
 </script>
 
 <svelte:head>

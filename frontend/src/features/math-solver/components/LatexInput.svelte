@@ -1,6 +1,5 @@
 <script lang="ts">
   import MathRenderer from './MathRenderer.svelte'
-
   interface Props {
     value?: string
     onsubmit?: () => void

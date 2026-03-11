@@ -11,9 +11,9 @@
  *   simplify_number   – animate a numeric computation (e.g. 2+3 → 5)
  */
 
-import type { TransformationType } from '../explanation-engine/templates'
-import type { DiffOp, ExprSide } from '../explanation-engine/ast-diff'
-import { opsOfType, extractNumericOps, extractVariableOps } from '../explanation-engine/ast-diff'
+import type { TransformationType } from '../explanation/templates'
+import type { DiffOp, ExprSide } from '../explanation/ast-diff'
+import { opsOfType, extractNumericOps, extractVariableOps } from '../explanation/ast-diff'
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 

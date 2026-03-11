@@ -5,9 +5,9 @@
   import MathRenderer from './MathRenderer.svelte'
   import RulePopup from './RulePopup.svelte'
   import FunctionPlot from './FunctionPlot.svelte'
-  import { analyzeTransformation, generateExplanation, diffTrees, type ExplanationOutput } from './explanation-engine'
-  import { buildStepAnimation, getColoredSpans } from './animation-engine'
-  import type { Timeline } from './animation-engine'
+  import { analyzeTransformation, generateExplanation, diffTrees, type ExplanationOutput } from '../engine/explanation'
+  import { buildStepAnimation, getColoredSpans } from '../../../features/math-solver/engine/animation'
+  import type { Timeline } from '../../../features/math-solver/engine/animation'
 
   interface Step {
     step_number:        number

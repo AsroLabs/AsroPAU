@@ -1,25 +1,29 @@
 <script lang="ts">
-  import { BookIcon, CalculatorIcon, HouseIcon, Sigma, X } from '@lucide/svelte'
-  import { page } from '$app/stores'
+  import {
+    BookIcon,
+    CalculatorIcon,
+    HouseIcon,
+    Sigma,
+    X,
+  } from "@lucide/svelte";
+  import { page } from "$app/stores";
 
-  let { isOpen = $bindable(false) }: { isOpen?: boolean } = $props()
+  let { isOpen = $bindable(false) }: { isOpen?: boolean } = $props();
 
   function close() {
-    isOpen = false
+    isOpen = false;
   }
 
-  const navLinks = [
-    { label: 'Inicio',      href: '/',           icon: HouseIcon },
-  ]
+  const navLinks = [{ label: "Inicio", href: "/", icon: HouseIcon }];
 
   const recursos = [
-    { label: 'Exámenes',    href: '/examen',    icon: BookIcon },
-    { label: 'Resolutor',   href: '/resolutor', icon: Sigma },
-    { label: 'Calculadora', href: '/media',     icon: CalculatorIcon },
-  ]
+    { label: "Exámenes", href: "/examen", icon: BookIcon },
+    { label: "Resolutor", href: "/resolutor", icon: Sigma },
+    { label: "Calculadora", href: "/media", icon: CalculatorIcon },
+  ];
 
   function isActive(href: string) {
-    return $page.url.pathname === href
+    return $page.url.pathname === href;
   }
 </script>
 
@@ -40,7 +44,10 @@
     aria-label="Menú de navegación"
   >
     <!-- Header -->
-    <div class="flex items-center justify-between px-5 py-4 border-b" style="border-color: rgba(234,88,12,0.2);">
+    <div
+      class="flex items-center justify-between px-5 py-4 border-b"
+      style="border-color: rgba(234,88,12,0.2);"
+    >
       <div class="flex items-center gap-2.5">
         <div
           class="w-8 h-8 rounded-xl flex items-center justify-center"
@@ -48,7 +55,9 @@
         >
           <span class="text-white font-extrabold text-sm">A</span>
         </div>
-        <span class="text-white font-extrabold text-base tracking-tight">AsroPAU</span>
+        <span class="text-white font-extrabold text-base tracking-tight"
+          >AsroPAU</span
+        >
       </div>
       <button
         onclick={close}
@@ -61,7 +70,6 @@
 
     <!-- Nav content -->
     <div class="flex-1 overflow-y-auto px-4 py-5 space-y-6">
-
       <!-- Main links -->
       <div>
         {#each navLinks as link}
@@ -71,9 +79,9 @@
             onclick={close}
             class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-150 cursor-pointer mb-1"
             style={isActive(link.href)
-              ? 'background: rgba(234,88,12,0.25); color: white; border-left: 3px solid #fb923c;'
-              : 'color: rgba(253,186,116,0.8);'}
-            aria-current={isActive(link.href) ? 'page' : undefined}
+              ? "background: rgba(234,88,12,0.25); color: white; border-left: 3px solid #fb923c;"
+              : "color: rgba(253,186,116,0.8);"}
+            aria-current={isActive(link.href) ? "page" : undefined}
           >
             <Icon size={16} />
             {link.label}
@@ -83,7 +91,12 @@
 
       <!-- Recursos section -->
       <div>
-        <p class="text-xs font-bold uppercase tracking-widest px-4 mb-3" style="color: rgba(249,115,22,0.6);">Recursos</p>
+        <p
+          class="text-xs font-bold uppercase tracking-widest px-4 mb-3"
+          style="color: rgba(249,115,22,0.6);"
+        >
+          Recursos
+        </p>
         {#each recursos as link}
           {@const Icon = link.icon}
           <a
@@ -91,9 +104,9 @@
             onclick={close}
             class="flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-150 cursor-pointer mb-1"
             style={isActive(link.href)
-              ? 'background: rgba(234,88,12,0.25); color: white; border-left: 3px solid #fb923c;'
-              : 'color: rgba(253,186,116,0.8);'}
-            aria-current={isActive(link.href) ? 'page' : undefined}
+              ? "background: rgba(234,88,12,0.25); color: white; border-left: 3px solid #fb923c;"
+              : "color: rgba(253,186,116,0.8);"}
+            aria-current={isActive(link.href) ? "page" : undefined}
           >
             <Icon size={16} />
             {link.label}
