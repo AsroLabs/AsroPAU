@@ -1,0 +1,3951 @@
+[
+  {
+    "id": "1",
+    "name": "Universitat Pompeu Fabra",
+    "community": "Cataluña",
+    "city": "Mataró",
+    "degrees": [
+      {
+        "id": "1-1",
+        "universityId": "1",
+        "name": "Administració d'Empreses i Gestió de la Innovació \"Tecnocampus\"",
+        "cutoffGrade": 7.424,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-2",
+        "universityId": "1",
+        "name": "Administració d'Empreses i Gestió de la Innovació \"Tecnocampus\" (docència en Anglès)",
+        "cutoffGrade": 5.154,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-3",
+        "universityId": "1",
+        "name": "Administració d'Empreses i Gestió de la Innovació / Màrqueting i Comunitats Digitals \"Tecnocampus\" (simultaneïtat)",
+        "cutoffGrade": 6.313,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-4",
+        "universityId": "1",
+        "name": "Administració d'Empreses i Gestió de la Innovació / Turisme i Gestió del Lleure \"Tecnocampus\" (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-5",
+        "universityId": "1",
+        "name": "Administració i Direcció d'Empreses",
+        "cutoffGrade": 10.912,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-6",
+        "universityId": "1",
+        "name": "Ciències Biomèdiques",
+        "cutoffGrade": 11.88,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "1-7",
+        "universityId": "1",
+        "name": "Ciències de l'Activitat Física i de l'Esport \"Tecnocampus\"",
+        "cutoffGrade": 7.796,
+        "field": "Ciencias"
+      },
+      {
+        "id": "1-8",
+        "universityId": "1",
+        "name": "Ciències de l'Activitat Física i de l'Esport / Fisioteràpia \"Tecnocampus\" (simultaneïtat)",
+        "cutoffGrade": 7.7,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "1-9",
+        "universityId": "1",
+        "name": "Ciències Empresarials - Management",
+        "cutoffGrade": 11.158,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-10",
+        "universityId": "1",
+        "name": "Ciències Polítiques i de l'Administració",
+        "cutoffGrade": 8.938,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "1-11",
+        "universityId": "1",
+        "name": "Comunicació Audiovisual",
+        "cutoffGrade": 11.659,
+        "field": "Comunicación"
+      },
+      {
+        "id": "1-12",
+        "universityId": "1",
+        "name": "Criminologia i Polítiques Públiques de Prevenció",
+        "cutoffGrade": 9.286,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "1-13",
+        "universityId": "1",
+        "name": "Criminologia i Polítiques Públiques de Prevenció / Dret (simultaneïtat)",
+        "cutoffGrade": 10.776,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "1-14",
+        "universityId": "1",
+        "name": "Disseny i Producció de Videojocs \"Tecnocampus\"",
+        "cutoffGrade": 5.0,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "1-15",
+        "universityId": "1",
+        "name": "Disseny i Producció de Videojocs / Enginyeria Informàtica de Gestió i Sistemes d'Informació \"Tecnocampus\" (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "1-16",
+        "universityId": "1",
+        "name": "Dret",
+        "cutoffGrade": 10.463,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "1-17",
+        "universityId": "1",
+        "name": "Dret / Administració i Direcció d'Empreses - Economia (agrupació de simultaneïtat)",
+        "cutoffGrade": 11.426,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "1-18",
+        "universityId": "1",
+        "name": "Economia",
+        "cutoffGrade": 10.554,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-19",
+        "universityId": "1",
+        "name": "Enginyeria Audiovisual Computacional",
+        "cutoffGrade": 8.163,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "1-20",
+        "universityId": "1",
+        "name": "Enginyeria Biomèdica",
+        "cutoffGrade": 12.398,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "1-21",
+        "universityId": "1",
+        "name": "Enginyeria de Xarxes de Telecomunicació",
+        "cutoffGrade": 8.81,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "1-22",
+        "universityId": "1",
+        "name": "Enginyeria d'Organització Industrial / Enginyeria Electrònica Industrial i Automàtica / Enginyeria Mecànica \"Tecnocampus\" (agrupació)",
+        "cutoffGrade": 6.682,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "1-23",
+        "universityId": "1",
+        "name": "Enginyeria en Informàtica",
+        "cutoffGrade": 10.414,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "1-24",
+        "universityId": "1",
+        "name": "Enginyeria Informàtica de Gestió i Sistemes d'Informació \"Tecnocampus\"",
+        "cutoffGrade": 7.236,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "1-25",
+        "universityId": "1",
+        "name": "Enginyeria Matemàtica en Ciència de Dades",
+        "cutoffGrade": 11.716,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "1-26",
+        "universityId": "1",
+        "name": "Estudis Globals",
+        "cutoffGrade": 11.724,
+        "field": "Otros"
+      },
+      {
+        "id": "1-27",
+        "universityId": "1",
+        "name": "Estudis Globals (Només per a estudiants amb uns estudis de batxillerat o equivalent que NO pertanyin a sistemes educatius de la Unió Europea ni d'altres estats amb acords de reciprocitats)",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "1-28",
+        "universityId": "1",
+        "name": "Estudis Internacionals d'Economia i Empresa - International Business Economics (docència en Anglès)",
+        "cutoffGrade": 12.214,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-29",
+        "universityId": "1",
+        "name": "Filosofia, Política i Economia",
+        "cutoffGrade": 12.046,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-30",
+        "universityId": "1",
+        "name": "Fisioteràpia \"Tecnocampus\"",
+        "cutoffGrade": 8.463,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "1-31",
+        "universityId": "1",
+        "name": "Grau Obert, Programa de (agrupació)",
+        "cutoffGrade": 10.54,
+        "field": "Otros"
+      },
+      {
+        "id": "1-32",
+        "universityId": "1",
+        "name": "Humanitats",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "1-33",
+        "universityId": "1",
+        "name": "Infermeria \"Escola Superior d'Infermeria del Mar\"",
+        "cutoffGrade": 9.636,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "1-34",
+        "universityId": "1",
+        "name": "Infermeria \"Tecnocampus\"",
+        "cutoffGrade": 8.932,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "1-35",
+        "universityId": "1",
+        "name": "Llengües Aplicades",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "1-36",
+        "universityId": "1",
+        "name": "Llengües Aplicades / Traducció i Interpretació -Anglès- (simultaneïtat)",
+        "cutoffGrade": 5.91,
+        "field": "Humanidades"
+      },
+      {
+        "id": "1-37",
+        "universityId": "1",
+        "name": "Logística i Negocis Marítims \"Tecnocampus\"",
+        "cutoffGrade": 5.384,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-38",
+        "universityId": "1",
+        "name": "Màrqueting i Comunitats Digitals \"Tecnocampus\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-39",
+        "universityId": "1",
+        "name": "Màrqueting i Comunitats Digitals / Turisme i Gestió del Lleure \"Tecnocampus\" (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-40",
+        "universityId": "1",
+        "name": "Medicina",
+        "cutoffGrade": 12.516,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "1-41",
+        "universityId": "1",
+        "name": "Mitjans Audiovisuals \"Tecnocampus\"",
+        "cutoffGrade": 5.0,
+        "field": "Comunicación"
+      },
+      {
+        "id": "1-42",
+        "universityId": "1",
+        "name": "Negocis i Màrqueting Internacionals - Bachelor in International Business and Marketing \"ESCI\"",
+        "cutoffGrade": 8.95,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-43",
+        "universityId": "1",
+        "name": "Negocis i Màrqueting Internacionals - Bachelor in International Business and Marketing \"ESCI\" (docència en anglès)",
+        "cutoffGrade": 9.372,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "1-44",
+        "universityId": "1",
+        "name": "Nutrició Humana i Dietètica \"Tecnocampus\"",
+        "cutoffGrade": 5.0,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "1-45",
+        "universityId": "1",
+        "name": "Periodisme",
+        "cutoffGrade": 10.426,
+        "field": "Comunicación"
+      },
+      {
+        "id": "1-46",
+        "universityId": "1",
+        "name": "Publicitat i Relacions Públiques",
+        "cutoffGrade": 11.43,
+        "field": "Comunicación"
+      },
+      {
+        "id": "1-47",
+        "universityId": "1",
+        "name": "Relacions Laborals",
+        "cutoffGrade": 7.872,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "1-48",
+        "universityId": "1",
+        "name": "Traducció i Interpretació -Alemany / Francès / Llengua de Signes Catalana-",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "1-49",
+        "universityId": "1",
+        "name": "Traducció i Interpretació -Anglès-",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "name": "Universitat de Barcelona",
+    "community": "Cataluña",
+    "city": "Barcelona",
+    "degrees": [
+      {
+        "id": "2-1",
+        "universityId": "2",
+        "name": "Administració i Direcció d'Empreses",
+        "cutoffGrade": 9.194,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "2-2",
+        "universityId": "2",
+        "name": "Administració i Direcció d'Empreses / Dret (simultaneïtat)",
+        "cutoffGrade": 10.444,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "2-3",
+        "universityId": "2",
+        "name": "Administració i Direcció d'Empreses / Matemàtiques (simultaneïtat)",
+        "cutoffGrade": 11.85,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-4",
+        "universityId": "2",
+        "name": "Administració i Direcció d'Empreses / Química (simultaneïtat)",
+        "cutoffGrade": 10.808,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-5",
+        "universityId": "2",
+        "name": "Administració i Direcció d'Empreses / Sociologia (simultaneïtat)",
+        "cutoffGrade": 9.014,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "2-6",
+        "universityId": "2",
+        "name": "Antropologia Social i Cultural",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-7",
+        "universityId": "2",
+        "name": "Arqueologia",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-8",
+        "universityId": "2",
+        "name": "Arqueologia / Història (simultaneïtat)",
+        "cutoffGrade": 6.362,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-9",
+        "universityId": "2",
+        "name": "Belles Arts",
+        "cutoffGrade": 6.701,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "2-10",
+        "universityId": "2",
+        "name": "Biologia",
+        "cutoffGrade": 10.946,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-11",
+        "universityId": "2",
+        "name": "Bioquímica",
+        "cutoffGrade": 11.592,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-12",
+        "universityId": "2",
+        "name": "Biotecnologia",
+        "cutoffGrade": 11.772,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-13",
+        "universityId": "2",
+        "name": "Ciberseguretat \"ENTI\"",
+        "cutoffGrade": 7.43,
+        "field": "Otros"
+      },
+      {
+        "id": "2-14",
+        "universityId": "2",
+        "name": "Ciència i Tecnologia dels Aliments",
+        "cutoffGrade": 7.166,
+        "field": "Otros"
+      },
+      {
+        "id": "2-15",
+        "universityId": "2",
+        "name": "Ciències Ambientals",
+        "cutoffGrade": 9.252,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-16",
+        "universityId": "2",
+        "name": "Ciències Biomèdiques",
+        "cutoffGrade": 12.062,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-17",
+        "universityId": "2",
+        "name": "Ciències Culinàries i Gastronòmiques \"CETT\"",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "2-18",
+        "universityId": "2",
+        "name": "Ciències de l'Activitat Física i de l'Esport",
+        "cutoffGrade": 10.2,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-19",
+        "universityId": "2",
+        "name": "Ciències del Mar",
+        "cutoffGrade": 9.47,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-20",
+        "universityId": "2",
+        "name": "Ciències Polítiques i de l'Administració",
+        "cutoffGrade": 8.558,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "2-21",
+        "universityId": "2",
+        "name": "Ciències Polítiques i de l'Administració / Dret (simultaneïtat)",
+        "cutoffGrade": 11.032,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "2-22",
+        "universityId": "2",
+        "name": "Cinematografia \"ESCAC\"",
+        "cutoffGrade": 5.0,
+        "field": "Comunicación"
+      },
+      {
+        "id": "2-23",
+        "universityId": "2",
+        "name": "Comunicació Audiovisual",
+        "cutoffGrade": 11.182,
+        "field": "Comunicación"
+      },
+      {
+        "id": "2-24",
+        "universityId": "2",
+        "name": "Comunicació Audiovisual / Gestió d'Informació i Documentació Digital (simultaneïtat)",
+        "cutoffGrade": 10.01,
+        "field": "Comunicación"
+      },
+      {
+        "id": "2-25",
+        "universityId": "2",
+        "name": "Comunicació i Indústries Culturals",
+        "cutoffGrade": 9.104,
+        "field": "Comunicación"
+      },
+      {
+        "id": "2-26",
+        "universityId": "2",
+        "name": "Conservació - Restauració de Béns Culturals",
+        "cutoffGrade": 5.188,
+        "field": "Otros"
+      },
+      {
+        "id": "2-27",
+        "universityId": "2",
+        "name": "Criminologia",
+        "cutoffGrade": 9.506,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "2-28",
+        "universityId": "2",
+        "name": "Direcció Hotelera Internacional \"CETT\"",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "2-29",
+        "universityId": "2",
+        "name": "Direcció i Gestió Gastronòmica \"Barcelona Culinary Hub\"",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "2-30",
+        "universityId": "2",
+        "name": "Disseny",
+        "cutoffGrade": 10.58,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "2-31",
+        "universityId": "2",
+        "name": "Disseny i Desenvolupament de Videojocs i Jocs Aplicats \"ENTI\"",
+        "cutoffGrade": 5.0,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "2-32",
+        "universityId": "2",
+        "name": "Disseny, Animació i Art Digital per a Videojocs i Jocs Aplicats \"ENTI\"",
+        "cutoffGrade": 5.924,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "2-33",
+        "universityId": "2",
+        "name": "Dret",
+        "cutoffGrade": 9.516,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "2-34",
+        "universityId": "2",
+        "name": "Economia",
+        "cutoffGrade": 8.944,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "2-35",
+        "universityId": "2",
+        "name": "Economia / Estadística (simultaneïtat)",
+        "cutoffGrade": 10.64,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-36",
+        "universityId": "2",
+        "name": "Educació Infantil",
+        "cutoffGrade": 8.84,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "2-37",
+        "universityId": "2",
+        "name": "Educació Infantil / Educació Primària (pla de millora de la formació inicial de Mestre - 5 anys) (simultaneïtat)",
+        "cutoffGrade": 10.71,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "2-38",
+        "universityId": "2",
+        "name": "Educació Primària",
+        "cutoffGrade": 8.922,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "2-39",
+        "universityId": "2",
+        "name": "Educació Social",
+        "cutoffGrade": 7.787,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "2-40",
+        "universityId": "2",
+        "name": "Empresa Internacional (docència en Anglès)",
+        "cutoffGrade": 11.316,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "2-41",
+        "universityId": "2",
+        "name": "Enginyeria Biomèdica",
+        "cutoffGrade": 12.74,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "2-42",
+        "universityId": "2",
+        "name": "Enginyeria de Materials",
+        "cutoffGrade": 8.49,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "2-43",
+        "universityId": "2",
+        "name": "Enginyeria Electrònica de Telecomunicació",
+        "cutoffGrade": 8.954,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "2-44",
+        "universityId": "2",
+        "name": "Enginyeria Informàtica",
+        "cutoffGrade": 10.066,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "2-45",
+        "universityId": "2",
+        "name": "Enginyeria Informàtica / Matemàtiques (simultaneïtat)",
+        "cutoffGrade": 12.378,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "2-46",
+        "universityId": "2",
+        "name": "Enginyeria Química",
+        "cutoffGrade": 10.916,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "2-47",
+        "universityId": "2",
+        "name": "Estadística",
+        "cutoffGrade": 9.706,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-48",
+        "universityId": "2",
+        "name": "Estudis Anglesos (docència en Anglès)",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "2-49",
+        "universityId": "2",
+        "name": "Estudis Àrabs i Hebreus",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-50",
+        "universityId": "2",
+        "name": "Estudis Literaris",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-51",
+        "universityId": "2",
+        "name": "Farmàcia",
+        "cutoffGrade": 11.026,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-52",
+        "universityId": "2",
+        "name": "Farmàcia / Nutrició Humana i Dietètica (simultaneïtat)",
+        "cutoffGrade": 11.192,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-53",
+        "universityId": "2",
+        "name": "Filologia Catalana",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-54",
+        "universityId": "2",
+        "name": "Filologia Clàssica",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-55",
+        "universityId": "2",
+        "name": "Filologia Hispànica",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-56",
+        "universityId": "2",
+        "name": "Filosofia",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-57",
+        "universityId": "2",
+        "name": "Física",
+        "cutoffGrade": 11.706,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-58",
+        "universityId": "2",
+        "name": "Física / Matemàtiques (simultaneïtat)",
+        "cutoffGrade": 12.924,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-59",
+        "universityId": "2",
+        "name": "Geografia i Canvi Global",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "2-60",
+        "universityId": "2",
+        "name": "Geologia",
+        "cutoffGrade": 5.0,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-61",
+        "universityId": "2",
+        "name": "Gestió d'Informació i Documentació Digital",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "2-62",
+        "universityId": "2",
+        "name": "Gestió i Administració Pública",
+        "cutoffGrade": 7.884,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "2-63",
+        "universityId": "2",
+        "name": "Grau obert \"CETT\" (Direcció Hotelera Internacional / Màrqueting, Esdeveniments i Entreteniment / Negoci Digital i Innovació en Turisme / Turisme) (agrupació)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "2-64",
+        "universityId": "2",
+        "name": "Història",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-65",
+        "universityId": "2",
+        "name": "Història / Història de l'Art (simultaneïtat)",
+        "cutoffGrade": 7.314,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-66",
+        "universityId": "2",
+        "name": "Història de l'Art",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-67",
+        "universityId": "2",
+        "name": "Infermeria (Campus Clínic)",
+        "cutoffGrade": 10.48,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-68",
+        "universityId": "2",
+        "name": "Infermeria (Campus Bellvitge)",
+        "cutoffGrade": 10.596,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-69",
+        "universityId": "2",
+        "name": "Investigació Privada (títol propi, no oficial)",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "2-70",
+        "universityId": "2",
+        "name": "Lingüística",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-71",
+        "universityId": "2",
+        "name": "Llengües i Literatures Modernes",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-72",
+        "universityId": "2",
+        "name": "Llengües Romàniques i les seves Literatures",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "2-73",
+        "universityId": "2",
+        "name": "Màrqueting, Esdeveniments i Entreteniment \"CETT\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "2-74",
+        "universityId": "2",
+        "name": "Matemàtiques",
+        "cutoffGrade": 11.946,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-75",
+        "universityId": "2",
+        "name": "Medicina (Campus Clínic)",
+        "cutoffGrade": 12.505,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-76",
+        "universityId": "2",
+        "name": "Medicina (Campus Bellvitge)",
+        "cutoffGrade": 12.478,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-77",
+        "universityId": "2",
+        "name": "Negoci Digital i Innovació en Turisme \"CETT\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "2-78",
+        "universityId": "2",
+        "name": "Negoci Digital i Innovació en Turisme / Turisme \"CETT\" (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "2-79",
+        "universityId": "2",
+        "name": "Nutrició Humana i Dietètica",
+        "cutoffGrade": 9.238,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-80",
+        "universityId": "2",
+        "name": "Odontologia",
+        "cutoffGrade": 12.368,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-81",
+        "universityId": "2",
+        "name": "Pedagogia",
+        "cutoffGrade": 7.904,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "2-82",
+        "universityId": "2",
+        "name": "Podologia",
+        "cutoffGrade": 8.349,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "2-83",
+        "universityId": "2",
+        "name": "Producció de Música i So per a la Indústria de l'Entreteniment \"ENTI\"",
+        "cutoffGrade": 5.0,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "2-84",
+        "universityId": "2",
+        "name": "Psicologia",
+        "cutoffGrade": 9.767,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "2-85",
+        "universityId": "2",
+        "name": "Publicitat, Relacions Públiques i Màrqueting \"ESRP\"",
+        "cutoffGrade": 7.91,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "2-86",
+        "universityId": "2",
+        "name": "Química",
+        "cutoffGrade": 9.77,
+        "field": "Ciencias"
+      },
+      {
+        "id": "2-87",
+        "universityId": "2",
+        "name": "Relacions Laborals i Recursos Humans",
+        "cutoffGrade": 8.07,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "2-88",
+        "universityId": "2",
+        "name": "Seguretat",
+        "cutoffGrade": 8.646,
+        "field": "Otros"
+      },
+      {
+        "id": "2-89",
+        "universityId": "2",
+        "name": "Sociologia",
+        "cutoffGrade": 6.85,
+        "field": "Otros"
+      },
+      {
+        "id": "2-90",
+        "universityId": "2",
+        "name": "Treball Social",
+        "cutoffGrade": 7.277,
+        "field": "Otros"
+      },
+      {
+        "id": "2-91",
+        "universityId": "2",
+        "name": "Turisme \"CETT\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "2-92",
+        "universityId": "2",
+        "name": "Turisme \"CETT\" (docència en Anglès)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "name": "Universitat Rovira i Virgili",
+    "community": "Cataluña",
+    "city": "Barcelona",
+    "degrees": [
+      {
+        "id": "3-1",
+        "universityId": "3",
+        "name": "Administració i Direcció d'Empreses \"IGEMA\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "3-2",
+        "universityId": "3",
+        "name": "Administració i Direcció d'Empreses",
+        "cutoffGrade": 8.352,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "3-3",
+        "universityId": "3",
+        "name": "Administració i Direcció d'Empreses",
+        "cutoffGrade": 6.979,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "3-4",
+        "universityId": "3",
+        "name": "Administració i Direcció d'Empreses / Dret (simultaneïtat)",
+        "cutoffGrade": 7.639,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "3-5",
+        "universityId": "3",
+        "name": "Administració i Direcció d'Empreses / Finances i Comptabilitat (simultaneïtat)",
+        "cutoffGrade": 10.131,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "3-6",
+        "universityId": "3",
+        "name": "Administració i Direcció d'Empreses / Màrqueting \"ESIC\" (simultaneïtat)",
+        "cutoffGrade": 7.5,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "3-7",
+        "universityId": "3",
+        "name": "Administració i Direcció d'Empreses / Màrqueting \"ESIC\" (simultaneïtat)",
+        "cutoffGrade": 6.03,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "3-8",
+        "universityId": "3",
+        "name": "Anglès",
+        "cutoffGrade": 5.404,
+        "field": "Otros"
+      },
+      {
+        "id": "3-9",
+        "universityId": "3",
+        "name": "Antropologia i Evolució Humana (virtual o semipresencial)",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "3-10",
+        "universityId": "3",
+        "name": "Arquitectura, Estudis d'",
+        "cutoffGrade": 9.4,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-11",
+        "universityId": "3",
+        "name": "Bioquímica i Biologia Molecular",
+        "cutoffGrade": 11.02,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-12",
+        "universityId": "3",
+        "name": "Bioquímica i Biologia Molecular / Biotecnologia (simultaneïtat)",
+        "cutoffGrade": 12.18,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-13",
+        "universityId": "3",
+        "name": "Biotecnologia",
+        "cutoffGrade": 10.62,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-14",
+        "universityId": "3",
+        "name": "Biotecnologia / Enginyeria Informàtica (simultaneïtat)",
+        "cutoffGrade": 10.224,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-15",
+        "universityId": "3",
+        "name": "Ciències de l'Activitat Física i de l'Esport \"EUSES\"",
+        "cutoffGrade": 5.494,
+        "field": "Ciencias"
+      },
+      {
+        "id": "3-16",
+        "universityId": "3",
+        "name": "Ciències de l'Activitat Física i de l'Esport / Fisioteràpia \"EUSES\" (simultaneïtat)",
+        "cutoffGrade": 5.344,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-17",
+        "universityId": "3",
+        "name": "Comunicació Audiovisual",
+        "cutoffGrade": 8.771,
+        "field": "Comunicación"
+      },
+      {
+        "id": "3-18",
+        "universityId": "3",
+        "name": "Direcció i Gestió d'Empreses en l'Àmbit Digital \"ESIC\"",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "3-19",
+        "universityId": "3",
+        "name": "Dret",
+        "cutoffGrade": 8.42,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "3-20",
+        "universityId": "3",
+        "name": "Dret / Relacions Laborals i Recursos Humans (simultaneïtat)",
+        "cutoffGrade": 8.638,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "3-21",
+        "universityId": "3",
+        "name": "Economia",
+        "cutoffGrade": 7.548,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "3-22",
+        "universityId": "3",
+        "name": "Educació Infantil",
+        "cutoffGrade": 7.787,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "3-23",
+        "universityId": "3",
+        "name": "Educació Infantil",
+        "cutoffGrade": 7.874,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "3-24",
+        "universityId": "3",
+        "name": "Educació Infantil",
+        "cutoffGrade": 5.0,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "3-25",
+        "universityId": "3",
+        "name": "Educació Infantil / Educació Primària (pla de millora de la formació inicial de Mestre - 5 anys) (simultaneïtat)",
+        "cutoffGrade": 9.968,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "3-26",
+        "universityId": "3",
+        "name": "Educació Infantil / Educació Primària (pla de millora de la formació inicial de Mestre - 5 anys) (simultaneïtat)",
+        "cutoffGrade": 8.596,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "3-27",
+        "universityId": "3",
+        "name": "Educació Primària",
+        "cutoffGrade": 8.956,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "3-28",
+        "universityId": "3",
+        "name": "Educació Primària",
+        "cutoffGrade": 7.294,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "3-29",
+        "universityId": "3",
+        "name": "Educació Social",
+        "cutoffGrade": 7.977,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "3-30",
+        "universityId": "3",
+        "name": "Enginyeria Biomèdica",
+        "cutoffGrade": 9.78,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-31",
+        "universityId": "3",
+        "name": "Enginyeria Biomèdica / Enginyeria de Sistemes i Serveis de Telecomunicacions (simultaneïtat)",
+        "cutoffGrade": 10.242,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-32",
+        "universityId": "3",
+        "name": "Enginyeria de Bioprocessos Alimentaris",
+        "cutoffGrade": 6.238,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-33",
+        "universityId": "3",
+        "name": "Enginyeria de Sistemes i Serveis de Telecomunicacions",
+        "cutoffGrade": 7.747,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-34",
+        "universityId": "3",
+        "name": "Enginyeria Elèctrica",
+        "cutoffGrade": 7.102,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-35",
+        "universityId": "3",
+        "name": "Enginyeria Elèctrica / Enginyeria Electrònica Industrial i Automàtica (simultaneïtat)",
+        "cutoffGrade": 9.078,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-36",
+        "universityId": "3",
+        "name": "Enginyeria Electrònica Industrial i Automàtica",
+        "cutoffGrade": 6.878,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-37",
+        "universityId": "3",
+        "name": "Enginyeria Informàtica",
+        "cutoffGrade": 8.662,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-38",
+        "universityId": "3",
+        "name": "Enginyeria Matemàtica i Física",
+        "cutoffGrade": 11.81,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-39",
+        "universityId": "3",
+        "name": "Enginyeria Mecànica",
+        "cutoffGrade": 7.595,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-40",
+        "universityId": "3",
+        "name": "Enginyeria Química",
+        "cutoffGrade": 8.735,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "3-41",
+        "universityId": "3",
+        "name": "Enologia",
+        "cutoffGrade": 5.49,
+        "field": "Otros"
+      },
+      {
+        "id": "3-42",
+        "universityId": "3",
+        "name": "Finances i Comptabilitat",
+        "cutoffGrade": 6.864,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "3-43",
+        "universityId": "3",
+        "name": "Fisioteràpia",
+        "cutoffGrade": 9.9,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-44",
+        "universityId": "3",
+        "name": "Fisioteràpia \"EUSES\"",
+        "cutoffGrade": 6.836,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-45",
+        "universityId": "3",
+        "name": "Geografia, Anàlisi Territorial i Sostenibilitat",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "3-46",
+        "universityId": "3",
+        "name": "Gestió en Turisme i Hoteleria",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "3-47",
+        "universityId": "3",
+        "name": "Història",
+        "cutoffGrade": 5.496,
+        "field": "Humanidades"
+      },
+      {
+        "id": "3-48",
+        "universityId": "3",
+        "name": "Història de l'Art i Arqueologia",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "3-49",
+        "universityId": "3",
+        "name": "Infermeria",
+        "cutoffGrade": 10.42,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-50",
+        "universityId": "3",
+        "name": "Infermeria",
+        "cutoffGrade": 10.756,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-51",
+        "universityId": "3",
+        "name": "Infermeria",
+        "cutoffGrade": 10.312,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-52",
+        "universityId": "3",
+        "name": "Infermeria",
+        "cutoffGrade": 10.31,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-53",
+        "universityId": "3",
+        "name": "Llengua i Literatura Catalanes",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "3-54",
+        "universityId": "3",
+        "name": "Llengua i Literatura Hispàniques",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "3-55",
+        "universityId": "3",
+        "name": "Màrqueting \"ESIC\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "3-56",
+        "universityId": "3",
+        "name": "Màrqueting \"ESIC\" (docència en Anglès)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "3-57",
+        "universityId": "3",
+        "name": "Medicina",
+        "cutoffGrade": 12.36,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-58",
+        "universityId": "3",
+        "name": "Nutrició Humana i Dietètica",
+        "cutoffGrade": 7.91,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "3-59",
+        "universityId": "3",
+        "name": "Pedagogia",
+        "cutoffGrade": 8.342,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "3-60",
+        "universityId": "3",
+        "name": "Periodisme",
+        "cutoffGrade": 8.556,
+        "field": "Comunicación"
+      },
+      {
+        "id": "3-61",
+        "universityId": "3",
+        "name": "Pilot d'Aviació Comercial i Operacions Aèries",
+        "cutoffGrade": 6.292,
+        "field": "Otros"
+      },
+      {
+        "id": "3-62",
+        "universityId": "3",
+        "name": "Psicologia",
+        "cutoffGrade": 9.494,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "3-63",
+        "universityId": "3",
+        "name": "Publicitat i Relacions Públiques",
+        "cutoffGrade": 9.45,
+        "field": "Comunicación"
+      },
+      {
+        "id": "3-64",
+        "universityId": "3",
+        "name": "Química",
+        "cutoffGrade": 9.342,
+        "field": "Ciencias"
+      },
+      {
+        "id": "3-65",
+        "universityId": "3",
+        "name": "Química (docència en Anglès)",
+        "cutoffGrade": 8.349,
+        "field": "Ciencias"
+      },
+      {
+        "id": "3-66",
+        "universityId": "3",
+        "name": "Relacions Laborals i Recursos Humans",
+        "cutoffGrade": 7.286,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "3-67",
+        "universityId": "3",
+        "name": "Treball Social",
+        "cutoffGrade": 7.255,
+        "field": "Otros"
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "name": "Universitat Autònoma de Barcelona",
+    "community": "Cataluña",
+    "city": "Cerdanyola del Vallès",
+    "degrees": [
+      {
+        "id": "4-1",
+        "universityId": "4",
+        "name": "Administració i Direcció d'Empreses",
+        "cutoffGrade": 9.8,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "4-2",
+        "universityId": "4",
+        "name": "Administració i Direcció d'Empreses (docència en Anglès)",
+        "cutoffGrade": 10.01,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "4-3",
+        "universityId": "4",
+        "name": "Administració i Direcció d'Empreses / Dret (simultaneïtat)",
+        "cutoffGrade": 9.804,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "4-4",
+        "universityId": "4",
+        "name": "Antropologia Social i Cultural",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "4-5",
+        "universityId": "4",
+        "name": "Arqueologia",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "4-6",
+        "universityId": "4",
+        "name": "Arts i Disseny \"Massana\"",
+        "cutoffGrade": 5.0,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "4-7",
+        "universityId": "4",
+        "name": "Biologia",
+        "cutoffGrade": 10.891,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-8",
+        "universityId": "4",
+        "name": "Biologia Ambiental",
+        "cutoffGrade": 10.714,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-9",
+        "universityId": "4",
+        "name": "Bioquímica",
+        "cutoffGrade": 11.236,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-10",
+        "universityId": "4",
+        "name": "Biotecnologia",
+        "cutoffGrade": 11.506,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-11",
+        "universityId": "4",
+        "name": "Ciència i Tecnologia dels Aliments",
+        "cutoffGrade": 8.233,
+        "field": "Otros"
+      },
+      {
+        "id": "4-12",
+        "universityId": "4",
+        "name": "Ciència Política i Gestió Pública",
+        "cutoffGrade": 8.694,
+        "field": "Otros"
+      },
+      {
+        "id": "4-13",
+        "universityId": "4",
+        "name": "Ciència Política i Gestió Pública / Dret (simultaneïtat)",
+        "cutoffGrade": 11.214,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "4-14",
+        "universityId": "4",
+        "name": "Ciència Política i Gestió Pública / Sociologia (simultaneïtat)",
+        "cutoffGrade": 9.694,
+        "field": "Otros"
+      },
+      {
+        "id": "4-15",
+        "universityId": "4",
+        "name": "Ciència, Tecnologia i Humanitats",
+        "cutoffGrade": 5.086,
+        "field": "Humanidades"
+      },
+      {
+        "id": "4-16",
+        "universityId": "4",
+        "name": "Ciències",
+        "cutoffGrade": 5.644,
+        "field": "Otros"
+      },
+      {
+        "id": "4-17",
+        "universityId": "4",
+        "name": "Ciències Ambientals",
+        "cutoffGrade": 6.932,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-18",
+        "universityId": "4",
+        "name": "Ciències Ambientals / Geologia (simultaneïtat)",
+        "cutoffGrade": 6.833,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-19",
+        "universityId": "4",
+        "name": "Ciències Biomèdiques",
+        "cutoffGrade": 12.367,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-20",
+        "universityId": "4",
+        "name": "Ciències de l'Antiguitat",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-21",
+        "universityId": "4",
+        "name": "Comptabilitat i Finances",
+        "cutoffGrade": 8.583,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "4-22",
+        "universityId": "4",
+        "name": "Comunicació Audiovisual",
+        "cutoffGrade": 10.783,
+        "field": "Comunicación"
+      },
+      {
+        "id": "4-23",
+        "universityId": "4",
+        "name": "Comunicació de les Organitzacions",
+        "cutoffGrade": 9.39,
+        "field": "Comunicación"
+      },
+      {
+        "id": "4-24",
+        "universityId": "4",
+        "name": "Comunicació Interactiva",
+        "cutoffGrade": 7.6,
+        "field": "Comunicación"
+      },
+      {
+        "id": "4-25",
+        "universityId": "4",
+        "name": "Criminologia",
+        "cutoffGrade": 9.16,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "4-26",
+        "universityId": "4",
+        "name": "Criminologia / Dret (simultaneïtat)",
+        "cutoffGrade": 10.826,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "4-27",
+        "universityId": "4",
+        "name": "Direcció Hotelera",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-28",
+        "universityId": "4",
+        "name": "Disseny \"Eina\"",
+        "cutoffGrade": 5.0,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "4-29",
+        "universityId": "4",
+        "name": "Dret",
+        "cutoffGrade": 9.492,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "4-30",
+        "universityId": "4",
+        "name": "Dret / Relacions Internacionals (simultaneïtat)",
+        "cutoffGrade": 12.681,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "4-31",
+        "universityId": "4",
+        "name": "Dret / Relacions Laborals (simultaneïtat)",
+        "cutoffGrade": 9.896,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "4-32",
+        "universityId": "4",
+        "name": "Economia",
+        "cutoffGrade": 9.072,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "4-33",
+        "universityId": "4",
+        "name": "Economia (docència en Anglès)",
+        "cutoffGrade": 8.77,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "4-34",
+        "universityId": "4",
+        "name": "Economia / Matemàtica Computacional i Analítica de Dades (simultaneïtat)",
+        "cutoffGrade": 11.402,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-35",
+        "universityId": "4",
+        "name": "Educació Infantil",
+        "cutoffGrade": 9.109,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "4-36",
+        "universityId": "4",
+        "name": "Educació Infantil / Educació Primària (pla de millora de la formació inicial de Mestre - 5 anys) (simultaneïtat)",
+        "cutoffGrade": 10.693,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "4-37",
+        "universityId": "4",
+        "name": "Educació Primària",
+        "cutoffGrade": 8.96,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "4-38",
+        "universityId": "4",
+        "name": "Educació Primària (docència en Anglès)",
+        "cutoffGrade": 8.136,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "4-39",
+        "universityId": "4",
+        "name": "Educació Social",
+        "cutoffGrade": 8.77,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "4-40",
+        "universityId": "4",
+        "name": "Empresa i Tecnologia",
+        "cutoffGrade": 9.474,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "4-41",
+        "universityId": "4",
+        "name": "Enginyeria d'Automoció \"EU Salesiana de Sarrià\"",
+        "cutoffGrade": 5.0,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-42",
+        "universityId": "4",
+        "name": "Enginyeria de Dades",
+        "cutoffGrade": 10.284,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-43",
+        "universityId": "4",
+        "name": "Enginyeria de Sistemes de Telecomunicació / Enginyeria Electrònica de Telecomunicació (agrupació)",
+        "cutoffGrade": 7.9,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-44",
+        "universityId": "4",
+        "name": "Enginyeria de Sistemes de Telecomunicació / Enginyeria Informàtica (simultaneïtat)",
+        "cutoffGrade": 9.66,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-45",
+        "universityId": "4",
+        "name": "Enginyeria Electrònica de Telecomunicació / Enginyeria Informàtica (simultaneïtat)",
+        "cutoffGrade": 9.458,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-46",
+        "universityId": "4",
+        "name": "Enginyeria Electrònica Industrial i Automàtica \"EU Salesiana de Sarrià\"",
+        "cutoffGrade": 5.092,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-47",
+        "universityId": "4",
+        "name": "Enginyeria Electrònica Industrial i Automàtica / Enginyeria Mecànica \"EU Salesiana de Sarrià\" (simultaneïtat)",
+        "cutoffGrade": 5.124,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-48",
+        "universityId": "4",
+        "name": "Enginyeria en Energies Renovables i Eficiència Energètica \"EU Salesiana de Sarrià\"",
+        "cutoffGrade": 5.008,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-49",
+        "universityId": "4",
+        "name": "Enginyeria en Organització Industrial \"EU Salesiana de Sarrià\"",
+        "cutoffGrade": 5.092,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-50",
+        "universityId": "4",
+        "name": "Enginyeria Informàtica",
+        "cutoffGrade": 9.845,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-51",
+        "universityId": "4",
+        "name": "Enginyeria Mecànica \"EU Salesiana de Sarrià\"",
+        "cutoffGrade": 6.882,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-52",
+        "universityId": "4",
+        "name": "Enginyeria Química",
+        "cutoffGrade": 9.438,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-53",
+        "universityId": "4",
+        "name": "Estadística Aplicada",
+        "cutoffGrade": 9.5,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-54",
+        "universityId": "4",
+        "name": "Estadística Aplicada / Sociologia (simultaneïtat)",
+        "cutoffGrade": 8.776,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-55",
+        "universityId": "4",
+        "name": "Estudis Anglesos",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-56",
+        "universityId": "4",
+        "name": "Estudis d'Anglès i Català",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-57",
+        "universityId": "4",
+        "name": "Estudis d'Anglès i de Clàssiques",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-58",
+        "universityId": "4",
+        "name": "Estudis d'Anglès i Espanyol",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-59",
+        "universityId": "4",
+        "name": "Estudis d'Anglès i Francès",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-60",
+        "universityId": "4",
+        "name": "Estudis d'Àsia Oriental -Japonès-",
+        "cutoffGrade": 5.604,
+        "field": "Otros"
+      },
+      {
+        "id": "4-61",
+        "universityId": "4",
+        "name": "Estudis d'Àsia Oriental -Xinès-",
+        "cutoffGrade": 5.19,
+        "field": "Otros"
+      },
+      {
+        "id": "4-62",
+        "universityId": "4",
+        "name": "Estudis d'Espanyol i Xinès: Llengua, Literatura i Cultura",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-63",
+        "universityId": "4",
+        "name": "Estudis de Català i Espanyol",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-64",
+        "universityId": "4",
+        "name": "Estudis Socioculturals de Gènere",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-65",
+        "universityId": "4",
+        "name": "Filologia Catalana: Estudis de Literatura i Lingüística",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "4-66",
+        "universityId": "4",
+        "name": "Filosofia",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "4-67",
+        "universityId": "4",
+        "name": "Física",
+        "cutoffGrade": 12.034,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-68",
+        "universityId": "4",
+        "name": "Física / Matemàtiques (simultaneïtat)",
+        "cutoffGrade": 13.34,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-69",
+        "universityId": "4",
+        "name": "Física / Química (simultaneïtat)",
+        "cutoffGrade": 12.06,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-70",
+        "universityId": "4",
+        "name": "Fisioteràpia",
+        "cutoffGrade": 11.057,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-71",
+        "universityId": "4",
+        "name": "Fisioteràpia \"Gimbernat\"",
+        "cutoffGrade": 6.323,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-72",
+        "universityId": "4",
+        "name": "Genètica",
+        "cutoffGrade": 11.302,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-73",
+        "universityId": "4",
+        "name": "Geografia, Medi Ambient i Planificació Territorial",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-74",
+        "universityId": "4",
+        "name": "Geologia",
+        "cutoffGrade": 5.0,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-75",
+        "universityId": "4",
+        "name": "Gestió Aeronàutica",
+        "cutoffGrade": 8.05,
+        "field": "Otros"
+      },
+      {
+        "id": "4-76",
+        "universityId": "4",
+        "name": "Gestió de Ciutats Intel·ligents i Sostenibles",
+        "cutoffGrade": 6.936,
+        "field": "Otros"
+      },
+      {
+        "id": "4-77",
+        "universityId": "4",
+        "name": "Història",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "4-78",
+        "universityId": "4",
+        "name": "Història de l'Art",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "4-79",
+        "universityId": "4",
+        "name": "Història, Política i Economia Contemporànies",
+        "cutoffGrade": 8.984,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "4-80",
+        "universityId": "4",
+        "name": "Humanitats",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "4-81",
+        "universityId": "4",
+        "name": "Infermeria \"Sant Pau\"",
+        "cutoffGrade": 10.023,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-82",
+        "universityId": "4",
+        "name": "Infermeria",
+        "cutoffGrade": 10.702,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-83",
+        "universityId": "4",
+        "name": "Infermeria \"Gimbernat\"",
+        "cutoffGrade": 7.771,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-84",
+        "universityId": "4",
+        "name": "Infermeria EUIT de Terrassa",
+        "cutoffGrade": 7.83,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-85",
+        "universityId": "4",
+        "name": "Informàtica i Serveis",
+        "cutoffGrade": 5.0,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "4-86",
+        "universityId": "4",
+        "name": "Intel·ligència Artificial / Artificial Intelligence (docència en Anglès)",
+        "cutoffGrade": 10.962,
+        "field": "Otros"
+      },
+      {
+        "id": "4-87",
+        "universityId": "4",
+        "name": "Llengua i Literatura Espanyoles",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-88",
+        "universityId": "4",
+        "name": "Logopèdia",
+        "cutoffGrade": 8.842,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-89",
+        "universityId": "4",
+        "name": "Matemàtica Computacional i Analítica de Dades",
+        "cutoffGrade": 11.378,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-90",
+        "universityId": "4",
+        "name": "Matemàtiques",
+        "cutoffGrade": 11.908,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-91",
+        "universityId": "4",
+        "name": "Medicina",
+        "cutoffGrade": 12.389,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-92",
+        "universityId": "4",
+        "name": "Microbiologia",
+        "cutoffGrade": 11.016,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-93",
+        "universityId": "4",
+        "name": "Musicologia",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-94",
+        "universityId": "4",
+        "name": "Nanociència i Nanotecnologia",
+        "cutoffGrade": 10.662,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-95",
+        "universityId": "4",
+        "name": "Pedagogia",
+        "cutoffGrade": 8.596,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "4-96",
+        "universityId": "4",
+        "name": "Periodisme",
+        "cutoffGrade": 9.36,
+        "field": "Comunicación"
+      },
+      {
+        "id": "4-97",
+        "universityId": "4",
+        "name": "Prevenció i Seguretat Integral",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-98",
+        "universityId": "4",
+        "name": "Prevenció i Seguretat Integral (en xarxa)",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "4-99",
+        "universityId": "4",
+        "name": "Psicologia",
+        "cutoffGrade": 9.84,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "4-100",
+        "universityId": "4",
+        "name": "Publicitat i Relacions Públiques",
+        "cutoffGrade": 10.862,
+        "field": "Comunicación"
+      },
+      {
+        "id": "4-101",
+        "universityId": "4",
+        "name": "Química",
+        "cutoffGrade": 9.726,
+        "field": "Ciencias"
+      },
+      {
+        "id": "4-102",
+        "universityId": "4",
+        "name": "Relacions Internacionals",
+        "cutoffGrade": 11.55,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "4-103",
+        "universityId": "4",
+        "name": "Relacions Laborals",
+        "cutoffGrade": 8.328,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "4-104",
+        "universityId": "4",
+        "name": "Sociologia",
+        "cutoffGrade": 6.91,
+        "field": "Otros"
+      },
+      {
+        "id": "4-105",
+        "universityId": "4",
+        "name": "Teràpia Ocupacional EUIT de Terrassa",
+        "cutoffGrade": 5.0,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "4-106",
+        "universityId": "4",
+        "name": "Traducció i Interpretació -Alemany-",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "4-107",
+        "universityId": "4",
+        "name": "Traducció i Interpretació -Anglès-",
+        "cutoffGrade": 5.462,
+        "field": "Humanidades"
+      },
+      {
+        "id": "4-108",
+        "universityId": "4",
+        "name": "Traducció i Interpretació -Francès-",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "4-109",
+        "universityId": "4",
+        "name": "Turisme",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "4-110",
+        "universityId": "4",
+        "name": "Turisme (docència en Anglès)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "4-111",
+        "universityId": "4",
+        "name": "Veterinària",
+        "cutoffGrade": 11.994,
+        "field": "Ciencias de la Salud"
+      }
+    ]
+  },
+  {
+    "id": "5",
+    "name": "Universitat de Girona",
+    "community": "Cataluña",
+    "city": "Girona",
+    "degrees": [
+      {
+        "id": "5-1",
+        "universityId": "5",
+        "name": "Administració i Direcció d'Empreses",
+        "cutoffGrade": 9.162,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-2",
+        "universityId": "5",
+        "name": "Administració i Direcció d'Empreses / Dret (simultaneïtat)",
+        "cutoffGrade": 9.838,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "5-3",
+        "universityId": "5",
+        "name": "Administració i Direcció d'Empreses / Economia (simultaneïtat)",
+        "cutoffGrade": 9.962,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-4",
+        "universityId": "5",
+        "name": "Administració i Direcció d'Empreses / Enginyeria en Tecnologies Industrials (simultaneïtat)",
+        "cutoffGrade": 10.198,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-5",
+        "universityId": "5",
+        "name": "Arquitectura Tècnica i Edificació",
+        "cutoffGrade": 8.549,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-6",
+        "universityId": "5",
+        "name": "Arquitectura Tècnica i Edificació (semipresencial)",
+        "cutoffGrade": 8.36,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-7",
+        "universityId": "5",
+        "name": "Arquitectura, Estudis d'",
+        "cutoffGrade": 9.866,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-8",
+        "universityId": "5",
+        "name": "Arts Escèniques \"ERAM\"",
+        "cutoffGrade": 5.0,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "5-9",
+        "universityId": "5",
+        "name": "Biologia",
+        "cutoffGrade": 9.77,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "5-10",
+        "universityId": "5",
+        "name": "Biologia / Biotecnologia (simultaneïtat)",
+        "cutoffGrade": 9.642,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "5-11",
+        "universityId": "5",
+        "name": "Biologia / Ciències Ambientals (simultaneïtat)",
+        "cutoffGrade": 9.692,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "5-12",
+        "universityId": "5",
+        "name": "Biotecnologia",
+        "cutoffGrade": 10.278,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "5-13",
+        "universityId": "5",
+        "name": "Ciències Ambientals",
+        "cutoffGrade": 5.758,
+        "field": "Ciencias"
+      },
+      {
+        "id": "5-14",
+        "universityId": "5",
+        "name": "Ciències de l'Activitat Física i de l'Esport \"EUSES\"",
+        "cutoffGrade": 5.73,
+        "field": "Ciencias"
+      },
+      {
+        "id": "5-15",
+        "universityId": "5",
+        "name": "Ciències de l'Activitat Física i de l'Esport / Fisioteràpia \"EUSES\" (simultaneïtat)",
+        "cutoffGrade": 6.5,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "5-16",
+        "universityId": "5",
+        "name": "Ciències Polítiques i de l'Administració",
+        "cutoffGrade": 7.362,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "5-17",
+        "universityId": "5",
+        "name": "Ciències Polítiques i de l'Administració / Dret (simultaneïtat)",
+        "cutoffGrade": 9.556,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "5-18",
+        "universityId": "5",
+        "name": "Comptabilitat i Finances",
+        "cutoffGrade": 7.718,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-19",
+        "universityId": "5",
+        "name": "Comunicació Audiovisual i Multimèdia \"ERAM\"",
+        "cutoffGrade": 5.0,
+        "field": "Comunicación"
+      },
+      {
+        "id": "5-20",
+        "universityId": "5",
+        "name": "Comunicació Audiovisual i Multimèdia \"ERAM\" (docència en Anglès)",
+        "cutoffGrade": 5.0,
+        "field": "Comunicación"
+      },
+      {
+        "id": "5-21",
+        "universityId": "5",
+        "name": "Comunicació Cultural",
+        "cutoffGrade": 5.0,
+        "field": "Comunicación"
+      },
+      {
+        "id": "5-22",
+        "universityId": "5",
+        "name": "Criminologia",
+        "cutoffGrade": 8.491,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "5-23",
+        "universityId": "5",
+        "name": "Criminologia / Dret (simultaneïtat)",
+        "cutoffGrade": 8.76,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "5-24",
+        "universityId": "5",
+        "name": "Direcció d'Empreses Hoteleres i Gastronòmiques",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "5-25",
+        "universityId": "5",
+        "name": "Disseny i Desenvolupament de Videojocs",
+        "cutoffGrade": 6.406,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "5-26",
+        "universityId": "5",
+        "name": "Dret",
+        "cutoffGrade": 8.408,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "5-27",
+        "universityId": "5",
+        "name": "Economia",
+        "cutoffGrade": 8.758,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-28",
+        "universityId": "5",
+        "name": "Economia / Filosofia (simultaneïtat)",
+        "cutoffGrade": 7.24,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-29",
+        "universityId": "5",
+        "name": "Educació Infantil",
+        "cutoffGrade": 8.148,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "5-30",
+        "universityId": "5",
+        "name": "Educació Infantil / Educació Primària (pla de millora de la formació inicial de Mestre - 5 anys) (simultaneïtat)",
+        "cutoffGrade": 9.9,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "5-31",
+        "universityId": "5",
+        "name": "Educació Primària",
+        "cutoffGrade": 8.766,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "5-32",
+        "universityId": "5",
+        "name": "Educació Social",
+        "cutoffGrade": 7.68,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "5-33",
+        "universityId": "5",
+        "name": "Enginyeria Agroalimentària",
+        "cutoffGrade": 6.842,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-34",
+        "universityId": "5",
+        "name": "Enginyeria Biomèdica",
+        "cutoffGrade": 10.426,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-35",
+        "universityId": "5",
+        "name": "Enginyeria Elèctrica",
+        "cutoffGrade": 7.266,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-36",
+        "universityId": "5",
+        "name": "Enginyeria Elèctrica / Enginyeria Electrònica Industrial i Automàtica (simultaneïtat)",
+        "cutoffGrade": 7.126,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-37",
+        "universityId": "5",
+        "name": "Enginyeria Electrònica Industrial i Automàtica",
+        "cutoffGrade": 7.056,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-38",
+        "universityId": "5",
+        "name": "Enginyeria en Tecnologies Industrials, Grau en + Màster Universitari en Enginyeria Industrial (PARS: Enginyer/a en Tecnologies Industrials)",
+        "cutoffGrade": 8.59,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-39",
+        "universityId": "5",
+        "name": "Enginyeria Informàtica",
+        "cutoffGrade": 8.514,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-40",
+        "universityId": "5",
+        "name": "Enginyeria Mecànica",
+        "cutoffGrade": 8.077,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-41",
+        "universityId": "5",
+        "name": "Enginyeria Química",
+        "cutoffGrade": 8.178,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "5-42",
+        "universityId": "5",
+        "name": "Estudis Globals / Global Studies (docència en Anglès)",
+        "cutoffGrade": 7.25,
+        "field": "Otros"
+      },
+      {
+        "id": "5-43",
+        "universityId": "5",
+        "name": "Estudis Globals / Global Studies (docència en Anglès) / Turisme (simultaneïtat)",
+        "cutoffGrade": 6.808,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-44",
+        "universityId": "5",
+        "name": "Filologia Catalana",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "5-45",
+        "universityId": "5",
+        "name": "Filologia Catalana / Filologia Hispànica (simultaneïtat)",
+        "cutoffGrade": 6.378,
+        "field": "Humanidades"
+      },
+      {
+        "id": "5-46",
+        "universityId": "5",
+        "name": "Filologia Hispànica",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "5-47",
+        "universityId": "5",
+        "name": "Filosofia",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "5-48",
+        "universityId": "5",
+        "name": "Fisioteràpia (docència en Anglès) (només per a estudiants espanyols o estrangers amb residència)",
+        "cutoffGrade": 6.974,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "5-49",
+        "universityId": "5",
+        "name": "Fisioteràpia (docència en Anglès) (només per a estudiants sense nacionalitat espanyola ni residència a l'Estat Espanyol)",
+        "cutoffGrade": 7.028,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "5-50",
+        "universityId": "5",
+        "name": "Fisioteràpia \"EUSES\"",
+        "cutoffGrade": 7.19,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "5-51",
+        "universityId": "5",
+        "name": "Geografia, Territori i Medi Ambient",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "5-52",
+        "universityId": "5",
+        "name": "Història",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "5-53",
+        "universityId": "5",
+        "name": "Història / Història de l'Art (simultaneïtat)",
+        "cutoffGrade": 5.888,
+        "field": "Humanidades"
+      },
+      {
+        "id": "5-54",
+        "universityId": "5",
+        "name": "Història de l'Art",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "5-55",
+        "universityId": "5",
+        "name": "Infermeria",
+        "cutoffGrade": 10.05,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "5-56",
+        "universityId": "5",
+        "name": "Innovació i Seguretat Alimentària",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "5-57",
+        "universityId": "5",
+        "name": "Logística Empresarial \"Mediterrani\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-58",
+        "universityId": "5",
+        "name": "Màrqueting \"Mediterrani\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-59",
+        "universityId": "5",
+        "name": "Medicina",
+        "cutoffGrade": 12.362,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "5-60",
+        "universityId": "5",
+        "name": "Moda \"ERAM\"",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "5-61",
+        "universityId": "5",
+        "name": "Nutrició Humana i Dietètica \"EUSES\"",
+        "cutoffGrade": 5.0,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "5-62",
+        "universityId": "5",
+        "name": "Pedagogia",
+        "cutoffGrade": 7.668,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "5-63",
+        "universityId": "5",
+        "name": "Psicologia",
+        "cutoffGrade": 9.63,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "5-64",
+        "universityId": "5",
+        "name": "Publicitat i Relacions Públiques",
+        "cutoffGrade": 8.875,
+        "field": "Comunicación"
+      },
+      {
+        "id": "5-65",
+        "universityId": "5",
+        "name": "Química",
+        "cutoffGrade": 8.462,
+        "field": "Ciencias"
+      },
+      {
+        "id": "5-66",
+        "universityId": "5",
+        "name": "Treball Social",
+        "cutoffGrade": 6.19,
+        "field": "Otros"
+      },
+      {
+        "id": "5-67",
+        "universityId": "5",
+        "name": "Turisme \"Euroaula\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-68",
+        "universityId": "5",
+        "name": "Turisme \"Mediterrani\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-69",
+        "universityId": "5",
+        "name": "Turisme",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-70",
+        "universityId": "5",
+        "name": "Turisme / Geografia, Territori i Medi Ambient (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-71",
+        "universityId": "5",
+        "name": "Turisme / Màrqueting \"Mediterrani\" (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "5-72",
+        "universityId": "5",
+        "name": "Turisme / Publicitat i Relacions Públiques (simultaneïtat)",
+        "cutoffGrade": 9.308,
+        "field": "Empresa y Economía"
+      }
+    ]
+  },
+  {
+    "id": "6",
+    "name": "Universitat de Lleida",
+    "community": "Cataluña",
+    "city": "Igualada",
+    "degrees": [
+      {
+        "id": "6-1",
+        "universityId": "6",
+        "name": "Administració i Direcció d'Empreses",
+        "cutoffGrade": 8.122,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "6-2",
+        "universityId": "6",
+        "name": "Administració i Direcció d'Empreses",
+        "cutoffGrade": 7.666,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "6-3",
+        "universityId": "6",
+        "name": "Administració i Direcció d'Empreses / Dret (simultaneïtat)",
+        "cutoffGrade": 9.396,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "6-4",
+        "universityId": "6",
+        "name": "Administració i Direcció d'Empreses / Enginyeria en Organització Industrial i Logística (simultaneïtat)",
+        "cutoffGrade": 8.006,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-5",
+        "universityId": "6",
+        "name": "Administració i Direcció d'Empreses / Enginyeria Informàtica (simultaneïtat)",
+        "cutoffGrade": 11.05,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-6",
+        "universityId": "6",
+        "name": "Administració i Direcció d'Empreses i Transformació de Negocis \"Centre Universitari EAE\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "6-7",
+        "universityId": "6",
+        "name": "Administració i Direcció d'Empreses / Turisme (simultaneïtat)",
+        "cutoffGrade": 7.284,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "6-8",
+        "universityId": "6",
+        "name": "Arquitectura Tècnica i Edificació",
+        "cutoffGrade": 8.39,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-9",
+        "universityId": "6",
+        "name": "Biotecnologia",
+        "cutoffGrade": 9.694,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-10",
+        "universityId": "6",
+        "name": "Ciència i Producció Animal / Veterinària (simultaneïtat)",
+        "cutoffGrade": 11.29,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-11",
+        "universityId": "6",
+        "name": "Ciència i Tecnologia dels Aliments",
+        "cutoffGrade": 5.098,
+        "field": "Otros"
+      },
+      {
+        "id": "6-12",
+        "universityId": "6",
+        "name": "Ciències Biomèdiques",
+        "cutoffGrade": 11.49,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-13",
+        "universityId": "6",
+        "name": "Ciències de l'Activitat Física i de l'Esport",
+        "cutoffGrade": 8.463,
+        "field": "Ciencias"
+      },
+      {
+        "id": "6-14",
+        "universityId": "6",
+        "name": "Ciències de l'Activitat Física i de l'Esport",
+        "cutoffGrade": 8.8,
+        "field": "Ciencias"
+      },
+      {
+        "id": "6-15",
+        "universityId": "6",
+        "name": "Ciències de l'Activitat Física i de l'Esport / Educació Primària (simultaneïtat)",
+        "cutoffGrade": 8.956,
+        "field": "Ciencias"
+      },
+      {
+        "id": "6-16",
+        "universityId": "6",
+        "name": "Ciències de l'Activitat Física i de l'Esport / Fisioteràpia (simultaneïtat)",
+        "cutoffGrade": 11.336,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-17",
+        "universityId": "6",
+        "name": "Comunicació i Periodisme Audiovisuals",
+        "cutoffGrade": 5.236,
+        "field": "Comunicación"
+      },
+      {
+        "id": "6-18",
+        "universityId": "6",
+        "name": "Conservació de la Natura / Enginyeria Forestal (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-19",
+        "universityId": "6",
+        "name": "Disseny Digital i Tecnologies Creatives",
+        "cutoffGrade": 6.148,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "6-20",
+        "universityId": "6",
+        "name": "Dret",
+        "cutoffGrade": 7.98,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "6-21",
+        "universityId": "6",
+        "name": "Educació Infantil",
+        "cutoffGrade": 5.0,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "6-22",
+        "universityId": "6",
+        "name": "Educació Infantil / Educació Primària (pla de millora de la formació inicial de Mestre - 5 anys) (simultaneïtat)",
+        "cutoffGrade": 8.82,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "6-23",
+        "universityId": "6",
+        "name": "Educació Primària (modalitat Bilingüe)",
+        "cutoffGrade": 5.0,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "6-24",
+        "universityId": "6",
+        "name": "Educació Primària (modalitat dual)",
+        "cutoffGrade": 7.374,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "6-25",
+        "universityId": "6",
+        "name": "Educació Social",
+        "cutoffGrade": 7.213,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "6-26",
+        "universityId": "6",
+        "name": "Enginyeria Agrària i Alimentària",
+        "cutoffGrade": 6.69,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-27",
+        "universityId": "6",
+        "name": "Enginyeria de l'Energia i Sostenibilitat / Enginyeria en Electrònica Industrial i Automàtica / Enginyeria Mecànica (agrupació)",
+        "cutoffGrade": 6.884,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-28",
+        "universityId": "6",
+        "name": "Enginyeria de l'Energia i Sostenibilitat / Enginyeria en Electrònica Industrial i Automàtica / Enginyeria Mecànica (agrupació) Grau en + Màster Universitari en Enginyeria Industrial (PARS: Enginyer/a Industrial)",
+        "cutoffGrade": 9.978,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-29",
+        "universityId": "6",
+        "name": "Enginyeria de l'Energia i Sostenibilitat / Enginyeria Mecànica (simultaneïtat)",
+        "cutoffGrade": 10.218,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-30",
+        "universityId": "6",
+        "name": "Enginyeria en Organització Industrial i Logística / Enginyeria Química (agrupació)",
+        "cutoffGrade": 6.832,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-31",
+        "universityId": "6",
+        "name": "Enginyeria Forestal",
+        "cutoffGrade": 5.26,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-32",
+        "universityId": "6",
+        "name": "Enginyeria Informàtica",
+        "cutoffGrade": 7.372,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-33",
+        "universityId": "6",
+        "name": "Enginyeria Informàtica",
+        "cutoffGrade": 7.888,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-34",
+        "universityId": "6",
+        "name": "Enginyeria Informàtica, Grau en + Màster Universitari en Enginyeria Informàtica (PARS: Enginyer/a Informàtic/a)",
+        "cutoffGrade": 7.633,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "6-35",
+        "universityId": "6",
+        "name": "Estudis Anglesos",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "6-36",
+        "universityId": "6",
+        "name": "Estudis Anglesos / Llengües Aplicades i Traducció (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "6-37",
+        "universityId": "6",
+        "name": "Filologia Catalana i Estudis Occitans",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "6-38",
+        "universityId": "6",
+        "name": "Filologia Catalana i Estudis Occitans / Llengües Aplicades i Traducció (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "6-39",
+        "universityId": "6",
+        "name": "Filologia Hispànica",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "6-40",
+        "universityId": "6",
+        "name": "Filologia Hispànica / Llengües Aplicades i Traducció (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "6-41",
+        "universityId": "6",
+        "name": "Fisioteràpia",
+        "cutoffGrade": 10.484,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-42",
+        "universityId": "6",
+        "name": "Fisioteràpia / Infermeria (simultaneïtat)",
+        "cutoffGrade": 11.017,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-43",
+        "universityId": "6",
+        "name": "Fisioteràpia / Nutrició Humana i Dietètica (simultaneïtat)",
+        "cutoffGrade": 10.16,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-44",
+        "universityId": "6",
+        "name": "Geografia",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "6-45",
+        "universityId": "6",
+        "name": "Història",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "6-46",
+        "universityId": "6",
+        "name": "Història de l'Art i Gestió del Patrimoni Artístic",
+        "cutoffGrade": 5.0,
+        "field": "Humanidades"
+      },
+      {
+        "id": "6-47",
+        "universityId": "6",
+        "name": "Infermeria",
+        "cutoffGrade": 10.264,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-48",
+        "universityId": "6",
+        "name": "Infermeria",
+        "cutoffGrade": 10.719,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-49",
+        "universityId": "6",
+        "name": "Infermeria",
+        "cutoffGrade": 9.866,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-50",
+        "universityId": "6",
+        "name": "Màrqueting i Comunicació Digital \"Centre Universitari EAE\"",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "6-51",
+        "universityId": "6",
+        "name": "Medicina",
+        "cutoffGrade": 12.353,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-52",
+        "universityId": "6",
+        "name": "Nutrició Humana i Dietètica",
+        "cutoffGrade": 7.284,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "6-53",
+        "universityId": "6",
+        "name": "Psicologia",
+        "cutoffGrade": 9.552,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "6-54",
+        "universityId": "6",
+        "name": "Relacions Laborals i Recursos Humans",
+        "cutoffGrade": 5.0,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "6-55",
+        "universityId": "6",
+        "name": "Treball Social",
+        "cutoffGrade": 5.474,
+        "field": "Otros"
+      },
+      {
+        "id": "6-56",
+        "universityId": "6",
+        "name": "Turisme",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      }
+    ]
+  },
+  {
+    "id": "7",
+    "name": "Universitat de Vic - Universitat Central de Catalunya",
+    "community": "Cataluña",
+    "city": "Manresa",
+    "degrees": [
+      {
+        "id": "7-1",
+        "universityId": "7",
+        "name": "Administració i Direcció d'Empreses (Campus Manresa)",
+        "cutoffGrade": 5.304,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "7-2",
+        "universityId": "7",
+        "name": "Administració i Direcció d'Empreses",
+        "cutoffGrade": 5.468,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "7-3",
+        "universityId": "7",
+        "name": "Audiologia General",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "7-4",
+        "universityId": "7",
+        "name": "Belles Arts \"BAU\"",
+        "cutoffGrade": 5.0,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "7-5",
+        "universityId": "7",
+        "name": "Biologia",
+        "cutoffGrade": 5.394,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-6",
+        "universityId": "7",
+        "name": "Biomedicina",
+        "cutoffGrade": 10.033,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-7",
+        "universityId": "7",
+        "name": "Biotecnologia",
+        "cutoffGrade": 7.254,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-8",
+        "universityId": "7",
+        "name": "Ciències de l'Activitat Física i de l'Esport",
+        "cutoffGrade": 6.66,
+        "field": "Ciencias"
+      },
+      {
+        "id": "7-9",
+        "universityId": "7",
+        "name": "Ciències de l'Activitat Física i de l'Esport / Educació Primària (menció en Educació Física) (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Ciencias"
+      },
+      {
+        "id": "7-10",
+        "universityId": "7",
+        "name": "Comunicació Audiovisual",
+        "cutoffGrade": 5.0,
+        "field": "Comunicación"
+      },
+      {
+        "id": "7-11",
+        "universityId": "7",
+        "name": "Criminologia \"ESERP\"",
+        "cutoffGrade": 5.0,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "7-12",
+        "universityId": "7",
+        "name": "Disseny \"BAU\"",
+        "cutoffGrade": 5.0,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "7-13",
+        "universityId": "7",
+        "name": "Disseny i Innovació \"ELISAVA\"",
+        "cutoffGrade": 5.0,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "7-14",
+        "universityId": "7",
+        "name": "Dret \"ESERP\"",
+        "cutoffGrade": 5.0,
+        "field": "Derecho y Ciencias Sociales"
+      },
+      {
+        "id": "7-15",
+        "universityId": "7",
+        "name": "Educació Infantil (Campus Manresa)",
+        "cutoffGrade": 5.0,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "7-16",
+        "universityId": "7",
+        "name": "Educació Infantil",
+        "cutoffGrade": 5.0,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "7-17",
+        "universityId": "7",
+        "name": "Educació Infantil / Educació Primària (pla de millora de la formació inicial de Mestre - 5 anys) (menció en Llengua Anglesa) (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "7-18",
+        "universityId": "7",
+        "name": "Educació Primària",
+        "cutoffGrade": 5.468,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "7-19",
+        "universityId": "7",
+        "name": "Educació Social",
+        "cutoffGrade": 5.0,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "7-20",
+        "universityId": "7",
+        "name": "Enginyeria de Disseny Industrial \"ELISAVA\"",
+        "cutoffGrade": 5.0,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "7-21",
+        "universityId": "7",
+        "name": "Enginyeria de l'Automoció",
+        "cutoffGrade": 6.85,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "7-22",
+        "universityId": "7",
+        "name": "Enginyeria Mecatrònica",
+        "cutoffGrade": 5.0,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "7-23",
+        "universityId": "7",
+        "name": "Estudis Globals / Global Studies (docència en Anglès)",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "7-24",
+        "universityId": "7",
+        "name": "Fisioteràpia (Campus Manresa)",
+        "cutoffGrade": 7.109,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-25",
+        "universityId": "7",
+        "name": "Fisioteràpia",
+        "cutoffGrade": 6.953,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-26",
+        "universityId": "7",
+        "name": "Gestió de la Societat Digital (Campus Manresa)",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "7-27",
+        "universityId": "7",
+        "name": "Infermeria (Campus Manresa)",
+        "cutoffGrade": 7.776,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-28",
+        "universityId": "7",
+        "name": "Infermeria \"Sant Joan de Déu\"",
+        "cutoffGrade": 7.788,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-29",
+        "universityId": "7",
+        "name": "Infermeria",
+        "cutoffGrade": 7.787,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-30",
+        "universityId": "7",
+        "name": "Màrqueting i Comunicació Empresarial",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "7-31",
+        "universityId": "7",
+        "name": "Medicina",
+        "cutoffGrade": 11.615,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-32",
+        "universityId": "7",
+        "name": "Multimèdia. Aplicacions i Videojocs",
+        "cutoffGrade": 5.0,
+        "field": "Comunicación"
+      },
+      {
+        "id": "7-33",
+        "universityId": "7",
+        "name": "Nutrició Humana i Dietètica",
+        "cutoffGrade": 5.0,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-34",
+        "universityId": "7",
+        "name": "Odontologia",
+        "cutoffGrade": 10.0,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-35",
+        "universityId": "7",
+        "name": "Periodisme",
+        "cutoffGrade": 5.0,
+        "field": "Comunicación"
+      },
+      {
+        "id": "7-36",
+        "universityId": "7",
+        "name": "Podologia (Campus Manresa)",
+        "cutoffGrade": 5.0,
+        "field": "Ciencias de la Salud"
+      },
+      {
+        "id": "7-37",
+        "universityId": "7",
+        "name": "Psicologia",
+        "cutoffGrade": 7.465,
+        "field": "Educación y Psicología"
+      },
+      {
+        "id": "7-38",
+        "universityId": "7",
+        "name": "Publicitat i Relacions Públiques",
+        "cutoffGrade": 5.0,
+        "field": "Comunicación"
+      },
+      {
+        "id": "7-39",
+        "universityId": "7",
+        "name": "Teràpia Ocupacional (presencial / semipresencial)",
+        "cutoffGrade": 5.0,
+        "field": "Ciencias de la Salud"
+      }
+    ]
+  },
+  {
+    "id": "8",
+    "name": "Universitat Politècnica de Catalunya",
+    "community": "Cataluña",
+    "city": "Barcelona",
+    "degrees": [
+      {
+        "id": "8-1",
+        "universityId": "8",
+        "name": "Arquitectura Tècnica i Edificació",
+        "cutoffGrade": 8.94,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-2",
+        "universityId": "8",
+        "name": "Arquitectura, Estudis d'",
+        "cutoffGrade": 10.092,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-3",
+        "universityId": "8",
+        "name": "Arquitectura, Estudis d'",
+        "cutoffGrade": 10.608,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-4",
+        "universityId": "8",
+        "name": "Bioinformàtica (docència en Anglès)",
+        "cutoffGrade": 10.714,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-5",
+        "universityId": "8",
+        "name": "Ciència i Enginyeria de Dades",
+        "cutoffGrade": 12.514,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-6",
+        "universityId": "8",
+        "name": "Ciències i Tecnologies del Mar",
+        "cutoffGrade": 7.305,
+        "field": "Otros"
+      },
+      {
+        "id": "8-7",
+        "universityId": "8",
+        "name": "Disseny Digital i Tecnologies Multimèdia",
+        "cutoffGrade": 5.0,
+        "field": "Comunicación"
+      },
+      {
+        "id": "8-8",
+        "universityId": "8",
+        "name": "Disseny i Desenvolupament de Videojocs (docència en Anglès) (Campus Barcelona)",
+        "cutoffGrade": 5.0,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "8-9",
+        "universityId": "8",
+        "name": "Disseny i Desenvolupament de Videojocs (Campus Terrassa)",
+        "cutoffGrade": 5.0,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "8-10",
+        "universityId": "8",
+        "name": "Disseny, Animació i Art Digital",
+        "cutoffGrade": 8.796,
+        "field": "Arte y Diseño"
+      },
+      {
+        "id": "8-11",
+        "universityId": "8",
+        "name": "Empresa, Innovació i Tecnologia \"EUNCET\" (Campus 22@) (presencial)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-12",
+        "universityId": "8",
+        "name": "Empresa, Innovació i Tecnologia \"EUNCET\" (Campus 22@) (semipresencial)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-13",
+        "universityId": "8",
+        "name": "Empresa, Innovació i Tecnologia \"EUNCET\" (Campus Terrassa) (presencial)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-14",
+        "universityId": "8",
+        "name": "Empresa, Innovació i Tecnologia \"EUNCET\" (Campus Terrassa) (semipresencial)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-15",
+        "universityId": "8",
+        "name": "Empresa, Innovació i Tecnologia / Gestió i Digitalització en l'Esport \"EUNCET\" (Campus Can Dragó + Campus 22@) (presencial) (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-16",
+        "universityId": "8",
+        "name": "Empresa, Innovació i Tecnologia / Màrqueting, Innovació i Tecnologia \"EUNCET\" (Campus 22@) (presencial) (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-17",
+        "universityId": "8",
+        "name": "Empresa, Innovació i Tecnologia / Màrqueting, Innovació i Tecnologia \"EUNCET\" (Campus Terrassa) (presencial) (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-18",
+        "universityId": "8",
+        "name": "Enginyeria Alimentària",
+        "cutoffGrade": 7.446,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-19",
+        "universityId": "8",
+        "name": "Enginyeria Ambiental",
+        "cutoffGrade": 7.252,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-20",
+        "universityId": "8",
+        "name": "Enginyeria Biomèdica",
+        "cutoffGrade": 11.946,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-21",
+        "universityId": "8",
+        "name": "Enginyeria Civil",
+        "cutoffGrade": 9.926,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-22",
+        "universityId": "8",
+        "name": "Enginyeria Civil, Grau en + Màster universitari en Enginyeria de Camins, Canals i Ports (PARS: Enginyer/a de Camins, Canals i Ports)",
+        "cutoffGrade": 11.498,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-23",
+        "universityId": "8",
+        "name": "Enginyeria d'Automoció (Campus Manresa)",
+        "cutoffGrade": 10.55,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-24",
+        "universityId": "8",
+        "name": "Enginyeria de Ciències Agronòmiques",
+        "cutoffGrade": 6.756,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-25",
+        "universityId": "8",
+        "name": "Enginyeria de Disseny Industrial i Desenvolupament del Producte",
+        "cutoffGrade": 10.826,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-26",
+        "universityId": "8",
+        "name": "Enginyeria de Disseny Industrial i Desenvolupament del Producte",
+        "cutoffGrade": 8.2,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-27",
+        "universityId": "8",
+        "name": "Enginyeria de l'Energia",
+        "cutoffGrade": 9.038,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-28",
+        "universityId": "8",
+        "name": "Enginyeria de Materials",
+        "cutoffGrade": 8.662,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-29",
+        "universityId": "8",
+        "name": "Enginyeria Electrònica Industrial i Automàtica / Enginyeria Mecànica / Enginyeria Química / Enginyeria de Recursos Minerals i el seu Reciclatge (agrupació)",
+        "cutoffGrade": 7.776,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-30",
+        "universityId": "8",
+        "name": "Enginyeria de Satèl·lits",
+        "cutoffGrade": 11.028,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-31",
+        "universityId": "8",
+        "name": "Enginyeria de Sistemes Aeroespacials",
+        "cutoffGrade": 10.942,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-32",
+        "universityId": "8",
+        "name": "Enginyeria de Sistemes Aeroespacials / Enginyeria de Sistemes de Telecomunicació - Enginyeria Telemàtica (agrupació de simultaneïtat)",
+        "cutoffGrade": 10.917,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-33",
+        "universityId": "8",
+        "name": "Enginyeria de Sistemes Audiovisuals",
+        "cutoffGrade": 7.144,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-34",
+        "universityId": "8",
+        "name": "Enginyeria de Sistemes Biològics",
+        "cutoffGrade": 9.247,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-35",
+        "universityId": "8",
+        "name": "Enginyeria de Sistemes de Telecomunicació / Enginyeria Telemàtica (inclou xarxes i Internet) (agrupació)",
+        "cutoffGrade": 7.912,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-36",
+        "universityId": "8",
+        "name": "Enginyeria de Sistemes de Telecomunicació / Enginyeria Telemàtica (inclou xarxes i Internet) (febrer) (agrupació)",
+        "cutoffGrade": 6.97,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-37",
+        "universityId": "8",
+        "name": "Enginyeria de Sistemes TIC (àmbit d'Informàtica i Comunicacions)",
+        "cutoffGrade": 7.34,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-38",
+        "universityId": "8",
+        "name": "Enginyeria de Tecnologia i Disseny Tèxtil / Enginyeria Elèctrica / Enginyeria Electrònica Industrial i Automàtica / Enginyeria Mecànica / Enginyeria Química (agrupació)",
+        "cutoffGrade": 9.0,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-39",
+        "universityId": "8",
+        "name": "Enginyeria de Tecnologies i Serveis de Telecomunicació (especialitats en Telecomunicació, Audiovisuals i Telemàtica, que inclou xarxes i internet)",
+        "cutoffGrade": 8.646,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-40",
+        "universityId": "8",
+        "name": "Enginyeria de Tecnologies i Serveis de Telecomunicació (Telecomunicació, Audiovisuals i Telemàtica, xarxes i internet), Grau en + Màster Universitari Enginyeria de Telecomunicació (PARS: Enginyer/a de Telecomunicació)",
+        "cutoffGrade": 11.006,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-41",
+        "universityId": "8",
+        "name": "Enginyeria Elèctrica",
+        "cutoffGrade": 8.904,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-42",
+        "universityId": "8",
+        "name": "Enginyeria Elèctrica i Sistemes Ferroviaris / Enginyeria Electrònica Industrial i Automàtica / Enginyeria Mecànica (agrupació)",
+        "cutoffGrade": 7.728,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-43",
+        "universityId": "8",
+        "name": "Enginyeria Electrònica de Telecomunicació",
+        "cutoffGrade": 9.894,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-44",
+        "universityId": "8",
+        "name": "Enginyeria Electrònica Industrial i Automàtica",
+        "cutoffGrade": 8.954,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-45",
+        "universityId": "8",
+        "name": "Enginyeria en Geoinformació i Geomàtica",
+        "cutoffGrade": 6.928,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-46",
+        "universityId": "8",
+        "name": "Enginyeria en Sistemes i Tecnologia Naval",
+        "cutoffGrade": 9.262,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-47",
+        "universityId": "8",
+        "name": "Enginyeria en Tecnologies Aeroespacials, Grau en + Màster Universitari en Enginyeria Aeronàutica (PARS: Enginyer/a Aeronàutic/a)",
+        "cutoffGrade": 12.93,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-48",
+        "universityId": "8",
+        "name": "Enginyeria en Tecnologies Industrials, Grau en + Màster Universitari en Enginyeria Industrial (PARS: Enginyer/a Industrial)",
+        "cutoffGrade": 10.04,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-49",
+        "universityId": "8",
+        "name": "Enginyeria en Tecnologies Industrials, Grau en + Màster Universitari en Enginyeria Industrial (PARS: Enginyer/a Industrial)",
+        "cutoffGrade": 11.09,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-50",
+        "universityId": "8",
+        "name": "Enginyeria en Vehicles Aeroespacials",
+        "cutoffGrade": 12.5,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-51",
+        "universityId": "8",
+        "name": "Enginyeria Física",
+        "cutoffGrade": 12.61,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-52",
+        "universityId": "8",
+        "name": "Enginyeria Informàtica",
+        "cutoffGrade": 10.544,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-53",
+        "universityId": "8",
+        "name": "Enginyeria Informàtica",
+        "cutoffGrade": 9.65,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-54",
+        "universityId": "8",
+        "name": "Enginyeria Informàtica, Grau en + Màster Universitari en Enginyeria Informàtica (PARS: Enginyer/a Informàtic/a)",
+        "cutoffGrade": 11.708,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-55",
+        "universityId": "8",
+        "name": "Enginyeria Mecànica",
+        "cutoffGrade": 10.014,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-56",
+        "universityId": "8",
+        "name": "Enginyeria Química",
+        "cutoffGrade": 9.572,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-57",
+        "universityId": "8",
+        "name": "Gestió i Digitalització en l'Esport \"EUNCET\" (Campus Can Dragó)",
+        "cutoffGrade": 5.0,
+        "field": "Otros"
+      },
+      {
+        "id": "8-58",
+        "universityId": "8",
+        "name": "Gestió i Digitalització en l'Esport / Màrqueting, Innovació i Tecnologia \"EUNCET\" (Campus Can Dragó + Campus 22@) (presencial) (simultaneïtat)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-59",
+        "universityId": "8",
+        "name": "Intel·ligència Artificial",
+        "cutoffGrade": 11.894,
+        "field": "Otros"
+      },
+      {
+        "id": "8-60",
+        "universityId": "8",
+        "name": "Màrqueting, Innovació i Tecnologia \"EUNCET\" (Campus 22@) (presencial)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-61",
+        "universityId": "8",
+        "name": "Màrqueting, Innovació i Tecnologia \"EUNCET\" (Campus 22@) (semipresencial)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-62",
+        "universityId": "8",
+        "name": "Màrqueting, Innovació i Tecnologia \"EUNCET\" (Campus Terrassa) (presencial)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-63",
+        "universityId": "8",
+        "name": "Màrqueting, Innovació i Tecnologia \"EUNCET\" (Campus Terrassa) (semipresencial)",
+        "cutoffGrade": 5.0,
+        "field": "Empresa y Economía"
+      },
+      {
+        "id": "8-64",
+        "universityId": "8",
+        "name": "Matemàtiques",
+        "cutoffGrade": 12.644,
+        "field": "Ciencias"
+      },
+      {
+        "id": "8-65",
+        "universityId": "8",
+        "name": "Nàutica i Transport Marítim",
+        "cutoffGrade": 7.93,
+        "field": "Otros"
+      },
+      {
+        "id": "8-66",
+        "universityId": "8",
+        "name": "Òptica i Optometria",
+        "cutoffGrade": 7.81,
+        "field": "Otros"
+      },
+      {
+        "id": "8-67",
+        "universityId": "8",
+        "name": "Paisatgisme",
+        "cutoffGrade": 7.833,
+        "field": "Otros"
+      },
+      {
+        "id": "8-68",
+        "universityId": "8",
+        "name": "Tecnologies Industrials i Anàlisi Econòmica, Grau en + Màster Universitari en Enginyeria Industrial (PARS: Enginyer/a Industrial i Anàlisi Econòmica) (docència en Anglès)",
+        "cutoffGrade": 12.54,
+        "field": "Ingeniería"
+      },
+      {
+        "id": "8-69",
+        "universityId": "8",
+        "name": "Tecnologies Marines",
+        "cutoffGrade": 7.432,
+        "field": "Otros"
+      }
+    ]
+  }
+]
