@@ -64,7 +64,7 @@ def tc(color: str, s: str) -> str:
 # ─── Helpers ──────────────────────────────────────────────────────────────────
 
 def _s(n: int, desc: str, latex_plain: str,
-       expl: str = "", rule: str = "", color: str = "",
+       expl: str = "", rule: str = "",
        highlighted: str = "") -> Step:
     """Build a Step.
 
@@ -79,7 +79,6 @@ def _s(n: int, desc: str, latex_plain: str,
         highlighted_latex=highlighted or latex_plain,
         explanation=expl,
         rule_name=rule,
-        highlight_color=color,
     )
 
 
@@ -119,7 +118,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                 "Ecuación original",
                 f"{sym_latex(lhs)} = {sym_latex(rhs)}",
                 "Identificamos la ecuación a resolver para x.",
-                color=C_ACTIVE,
                 highlighted=f"{tc(C_ACTIVE, sym_latex(lhs))} = {tc(C_ACTIVE, sym_latex(rhs))}",
             ))
 
@@ -129,7 +127,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                 f"{sym_latex(combined)} = 0",
                 "Restamos el lado derecho en ambos miembros para igualar a cero.",
                 rule="Reorganizar",
-                color=C_ACTIVE,
                 highlighted=f"{tc(C_ACTIVE, sym_latex(combined))} = 0",
             ))
 
@@ -140,7 +137,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                     f"{sym_latex(factored)} = 0",
                     "Factorizamos para identificar las raíces más fácilmente.",
                     rule="Factorización",
-                    color=C_CONST,
                     highlighted=f"{tc(C_CONST, sym_latex(factored))} = 0",
                 ))
 
@@ -161,7 +157,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                          f"c = {sym_latex(c_coef)}"),
                         "Reconocemos la forma estándar de la ecuación de segundo grado.",
                         rule="Cuadrática",
-                        color=C_CONST,
                         highlighted=(
                             f"{tc(C_CONST,'a')} = {tc(C_CONST, sym_latex(a_coef))},\\quad "
                             f"{tc(C_CONST,'b')} = {tc(C_CONST, sym_latex(b_coef))},\\quad "
@@ -188,7 +183,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                         disc_plain,
                         "El discriminante determina cuántas soluciones reales tiene la ecuación.",
                         rule="Discriminante",
-                        color=C_ACTIVE,
                         highlighted=disc_highlighted,
                     ))
 
@@ -206,7 +200,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                             r"x = \frac{-b \pm \sqrt{\Delta}}{2a}",
                             "Δ > 0 → dos soluciones reales distintas.",
                             rule="Fórmula",
-                            color=C_ACTIVE,
                             highlighted=(
                                 r"x = \frac{"
                                 + tc(C_REMOVE, "-b")
@@ -223,7 +216,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                             r"x = \frac{-b}{2a}",
                             "Δ = 0 → una única solución real (raíz doble).",
                             rule="Fórmula",
-                            color=C_CONST,
                             highlighted=(
                                 r"x = \frac{"
                                 + tc(C_REMOVE, "-b")
@@ -238,7 +230,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                             f"\\Delta = {sym_latex(discriminant)} < 0",
                             "Δ < 0 → no existen soluciones reales.",
                             rule="Sin solución",
-                            color=C_REMOVE,
                             highlighted=f"\\Delta = {tc(C_REMOVE, sym_latex(discriminant))} < 0",
                         ))
 
@@ -248,7 +239,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                         f"{sym_latex(combined)} = 0",
                         "Sumamos/restamos y dividimos para despejar x directamente.",
                         rule="Lineal",
-                        color=C_ACTIVE,
                         highlighted=tc(C_ACTIVE, sym_latex(combined)) + " = 0",
                     ))
                 elif deg == 3:
@@ -257,7 +247,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                         f"{sym_latex(combined)} = 0",
                         "Buscamos raíces racionales y factorizamos.",
                         rule="Cúbica",
-                        color=C_ACTIVE,
                         highlighted=tc(C_ACTIVE, sym_latex(combined)) + " = 0",
                     ))
             except Exception:
@@ -279,7 +268,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                     f"x = {sym_latex(sol)}",
                     f"Verificación: sustituir x = {sym_latex(sol)} en la ecuación original.",
                     rule="Solución",
-                    color=C_RESULT,
                     highlighted=f"x = {tc(C_RESULT, sym_latex(sol))}",
                 ))
 
@@ -304,7 +292,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                 "Expresión original",
                 sym_latex(expr),
                 "Partimos de la expresión tal como se introdujo.",
-                color=C_ACTIVE,
             ))
 
             expanded_expr = expand(expr)
@@ -314,7 +301,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                     sym_latex(expanded_expr),
                     "Aplicamos la propiedad distributiva para eliminar paréntesis.",
                     rule="Distributiva",
-                    color=C_ACTIVE,
                     highlighted=tc(C_ACTIVE, sym_latex(expanded_expr)),
                 ))
 
@@ -325,7 +311,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                     sym_latex(factored_expr),
                     "Expresamos como producto de factores irreducibles.",
                     rule="Factorización",
-                    color=C_CONST,
                     highlighted=tc(C_CONST, sym_latex(factored_expr)),
                 ))
 
@@ -335,7 +320,6 @@ def solve_algebraic_equation(expr_str: str) -> SolveResponse:
                 sym_latex(simplified),
                 "Reducimos la expresión a su forma más simple.",
                 rule="Simplificar",
-                color=C_RESULT,
                 highlighted=tc(C_RESULT, sym_latex(simplified)),
             ))
 
@@ -399,7 +383,6 @@ def solve_derivative(expr_str: str) -> SolveResponse:
             "Función original",
             f"f(x) = {sym_latex(expr)}",
             "Identificamos la función a derivar respecto a x.",
-            color=C_ACTIVE,
             highlighted=f"f(x) = {tc(C_ACTIVE, sym_latex(expr))}",
         ))
 
@@ -409,7 +392,6 @@ def solve_derivative(expr_str: str) -> SolveResponse:
             f"\\frac{{d}}{{dx}}\\left[{sym_latex(expr)}\\right]",
             rule_desc,
             rule=rule_pill,
-            color=C_ACTIVE,
             highlighted=f"\\frac{{d}}{{dx}}\\left[{tc(C_ACTIVE, sym_latex(expr))}\\right]",
         ))
 
@@ -425,7 +407,6 @@ def solve_derivative(expr_str: str) -> SolveResponse:
                     f"u = {sym_latex(u)},\\quad v = {sym_latex(v)}",
                     "Identificamos las dos funciones que se multiplican.",
                     rule="Producto",
-                    color=C_ACTIVE,
                     highlighted=(
                         f"{tc(C_ACTIVE,'u')} = {tc(C_ACTIVE, sym_latex(u))},\\quad "
                         f"{tc(C_CONST,'v')} = {tc(C_CONST, sym_latex(v))}"
@@ -438,7 +419,6 @@ def solve_derivative(expr_str: str) -> SolveResponse:
                     f"u' = {sym_latex(du)},\\quad v' = {sym_latex(dv)}",
                     "Derivamos cada factor por separado.",
                     rule="Producto",
-                    color=C_CONST,
                     highlighted=(
                         f"{tc(C_ACTIVE, _up)} = {tc(C_ACTIVE, sym_latex(du))},\\quad "
                         f"{tc(C_CONST, _vp)} = {tc(C_CONST, sym_latex(dv))}"
@@ -459,7 +439,6 @@ def solve_derivative(expr_str: str) -> SolveResponse:
                     combine_plain,
                     "Aplicamos la regla del producto y sumamos los dos términos.",
                     rule="Producto",
-                    color=C_ACTIVE,
                     highlighted=combine_highlighted,
                 ))
 
@@ -482,7 +461,6 @@ def solve_derivative(expr_str: str) -> SolveResponse:
                     _chain_plain,
                     f"u = {sym_latex(base)},\\quad u' = {sym_latex(inner_der)}",
                     rule="Cadena",
-                    color=C_ACTIVE,
                     highlighted=_chain_highlighted,
                 ))
 
@@ -501,7 +479,6 @@ def solve_derivative(expr_str: str) -> SolveResponse:
                     breakdown_plain,
                     "La derivada de una suma es la suma de las derivadas.",
                     rule="Suma",
-                    color=C_ACTIVE,
                     highlighted=breakdown_highlighted,
                 ))
 
@@ -513,7 +490,6 @@ def solve_derivative(expr_str: str) -> SolveResponse:
             f"f'(x) = {sym_latex(derivative)}",
             "Aplicamos las reglas y obtenemos el resultado.",
             rule="Resultado",
-            color=C_RESULT,
             highlighted=f"f'(x) = {tc(C_RESULT, sym_latex(derivative))}",
         ))
 
@@ -523,7 +499,6 @@ def solve_derivative(expr_str: str) -> SolveResponse:
                 f"f'(x) = {sym_latex(simplified_der)}",
                 "Simplificamos la expresión para obtener la forma más compacta.",
                 rule="Simplificar",
-                color=C_RESULT,
                 highlighted=f"f'(x) = {tc(C_RESULT, sym_latex(simplified_der))}",
             ))
             final = simplified_der
@@ -594,7 +569,6 @@ def solve_integral(expr_str: str) -> SolveResponse:
             "Identificar el integrando",
             f"\\int {sym_latex(expr)} \\, dx",
             "Reconocemos la función que vamos a integrar.",
-            color=C_ACTIVE,
             highlighted=f"\\int {tc(C_ACTIVE, sym_latex(expr))} \\, dx",
         ))
 
@@ -604,7 +578,6 @@ def solve_integral(expr_str: str) -> SolveResponse:
             f"\\int {sym_latex(expr)} \\, dx",
             rule_expl,
             rule=rule_pill,
-            color=C_ACTIVE,
             highlighted=f"\\int {tc(C_ACTIVE, sym_latex(expr))} \\, dx",
         ))
 
@@ -626,7 +599,6 @@ def solve_integral(expr_str: str) -> SolveResponse:
                 breakdown_plain,
                 "La integral de una suma es la suma de las integrales.",
                 rule="Linealidad",
-                color=C_ACTIVE,
                 highlighted=breakdown_highlighted,
             ))
             parts_plain = " + ".join([sym_latex(ti) for ti in term_integrals])
@@ -639,7 +611,6 @@ def solve_integral(expr_str: str) -> SolveResponse:
                 parts_plain + " + C",
                 "Aplicamos la regla adecuada a cada término.",
                 rule="Potencia",
-                color=C_CONST,
                 highlighted=parts_highlighted + f" + {tc(C_CTX, 'C')}",
             ))
 
@@ -654,7 +625,6 @@ def solve_integral(expr_str: str) -> SolveResponse:
                     f"{sym_latex(k)} \\int {sym_latex(rest)} \\, dx",
                     f"Las constantes salen fuera del signo integral. Factor: {sym_latex(k)}",
                     rule="Constante",
-                    color=C_CONST,
                     highlighted=(
                         f"{tc(C_CONST, sym_latex(k))} \\int {tc(C_ACTIVE, sym_latex(rest))} \\, dx"
                     ),
@@ -675,7 +645,6 @@ def solve_integral(expr_str: str) -> SolveResponse:
             f"\\int {sym_latex(expr)} \\, dx = {sym_latex(integral_result)} + C",
             "Obtenemos la antiderivada exacta. C representa cualquier constante.",
             rule="Resultado",
-            color=C_RESULT,
             highlighted=(
                 f"\\int {tc(C_ACTIVE, sym_latex(expr))} \\, dx"
                 f" = {tc(C_RESULT, sym_latex(integral_result))} + {tc(C_CTX,'C')}"
@@ -688,7 +657,6 @@ def solve_integral(expr_str: str) -> SolveResponse:
                 f"{sym_latex(simplified_int)} + C",
                 "Simplificamos la antiderivada a su forma más compacta.",
                 rule="Simplificar",
-                color=C_RESULT,
                 highlighted=f"{tc(C_RESULT, sym_latex(simplified_int))} + {tc(C_CTX,'C')}",
             ))
             final = simplified_int
@@ -757,7 +725,6 @@ def solve_limit(expr_str: str) -> SolveResponse:
             "Plantear el límite",
             f"\\lim_{{x \\to {point_latex}}} {sym_latex(expr)}",
             "Identificamos la función y el punto hacia el que tiende x.",
-            color=C_ACTIVE,
             highlighted=(
                 f"\\lim_{{x \\to {tc(C_CONST, point_latex)}}} {tc(C_ACTIVE, sym_latex(expr))}"
             ),
@@ -772,7 +739,6 @@ def solve_limit(expr_str: str) -> SolveResponse:
                     f"f\\!\\left({point_latex}\\right) = {sym_latex(direct)}",
                     "Sustituimos directamente. El resultado es finito — sin indeterminación.",
                     rule="Sustitución",
-                    color=C_RESULT,
                     highlighted=(
                         f"f\\!\\left({tc(C_CONST, point_latex)}\\right)"
                         f" = {tc(C_RESULT, sym_latex(direct))}"
@@ -786,7 +752,6 @@ def solve_limit(expr_str: str) -> SolveResponse:
                 r"\text{Forma indeterminada} \left(\frac{0}{0},\ \frac{\infty}{\infty}\ldots\right)",
                 "La sustitución directa produce una indeterminación: necesitamos técnicas adicionales.",
                 rule="Indeterminada",
-                color=C_REMOVE,
                 highlighted=(
                     f"\\text{{Forma indeterminada}} \\left("
                     f"{tc(C_REMOVE, r'\frac{0}{0}')},\\ "
@@ -822,7 +787,6 @@ def solve_limit(expr_str: str) -> SolveResponse:
                     lhopital_plain,
                     "Como la forma es 0/0 o ∞/∞, derivamos numerador y denominador por separado.",
                     rule="L'Hôpital",
-                    color=C_ACTIVE,
                     highlighted=lhopital_highlighted,
                 ))
 
@@ -833,7 +797,6 @@ def solve_limit(expr_str: str) -> SolveResponse:
             f"\\lim_{{x \\to {point_latex}}} {sym_latex(expr)} = {sym_latex(limit_val)}",
             "Valor exacto del límite obtenido.",
             rule="Resultado",
-            color=C_RESULT,
             highlighted=(
                 f"\\lim_{{x \\to {tc(C_CONST, point_latex)}}}"
                 f" {tc(C_ACTIVE, sym_latex(expr))}"
