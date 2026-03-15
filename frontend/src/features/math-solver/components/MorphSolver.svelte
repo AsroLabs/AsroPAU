@@ -8,7 +8,6 @@
   import { analyzeTransformation, generateExplanation, diffTrees, type ExplanationOutput } from '../engine/explanation'
   import { buildStepAnimation, getColoredSpans } from '../../../features/math-solver/engine/animation'
   import type { Timeline } from '../../../features/math-solver/engine/animation'
-  import { getRuleColor, rulePillClasses } from '../constants'
 
   interface Step {
     step_number:        number
@@ -17,6 +16,7 @@
     highlighted_latex?: string
     explanation?:       string
     rule_name?:         string
+    highlight_color?:   string
   }
   interface Result {
     type:       string
@@ -196,16 +196,16 @@
     phase        = 'show-before'
     whyOpen      = false
 
-     // Set panel content
-     beforeLatex      = s.expr_latex ?? ''
-     beforeHighlighted = s.highlighted_latex ?? s.expr_latex ?? ''
-     beforeColor      = getRuleColor(s.rule_name)
+    // Set panel content
+    beforeLatex      = s.expr_latex ?? ''
+    beforeHighlighted = s.highlighted_latex ?? s.expr_latex ?? ''
+    beforeColor      = s.highlight_color ?? '#EA580C'
 
-     // When there is no next step, show the final result in the "Después" panel
-     const finalExpr   = result?.latex ?? result?.result ?? s.expr_latex ?? ''
-     afterLatex       = next?.expr_latex ?? finalExpr
-     afterHighlighted  = next?.highlighted_latex ?? next?.expr_latex ?? finalExpr
-     afterColor       = getRuleColor(next?.rule_name)
+    // When there is no next step, show the final result in the "Después" panel
+    const finalExpr   = result?.latex ?? result?.result ?? s.expr_latex ?? ''
+    afterLatex       = next?.expr_latex ?? finalExpr
+    afterHighlighted  = next?.highlighted_latex ?? next?.expr_latex ?? finalExpr
+    afterColor       = next?.highlight_color ?? '#EA580C'
 
     // Compute pedagogical explanation + animation timeline for this transition
     try {
@@ -375,28 +375,17 @@
   }
 
   function typeLabel(type: string) {
-    return (
-      {
-        equation: 'Ecuación',
-        expression: 'Expresión',
-        derivative: 'Derivada',
-        integral: 'Integral',
-        limit: 'Límite',
-        no_solution: 'Sin solución'
-      } as Record<string, string>
-    )[type] ?? type
+    return ({ equation:'Ecuación', expression:'Expresión', derivative:'Derivada',
+              integral:'Integral', limit:'Límite', no_solution:'Sin solución' } as Record<string,string>)[type] ?? type
   }
   function typeColor(type: string) {
-    return (
-      {
-        equation: 'bg-violet-500',
-        expression: 'bg-blue-500',
-        derivative: 'bg-teal-500',
-        integral: 'bg-indigo-500',
-        limit: 'bg-pink-500',
-        no_solution: 'bg-slate-400'
-      } as Record<string, string>
-    )[type] ?? 'bg-orange-500'
+    return ({ equation:'bg-violet-500', expression:'bg-blue-500', derivative:'bg-teal-500',
+              integral:'bg-indigo-500', limit:'bg-pink-500', no_solution:'bg-slate-400' } as Record<string,string>)[type] ?? 'bg-orange-500'
+  }
+  function rulePill(color?: string) {
+    return ({ '#EA580C':'bg-orange-100 text-orange-700', '#2563EB':'bg-blue-100 text-blue-700',
+              '#16A34A':'bg-green-100 text-green-700',   '#DC2626':'bg-red-100 text-red-700'
+            } as Record<string,string>)[color ?? ''] ?? 'bg-orange-100 text-orange-700'
   }
 </script>
 
@@ -516,12 +505,12 @@
                 {step.step_number}
               </span>
               <p class="text-sm font-semibold text-gray-700 leading-snug">{step.description}</p>
-             </div>
-             {#if step.rule_name}
-               <div class="flex items-center gap-1.5 shrink-0">
-                 <span class="text-[10px] font-bold px-2 py-0.5 rounded-full {rulePillClasses(getRuleColor(step.rule_name))}">
-                   {step.rule_name}
-                 </span>
+            </div>
+            {#if step.rule_name}
+              <div class="flex items-center gap-1.5 shrink-0">
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full {rulePill(step.highlight_color)}">
+                  {step.rule_name}
+                </span>
                 <button
                   type="button"
                   onclick={() => whyOpen = true}
@@ -645,12 +634,12 @@
                 <li
                   in:fade={{ duration: prefersReduced ? 0 : 220, delay: prefersReduced ? 0 : 320 + i * 60, easing: cubicOut }}
                   class="breakdown-item"
-                 >
-                   <!-- Step number + connector line -->
-                   <div class="breakdown-spine">
-                     <span class="breakdown-num" style="background: {getRuleColor(s.rule_name)}">
-                       {s.step_number}
-                     </span>
+                >
+                  <!-- Step number + connector line -->
+                  <div class="breakdown-spine">
+                    <span class="breakdown-num" style="background: {s.highlight_color ?? '#EA580C'}">
+                      {s.step_number}
+                    </span>
                     {#if i < steps.length - 1}
                       <span class="breakdown-line"></span>
                     {/if}
@@ -659,10 +648,10 @@
                   <!-- Content -->
                   <div class="breakdown-content">
                     <div class="breakdown-header">
-                       <p class="breakdown-desc">{s.description}</p>
-                       {#if s.rule_name}
-                         <div class="flex items-center gap-1">
-                           <span class="breakdown-pill {rulePillClasses(getRuleColor(s.rule_name))}">{s.rule_name}</span>
+                      <p class="breakdown-desc">{s.description}</p>
+                      {#if s.rule_name}
+                        <div class="flex items-center gap-1">
+                          <span class="breakdown-pill {rulePill(s.highlight_color)}">{s.rule_name}</span>
                           <button
                             type="button"
                             onclick={() => breakdownWhyStep = s}

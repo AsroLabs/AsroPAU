@@ -1,44 +1,43 @@
 <script lang="ts">
-  import katex from 'katex'
+  import katex from "katex";
+  import "katex/dist/katex.min.css";
 
-  let { latex = '', inline = false }: { latex?: string; inline?: boolean } = $props()
+  let { latex = "", inline = false }: { latex?: string; inline?: boolean } =
+    $props();
 
-  let container = $state<HTMLElement | null>(null)
+  let container = $state<HTMLElement | null>(null);
 
   $effect(() => {
-    if (!container) return
-    const l = latex
-    const i = inline
+    if (!container) return;
+    const l = latex;
+    const i = inline;
 
     if (!l.trim()) {
-      container.innerHTML = ''
-      return
+      container.innerHTML = "";
+      return;
     }
 
     try {
       katex.render(l, container, {
         throwOnError: false,
         displayMode: !i,
-        output: 'html',
-        trust: true,           // needed for \textcolor
+        output: "html",
+        trust: true, // needed for \textcolor
         strict: false,
         macros: {
-          '\\diff': '\\,\\mathrm{d}',
-          '\\abs':  '\\left|#1\\right|',
+          "\\diff": "\\,\\mathrm{d}",
+          "\\abs": "\\left|#1\\right|",
         },
         minRuleThickness: 0.06,
-      })
+      });
     } catch {
-      container.textContent = l
+      container.textContent = l;
     }
-  })
+  });
 </script>
 
 {#if inline}
-  <span
-    bind:this={container}
-    class="inline align-middle"
-    aria-label={latex}
+  <span bind:this={container} class="inline align-middle" aria-label={latex}
   ></span>
 {:else}
   <div class="relative min-w-0 overflow-hidden">
